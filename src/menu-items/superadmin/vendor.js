@@ -2,10 +2,10 @@
 import {
   IconDashboard,
   IconTruck, // You can use a truck or delivery icon for vendor
-} from '@tabler/icons-react';
+} from '@tabler/icons-react'
 
 // constant
-const icons = { IconDashboard, IconTruck };
+const icons = { IconDashboard, IconTruck }
 
 // ==============================|| VENDOR DASHBOARD MENU ITEMS ||============================== //
 
@@ -23,6 +23,6 @@ const vendorSuperadmin = {
       breadcrumbs: false,
     },
   ],
-};
+}
 
-export default vendorSuperadmin;
+export default vendorSuperadmin

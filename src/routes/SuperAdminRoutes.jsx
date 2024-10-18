@@ -6,7 +6,6 @@ import MainLayout from 'layout/MainLayout'
 // dashboard routing
 const DashboardDefault = lazyLoad(() => import('views/dashboard'))
 
-
 const StudentsList = lazyLoad(
   () => import('views/pages/superAdmin/StudentsList'),
 )
@@ -20,7 +19,7 @@ const OperatorList = lazyLoad(
 const StaffList = lazyLoad(() => import('views/pages/superAdmin/StaffList'))
 
 //Vendor Routing
-const VendorList= lazyLoad(() => import('views/pages/superAdmin/VendorList'))
+const VendorList = lazyLoad(() => import('views/pages/superAdmin/VendorList'))
 const Profile = lazyLoad(() => import('views/pages/superAdmin/Profile'))
 import { Navigate } from 'react-router-dom'
 

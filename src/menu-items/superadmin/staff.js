@@ -3,10 +3,10 @@ import {
   IconDashboard,
   IconUser, // Use a user icon for staff
   IconSchool, // You can use a school icon if available
-} from '@tabler/icons-react';
+} from '@tabler/icons-react'
 
 // constant
-const icons = { IconDashboard, IconUser, IconSchool };
+const icons = { IconDashboard, IconUser, IconSchool }
 
 // ==============================|| STAFF DASHBOARD MENU ITEMS ||============================== //
 
@@ -24,6 +24,6 @@ const staffSuperadmin = {
       breadcrumbs: false,
     },
   ],
-};
+}
 
-export default staffSuperadmin;
+export default staffSuperadmin

@@ -17,5 +17,5 @@ export {
   getAllStudents,
   getAllProfessors,
   getAllStaff,
-  getAllVendors
+  getAllVendors,
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import {
   Table,
   TableBody,
@@ -15,24 +15,24 @@ import {
   Fade,
   Typography,
   Backdrop,
-} from '@mui/material';
-import MainCard from 'ui-component/cards/MainCard';
-import { getAllStaff } from 'api'; // Change to getAllStaff
+} from '@mui/material'
+import MainCard from 'ui-component/cards/MainCard'
+import { getAllStaff } from 'api' // Change to getAllStaff
 
 const StaffList = () => {
-  const [staff, setStaff] = useState([]); // Change professors to staff
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('firstName');
-  const [totalStaff, setTotalStaff] = useState(0); // For pagination
-  const [selectedStaff, setSelectedStaff] = useState(null); // For modal
-  const [open, setOpen] = useState(false); // Modal open state
+  const [staff, setStaff] = useState([]) // Change professors to staff
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(5)
+  const [searchTerm, setSearchTerm] = useState('')
+  const [order, setOrder] = useState('asc')
+  const [orderBy, setOrderBy] = useState('firstName')
+  const [totalStaff, setTotalStaff] = useState(0) // For pagination
+  const [selectedStaff, setSelectedStaff] = useState(null) // For modal
+  const [open, setOpen] = useState(false) // Modal open state
 
   useEffect(() => {
-    fetchData();
-  }, [page, rowsPerPage, searchTerm, order, orderBy]);
+    fetchData()
+  }, [page, rowsPerPage, searchTerm, order, orderBy])
 
   const fetchData = async () => {
     try {
@@ -40,49 +40,52 @@ const StaffList = () => {
         page: page + 1, // API expects a 1-based page index
         limit: rowsPerPage,
         searchTerm, // Pass the search term for filtering
-      };
+      }
 
-      const data = await getAllStaff(); // Fetch staff from API
-      const { results, totalResults } = data;
-      setStaff(results); // Set staff instead of professors
-      setTotalStaff(totalResults); // Update total count for staff
+      const data = await getAllStaff() // Fetch staff from API
+      const { results, totalResults } = data
+      setStaff(results) // Set staff instead of professors
+      setTotalStaff(totalResults) // Update total count for staff
     } catch (error) {
-      console.error('Error fetching staff:', error.message); // Update error message
+      console.error('Error fetching staff:', error.message) // Update error message
     }
-  };
+  }
 
   const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
-    setPage(0); // Reset to first page when searching
-  };
+    setSearchTerm(event.target.value)
+    setPage(0) // Reset to first page when searching
+  }
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+    setPage(newPage)
+  }
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0); // Reset to first page when changing rows per page
-  };
+    setRowsPerPage(parseInt(event.target.value, 10))
+    setPage(0) // Reset to first page when changing rows per page
+  }
 
   const handleRequestSort = (property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
+    const isAsc = orderBy === property && order === 'asc'
+    setOrder(isAsc ? 'desc' : 'asc')
+    setOrderBy(property)
+  }
 
-  const handleRowClick = (staff) => { // Update parameter to staff
-    setSelectedStaff(staff); // Set selected staff instead of professor
-    setOpen(true);
-  };
+  const handleRowClick = (staff) => {
+    // Update parameter to staff
+    setSelectedStaff(staff) // Set selected staff instead of professor
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-    setSelectedStaff(null); // Reset selected staff
-  };
+    setOpen(false)
+    setSelectedStaff(null) // Reset selected staff
+  }
 
   return (
-    <MainCard title="Staff List"> {/* Update title */}
+    <MainCard title="Staff List">
+      {' '}
+      {/* Update title */}
       <Paper>
         <TextField
           label="Search"
@@ -131,17 +134,23 @@ const StaffList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {staff.map((staffMember) => ( // Update mapping
-                <TableRow
-                  key={staffMember._id}
-                  hover
-                  onClick={() => handleRowClick(staffMember)}> {/* Update parameter */}
-                  <TableCell>{staffMember.firstName}</TableCell>
-                  <TableCell>{staffMember.lastName}</TableCell>
-                  <TableCell>{staffMember.email}</TableCell>
-                  <TableCell>{staffMember.phoneNumber}</TableCell>
-                </TableRow>
-              ))}
+              {staff.map(
+                (
+                  staffMember, // Update mapping
+                ) => (
+                  <TableRow
+                    key={staffMember._id}
+                    hover
+                    onClick={() => handleRowClick(staffMember)}>
+                    {' '}
+                    {/* Update parameter */}
+                    <TableCell>{staffMember.firstName}</TableCell>
+                    <TableCell>{staffMember.lastName}</TableCell>
+                    <TableCell>{staffMember.email}</TableCell>
+                    <TableCell>{staffMember.phoneNumber}</TableCell>
+                  </TableRow>
+                ),
+              )}
             </TableBody>
           </Table>
         </TableContainer>
@@ -154,7 +163,6 @@ const StaffList = () => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-
       {/* Modal for displaying staff details */}
       <Modal
         open={open}
@@ -194,8 +202,7 @@ const StaffList = () => {
                   <strong>Email:</strong> {selectedStaff.email}
                 </Typography>
                 <Typography variant="body1">
-                  <strong>Phone Number:</strong>{' '}
-                  {selectedStaff.phoneNumber}
+                  <strong>Phone Number:</strong> {selectedStaff.phoneNumber}
                 </Typography>
                 <Typography variant="body1">
                   <strong>Joined At:</strong>{' '}
@@ -207,7 +214,7 @@ const StaffList = () => {
         </Fade>
       </Modal>
     </MainCard>
-  );
-};
+  )
+}
 
-export default StaffList;
+export default StaffList

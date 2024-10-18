@@ -6,9 +6,7 @@ const getAllStudents = async (params = {}) => {
     const response = await apiClient.get(API_ENDPOINT, { params })
     return response.data
   } catch (error) {
-    throw new Error(
-      error.response?.data?.message || 'Failed to fetch students',
-    )
+    throw new Error(error.response?.data?.message || 'Failed to fetch students')
   }
 }
 

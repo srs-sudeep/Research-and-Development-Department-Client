@@ -194,8 +194,7 @@ const StudentList = () => {
                   <strong>Email:</strong> {selectedStudent.email}
                 </Typography>
                 <Typography variant="body1">
-                  <strong>Phone Number:</strong>{' '}
-                  {selectedStudent.phoneNumber}
+                  <strong>Phone Number:</strong> {selectedStudent.phoneNumber}
                 </Typography>
                 <Typography variant="body1">
                   <strong>Enrolled At:</strong>{' '}
@@ -211,4 +210,3 @@ const StudentList = () => {
 }
 
 export default StudentList
-

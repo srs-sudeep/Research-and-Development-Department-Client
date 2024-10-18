@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import {
   Table,
   TableBody,
@@ -15,24 +15,24 @@ import {
   Fade,
   Typography,
   Backdrop,
-} from '@mui/material';
-import MainCard from 'ui-component/cards/MainCard';
-import { getAllVendors } from 'api'; // API call for fetching vendors
+} from '@mui/material'
+import MainCard from 'ui-component/cards/MainCard'
+import { getAllVendors } from 'api' // API call for fetching vendors
 
 const VendorList = () => {
-  const [vendors, setVendors] = useState([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('firstName');
-  const [totalVendors, setTotalVendors] = useState(0); // For pagination
-  const [selectedVendor, setSelectedVendor] = useState(null); // For modal
-  const [open, setOpen] = useState(false); // Modal open state
+  const [vendors, setVendors] = useState([])
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(5)
+  const [searchTerm, setSearchTerm] = useState('')
+  const [order, setOrder] = useState('asc')
+  const [orderBy, setOrderBy] = useState('firstName')
+  const [totalVendors, setTotalVendors] = useState(0) // For pagination
+  const [selectedVendor, setSelectedVendor] = useState(null) // For modal
+  const [open, setOpen] = useState(false) // Modal open state
 
   useEffect(() => {
-    fetchData();
-  }, [page, rowsPerPage, searchTerm, order, orderBy]);
+    fetchData()
+  }, [page, rowsPerPage, searchTerm, order, orderBy])
 
   const fetchData = async () => {
     try {
@@ -40,47 +40,47 @@ const VendorList = () => {
         page: page + 1, // API expects a 1-based page index
         limit: rowsPerPage,
         searchTerm, // Pass the search term for filtering
-      };
+      }
 
-      const data = await getAllVendors(); // Fetch vendors from API
-      const { results, totalResults } = data;
+      const data = await getAllVendors() // Fetch vendors from API
+      const { results, totalResults } = data
       console.log(results)
-      setVendors(results);
-      setTotalVendors(totalResults);
+      setVendors(results)
+      setTotalVendors(totalResults)
     } catch (error) {
-      console.error('Error fetching vendors:', error.message);
+      console.error('Error fetching vendors:', error.message)
     }
-  };
+  }
 
   const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
-    setPage(0); // Reset to first page when searching
-  };
+    setSearchTerm(event.target.value)
+    setPage(0) // Reset to first page when searching
+  }
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+    setPage(newPage)
+  }
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0); // Reset to first page when changing rows per page
-  };
+    setRowsPerPage(parseInt(event.target.value, 10))
+    setPage(0) // Reset to first page when changing rows per page
+  }
 
   const handleRequestSort = (property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
+    const isAsc = orderBy === property && order === 'asc'
+    setOrder(isAsc ? 'desc' : 'asc')
+    setOrderBy(property)
+  }
 
   const handleRowClick = (vendor) => {
-    setSelectedVendor(vendor);
-    setOpen(true);
-  };
+    setSelectedVendor(vendor)
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-    setSelectedVendor(null);
-  };
+    setOpen(false)
+    setSelectedVendor(null)
+  }
 
   return (
     <MainCard title="Vendor List">
@@ -208,7 +208,7 @@ const VendorList = () => {
         </Fade>
       </Modal>
     </MainCard>
-  );
-};
+  )
+}
 
-export default VendorList;
+export default VendorList

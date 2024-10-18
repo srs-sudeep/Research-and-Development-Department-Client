@@ -24,7 +24,14 @@ const menuItems = (role) => {
       }
     case 'superadmin':
       return {
-        items: [dashboard, studentSuperadmin, professorSuperadmin, staffSuperadmin, driver,adminProfile],
+        items: [
+          dashboard,
+          studentSuperadmin,
+          professorSuperadmin,
+          staffSuperadmin,
+          driver,
+          adminProfile,
+        ],
       }
     default:
       return {

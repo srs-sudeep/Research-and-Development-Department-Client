@@ -72,9 +72,7 @@ const Profile = () => {
                   fontSize: theme.typography.body1.fontSize,
                   fontWeight: theme.typography.body1.fontWeight,
                 }}>
-                <strong>Email</strong>{' '}
-                {adminDetails.email}
-                
+                <strong>Email</strong> {adminDetails.email}
               </Typography>
               <Typography
                 variant="body1"

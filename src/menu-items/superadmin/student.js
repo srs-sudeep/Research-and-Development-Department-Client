@@ -3,10 +3,10 @@ import {
   IconDashboard,
   IconUser, // You might want to use a user icon here
   IconSchool, // You can use a school icon if available
-} from '@tabler/icons-react';
+} from '@tabler/icons-react'
 
 // constant
-const icons = { IconDashboard, IconUser, IconSchool };
+const icons = { IconDashboard, IconUser, IconSchool }
 
 // ==============================|| STUDENT DASHBOARD MENU ITEMS ||============================== //
 
@@ -24,6 +24,6 @@ const studentSuperadmin = {
       breadcrumbs: false,
     },
   ],
-};
+}
 
-export default studentSuperadmin;
+export default studentSuperadmin

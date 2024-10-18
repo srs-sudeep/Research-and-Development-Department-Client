@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import {
   Table,
   TableBody,
@@ -15,24 +15,24 @@ import {
   Fade,
   Typography,
   Backdrop,
-} from '@mui/material';
-import MainCard from 'ui-component/cards/MainCard';
-import { getAllProfessors } from 'api';
+} from '@mui/material'
+import MainCard from 'ui-component/cards/MainCard'
+import { getAllProfessors } from 'api'
 
 const ProfessorList = () => {
-  const [professors, setProfessors] = useState([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('firstName');
-  const [totalProfessors, setTotalProfessors] = useState(0); // For pagination
-  const [selectedProfessor, setSelectedProfessor] = useState(null); // For modal
-  const [open, setOpen] = useState(false); // Modal open state
+  const [professors, setProfessors] = useState([])
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(5)
+  const [searchTerm, setSearchTerm] = useState('')
+  const [order, setOrder] = useState('asc')
+  const [orderBy, setOrderBy] = useState('firstName')
+  const [totalProfessors, setTotalProfessors] = useState(0) // For pagination
+  const [selectedProfessor, setSelectedProfessor] = useState(null) // For modal
+  const [open, setOpen] = useState(false) // Modal open state
 
   useEffect(() => {
-    fetchData();
-  }, [page, rowsPerPage, searchTerm, order, orderBy]);
+    fetchData()
+  }, [page, rowsPerPage, searchTerm, order, orderBy])
 
   const fetchData = async () => {
     try {
@@ -42,46 +42,46 @@ const ProfessorList = () => {
         // You can include sorting if needed
         // sortBy: `${orderBy}:${order}`,
         searchTerm, // Pass the search term for filtering
-      };
+      }
 
-      const data = await getAllProfessors(); // Fetch professors from API
-      const { results, totalResults } = data;
-      setProfessors(results);
-      setTotalProfessors(totalResults);
+      const data = await getAllProfessors() // Fetch professors from API
+      const { results, totalResults } = data
+      setProfessors(results)
+      setTotalProfessors(totalResults)
     } catch (error) {
-      console.error('Error fetching professors:', error.message);
+      console.error('Error fetching professors:', error.message)
     }
-  };
+  }
 
   const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
-    setPage(0); // Reset to first page when searching
-  };
+    setSearchTerm(event.target.value)
+    setPage(0) // Reset to first page when searching
+  }
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+    setPage(newPage)
+  }
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0); // Reset to first page when changing rows per page
-  };
+    setRowsPerPage(parseInt(event.target.value, 10))
+    setPage(0) // Reset to first page when changing rows per page
+  }
 
   const handleRequestSort = (property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
+    const isAsc = orderBy === property && order === 'asc'
+    setOrder(isAsc ? 'desc' : 'asc')
+    setOrderBy(property)
+  }
 
   const handleRowClick = (professor) => {
-    setSelectedProfessor(professor);
-    setOpen(true);
-  };
+    setSelectedProfessor(professor)
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-    setSelectedProfessor(null);
-  };
+    setOpen(false)
+    setSelectedProfessor(null)
+  }
 
   return (
     <MainCard title="Professor List">
@@ -196,8 +196,7 @@ const ProfessorList = () => {
                   <strong>Email:</strong> {selectedProfessor.email}
                 </Typography>
                 <Typography variant="body1">
-                  <strong>Phone Number:</strong>{' '}
-                  {selectedProfessor.phoneNumber}
+                  <strong>Phone Number:</strong> {selectedProfessor.phoneNumber}
                 </Typography>
                 <Typography variant="body1">
                   <strong>Joined At:</strong>{' '}
@@ -209,7 +208,7 @@ const ProfessorList = () => {
         </Fade>
       </Modal>
     </MainCard>
-  );
-};
+  )
+}
 
-export default ProfessorList;
+export default ProfessorList
