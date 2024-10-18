@@ -29,7 +29,7 @@ const ProfileSection = () => {
   const theme = useTheme()
   const customization = useSelector((state) => state.customization)
   const navigate = useNavigate()
-  const [user,setUser] = useState("User")
+  const [user, setUser] = useState('User')
   const [open, setOpen] = useState(false)
   const anchorRef = useRef(null)
 
@@ -85,7 +85,7 @@ const ProfileSection = () => {
         }}
         icon={
           <Avatar
-            src=''
+            src=""
             sx={{
               ...theme.typography.mediumAvatar,
               margin: '8px 0 8px 8px !important',
@@ -140,7 +140,9 @@ const ProfileSection = () => {
                   shadow={theme.shadows[16]}>
                   <Box sx={{ p: 2 }}>
                     <Typography variant="h4">WELCOME</Typography>
-                    <Typography variant="subtitle2">{user.toUpperCase()}</Typography>
+                    <Typography variant="subtitle2">
+                      {user.toUpperCase()}
+                    </Typography>
                     <Divider sx={{ my: 1 }} />
                     <List
                       component="nav"

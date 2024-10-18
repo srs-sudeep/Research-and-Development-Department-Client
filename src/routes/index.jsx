@@ -5,10 +5,7 @@ import commonRoutes from './commonRoutes'
 
 export default function Router() {
   useAuthValidation()
-  const routes = useRoutes([
-    ...SuperAdminRoutes,
-    ...commonRoutes,
-  ])
+  const routes = useRoutes([...SuperAdminRoutes, ...commonRoutes])
 
   return routes
 }
