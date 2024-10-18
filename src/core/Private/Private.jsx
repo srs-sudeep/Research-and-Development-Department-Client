@@ -35,7 +35,10 @@ const useAuthValidation = () => {
         }
       } catch (error) {
         if (error.response && error.response.status === 401) {
-          localStorage.clear()
+          localStorage.removeItem('accessToken')
+          localStorage.removeItem('refreshToken')
+          localStorage.removeItem('userRole')
+          localStorage.removeItem('firstVisit')
           navigate('/login', { replace: true })
         } else if (
           error.response &&
@@ -47,6 +50,10 @@ const useAuthValidation = () => {
         } else {
           console.error(error)
         }
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('refreshToken')
+        localStorage.removeItem('userRole')
+        localStorage.removeItem('firstVisit')
         navigate('/login', { replace: true })
       }
     }

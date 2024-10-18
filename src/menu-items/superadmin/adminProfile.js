@@ -6,20 +6,20 @@ const icons = { IconUser }
 
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
-const userSuperAdmin = {
-  id: 'user',
-  title: 'User',
+const adminProfile = {
+  id: 'adminProfile',
+  title: 'ADMIN PROFILE',
   type: 'group',
   children: [
     {
-      id: 'userlist',
-      title: 'User Lists',
+      id: 'admin Profile',
+      title: 'ADMIN PROFILE',
       type: 'item',
-      url: '/superadmin/user/list',
+      url: '/superadmin/profile',
       icon: icons.IconUser,
       breadcrumbs: false,
     },
   ],
 }
 
-export default userSuperAdmin
+export default adminProfile

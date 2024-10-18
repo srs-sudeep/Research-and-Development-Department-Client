@@ -6,30 +6,22 @@ import MainLayout from 'layout/MainLayout'
 // dashboard routing
 const DashboardDefault = lazyLoad(() => import('views/dashboard'))
 
-//Hospital routing
-const HospitalCreate = lazyLoad(
-  () => import('views/pages/superAdmin/HospitalCreate'),
-)
-const HospitalList = lazyLoad(
-  () => import('views/pages/superAdmin/HospitalList'),
+
+const StudentsList = lazyLoad(
+  () => import('views/pages/superAdmin/StudentsList'),
 )
 
 //Operator routing
 const OperatorList = lazyLoad(
-  () => import('views/pages/superAdmin/OperatorList'),
-)
-const OperatorCreate = lazyLoad(
-  () => import('views/pages/superAdmin/OperatorCreate'),
+  () => import('views/pages/superAdmin/ProfessorList'),
 )
 
-//User Routing
-const UserList = lazyLoad(() => import('views/pages/superAdmin/UserList'))
+//Staff List
+const StaffList = lazyLoad(() => import('views/pages/superAdmin/StaffList'))
 
-//Driver Routing
-const DriverCreate = lazyLoad(
-  () => import('views/pages/superAdmin/DriverCreate'),
-)
-const DriverList = lazyLoad(() => import('views/pages/superAdmin/DriverList'))
+//Vendor Routing
+const VendorList= lazyLoad(() => import('views/pages/superAdmin/VendorList'))
+const Profile = lazyLoad(() => import('views/pages/superAdmin/Profile'))
 import { Navigate } from 'react-router-dom'
 
 // ==============================|| MAIN ROUTING ||============================== //
@@ -48,25 +40,17 @@ const SuperAdminRoutes = [
         element: <DashboardDefault />,
       },
       {
-        path: 'hospital',
+        path: 'student',
         children: [
           {
-            path: 'create',
-            element: <HospitalCreate />,
-          },
-          {
             path: 'list',
-            element: <HospitalList />,
+            element: <StudentsList />,
           },
         ],
       },
       {
-        path: 'operator',
+        path: 'professor',
         children: [
-          {
-            path: 'create',
-            element: <OperatorCreate />,
-          },
           {
             path: 'list',
             element: <OperatorList />,
@@ -74,26 +58,26 @@ const SuperAdminRoutes = [
         ],
       },
       {
-        path: 'user',
+        path: 'staff',
         children: [
           {
             path: 'list',
-            element: <UserList />,
+            element: <StaffList />,
           },
         ],
       },
       {
-        path: 'driver',
+        path: 'vendor',
         children: [
           {
-            path: 'create',
-            element: <DriverCreate />,
-          },
-          {
             path: 'list',
-            element: <DriverList />,
+            element: <VendorList />,
           },
         ],
+      },
+      {
+        path: 'profile',
+        element: <Profile />,
       },
     ],
   },

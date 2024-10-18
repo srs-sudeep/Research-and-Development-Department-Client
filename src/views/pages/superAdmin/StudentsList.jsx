@@ -17,17 +17,17 @@ import {
   Backdrop,
 } from '@mui/material'
 import MainCard from 'ui-component/cards/MainCard'
-import { getAllHospital } from 'api'
+import { getAllStudents } from 'api' // Change the API import to fetch student data
 
-const HospitalList = () => {
-  const [hospitals, setHospitals] = useState([])
+const StudentList = () => {
+  const [students, setStudents] = useState([])
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [searchTerm, setSearchTerm] = useState('')
   const [order, setOrder] = useState('asc')
-  const [orderBy, setOrderBy] = useState('name')
-  const [totalHospitals, setTotalHospitals] = useState(0) // For pagination
-  const [selectedHospital, setSelectedHospital] = useState(null) // For modal
+  const [orderBy, setOrderBy] = useState('firstName')
+  const [totalStudents, setTotalStudents] = useState(0) // For pagination
+  const [selectedStudent, setSelectedStudent] = useState(null) // For modal
   const [open, setOpen] = useState(false) // Modal open state
 
   useEffect(() => {
@@ -36,18 +36,18 @@ const HospitalList = () => {
 
   const fetchData = async () => {
     try {
-      const params = {
-        page: page + 1, // API expects a 1-based page index
-        limit: rowsPerPage,
-        sortBy: `${orderBy}:${order}`,
-      }
+      // const params = {
+      //   page: page + 1, // API expects a 1-based page index
+      //   limit: rowsPerPage,
+      //   // sortBy: `${orderBy}:${order}`,
+      // }
 
-      const data = await getAllHospital(params)
+      const data = await getAllStudents() // Fetch students from API
       const { results, totalResults } = data
-      setHospitals(results)
-      setTotalHospitals(totalResults)
+      setStudents(results)
+      setTotalStudents(totalResults)
     } catch (error) {
-      console.error('Error fetching hospitals:', error.message)
+      console.error('Error fetching students:', error.message)
     }
   }
 
@@ -71,18 +71,18 @@ const HospitalList = () => {
     setOrderBy(property)
   }
 
-  const handleRowClick = (hospital) => {
-    setSelectedHospital(hospital)
+  const handleRowClick = (student) => {
+    setSelectedStudent(student)
     setOpen(true)
   }
 
   const handleClose = () => {
     setOpen(false)
-    setSelectedHospital(null)
+    setSelectedStudent(null)
   }
 
   return (
-    <MainCard title="Hospital List">
+    <MainCard title="Student List">
       <Paper>
         <TextField
           label="Search"
@@ -98,18 +98,18 @@ const HospitalList = () => {
               <TableRow>
                 <TableCell>
                   <TableSortLabel
-                    active={orderBy === 'username'}
-                    direction={orderBy === 'username' ? order : 'asc'}
-                    onClick={() => handleRequestSort('username')}>
-                    Username
+                    active={orderBy === 'firstName'}
+                    direction={orderBy === 'firstName' ? order : 'asc'}
+                    onClick={() => handleRequestSort('firstName')}>
+                    First Name
                   </TableSortLabel>
                 </TableCell>
                 <TableCell>
                   <TableSortLabel
-                    active={orderBy === 'name'}
-                    direction={orderBy === 'name' ? order : 'asc'}
-                    onClick={() => handleRequestSort('name')}>
-                    Name of the Hospital
+                    active={orderBy === 'lastName'}
+                    direction={orderBy === 'lastName' ? order : 'asc'}
+                    onClick={() => handleRequestSort('lastName')}>
+                    Last Name
                   </TableSortLabel>
                 </TableCell>
                 <TableCell>
@@ -117,29 +117,29 @@ const HospitalList = () => {
                     active={orderBy === 'email'}
                     direction={orderBy === 'email' ? order : 'asc'}
                     onClick={() => handleRequestSort('email')}>
-                    Email ID
+                    Email
                   </TableSortLabel>
                 </TableCell>
                 <TableCell>
                   <TableSortLabel
-                    active={orderBy === 'phone'}
-                    direction={orderBy === 'phone' ? order : 'asc'}
-                    onClick={() => handleRequestSort('phone')}>
+                    active={orderBy === 'phoneNumber'}
+                    direction={orderBy === 'phoneNumber' ? order : 'asc'}
+                    onClick={() => handleRequestSort('phoneNumber')}>
                     Phone Number
                   </TableSortLabel>
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {hospitals.map((hospital) => (
+              {students.map((student) => (
                 <TableRow
-                  key={hospital._id}
+                  key={student._id}
                   hover
-                  onClick={() => handleRowClick(hospital)}>
-                  <TableCell>{hospital.userDetails.username}</TableCell>
-                  <TableCell>{hospital.userDetails.name}</TableCell>
-                  <TableCell>{hospital.userDetails.email}</TableCell>
-                  <TableCell>{hospital.userDetails.phoneNumber}</TableCell>
+                  onClick={() => handleRowClick(student)}>
+                  <TableCell>{student.firstName}</TableCell>
+                  <TableCell>{student.lastName}</TableCell>
+                  <TableCell>{student.email}</TableCell>
+                  <TableCell>{student.phoneNumber}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -147,7 +147,7 @@ const HospitalList = () => {
         </TableContainer>
         <TablePagination
           component="div"
-          count={totalHospitals} // Total count of all hospital entries
+          count={totalStudents} // Total count of all student entries
           page={page}
           onPageChange={handleChangePage}
           rowsPerPage={rowsPerPage}
@@ -155,7 +155,7 @@ const HospitalList = () => {
         />
       </Paper>
 
-      {/* Modal for displaying hospital details */}
+      {/* Modal for displaying student details */}
       <Modal
         open={open}
         onClose={handleClose}
@@ -179,45 +179,27 @@ const HospitalList = () => {
               boxShadow: 24,
               p: 4,
             }}>
-            {selectedHospital && (
+            {selectedStudent && (
               <>
                 <Typography variant="h1" gutterBottom>
-                  Hospital Details
+                  Student Details
                 </Typography>
                 <Typography variant="body1">
-                  <strong>Hospital Name:</strong> {selectedHospital.name}
+                  <strong>First Name:</strong> {selectedStudent.firstName}
                 </Typography>
                 <Typography variant="body1">
-                  <strong>POS Email:</strong> {selectedHospital.posEmail}
+                  <strong>Last Name:</strong> {selectedStudent.lastName}
                 </Typography>
                 <Typography variant="body1">
-                  <strong>POS Contact:</strong> {selectedHospital.posContact}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Hospital Beds:</strong>{' '}
-                  {JSON.stringify(selectedHospital.beds)}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Created At:</strong>{' '}
-                  {new Date(selectedHospital.createdAt).toLocaleString()}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Updated At:</strong>{' '}
-                  {new Date(selectedHospital.updatedAt).toLocaleString()}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Username:</strong>{' '}
-                  {selectedHospital.userDetails.username}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Name:</strong> {selectedHospital.userDetails.name}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Email:</strong> {selectedHospital.userDetails.email}
+                  <strong>Email:</strong> {selectedStudent.email}
                 </Typography>
                 <Typography variant="body1">
                   <strong>Phone Number:</strong>{' '}
-                  {selectedHospital.userDetails.phoneNumber}
+                  {selectedStudent.phoneNumber}
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Enrolled At:</strong>{' '}
+                  {new Date(selectedStudent.enrolledAt).toLocaleString()}
                 </Typography>
               </>
             )}
@@ -228,4 +210,5 @@ const HospitalList = () => {
   )
 }
 
-export default HospitalList
+export default StudentList
+

@@ -1,9 +1,10 @@
 // import dashboard from './dashboard'
 import dashboard from './superadmin/dashboard'
-import hospital from './superadmin/hospital'
-import operatorSuperAdmin from './superadmin/operator'
-import user from './superadmin/user'
-import driver from './superadmin/driver'
+import studentSuperadmin from './superadmin/student'
+import adminProfile from './superadmin/adminProfile'
+import professorSuperadmin from './superadmin/professor'
+import staffSuperadmin from './superadmin/staff'
+import driver from './superadmin/vendor'
 import beds from './hospital/beds'
 import hospitalProfile from './hospital/hospitalProfile'
 import operatorProfile from './operator/operatorProfile'
@@ -23,7 +24,7 @@ const menuItems = (role) => {
       }
     case 'superadmin':
       return {
-        items: [dashboard, hospital, operatorSuperAdmin, user, driver],
+        items: [dashboard, studentSuperadmin, professorSuperadmin, staffSuperadmin, driver,adminProfile],
       }
     default:
       return {

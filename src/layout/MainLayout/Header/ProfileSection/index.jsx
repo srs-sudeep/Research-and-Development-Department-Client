@@ -60,6 +60,10 @@ const ProfileSection = () => {
   const anchorRef = useRef(null)
   const handleLogout = async () => {
     const logout = await logoutAPi()
+    localStorage.removeItem('accessToken')
+    localStorage.removeItem('refreshToken')
+    localStorage.removeItem('userRole')
+    localStorage.removeItem('firstVisit')
     console.log('Logout')
   }
 
