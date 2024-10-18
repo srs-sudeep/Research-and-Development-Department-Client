@@ -13,23 +13,34 @@ const useAuthValidation = () => {
         const person = response.user.role
         console.log(person, response.user.role)
         if (
-          person === 'operator' &&
+          person === 'student' &&
           (location.pathname.startsWith('/superadmin') ||
-            location.pathname.startsWith('/hospital'))
+            location.pathname.startsWith('/professor') ||
+            location.pathname.startsWith('/staff'))
         ) {
-          window.location.pathname = '/operator'
+          window.location.pathname = '/student'
         }
         if (
-          person === 'hospital' &&
-          (location.pathname.startsWith('/operator') ||
-            location.pathname.startsWith('/superadmin'))
+          person === 'staff' &&
+          (location.pathname.startsWith('/superadmin') ||
+            location.pathname.startsWith('/professor') ||
+            location.pathname.startsWith('/student'))
         ) {
-          window.location.pathname = '/hospital'
+          window.location.pathname = '/staff'
+        }
+        if (
+          person === 'professor' &&
+          (location.pathname.startsWith('/superadmin') ||
+            location.pathname.startsWith('/staff') ||
+            location.pathname.startsWith('/student'))
+        ) {
+          window.location.pathname = '/professor'
         }
         if (
           person === 'superadmin' &&
-          (location.pathname.startsWith('/hospital') ||
-            location.pathname.startsWith('/operator'))
+          (location.pathname.startsWith('/professor') ||
+            location.pathname.startsWith('/staff') ||
+            location.pathname.startsWith('/student'))
         ) {
           window.location.pathname = '/superadmin'
         }
@@ -39,6 +50,7 @@ const useAuthValidation = () => {
           localStorage.removeItem('refreshToken')
           localStorage.removeItem('userRole')
           localStorage.removeItem('firstVisit')
+          localStorage.removeItem('user')
           navigate('/login', { replace: true })
         } else if (
           error.response &&
@@ -54,6 +66,7 @@ const useAuthValidation = () => {
         localStorage.removeItem('refreshToken')
         localStorage.removeItem('userRole')
         localStorage.removeItem('firstVisit')
+        localStorage.removeItem('user')
         navigate('/login', { replace: true })
       }
     }

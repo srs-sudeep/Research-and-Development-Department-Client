@@ -38,10 +38,12 @@ const AuthLogin = () => {
     const accessToken = localStorage.getItem('accessToken')
     const userRole = localStorage.getItem('userRole')
     if (accessToken && userRole) {
-      if (userRole === 'operator') {
-        navigate('/operator')
-      } else if (userRole === 'hospital') {
-        navigate('/hospital')
+      if (userRole === 'student') {
+        navigate('/student')
+      } else if (userRole === 'staff') {
+        navigate('/staff')
+      } else if (userRole === 'professor') {
+        navigate('/professor')
       } else if (userRole === 'superadmin') {
         navigate('/superadmin')
       }
@@ -55,11 +57,13 @@ const AuthLogin = () => {
       localStorage.setItem('userRole', data.user.role)
       dispatch(loginSuccess(data.user, data.refreshToken))
 
-      if (data.user.role === 'operator') {
-        navigate('/operator')
-      } else if (data.user.role === 'hospital') {
-        navigate('/hospital')
-      } else if (data.user.role === 'superadmin') {
+      if (userRole === 'student') {
+        navigate('/student')
+      } else if (userRole === 'staff') {
+        navigate('/staff')
+      } else if (userRole === 'professor') {
+        navigate('/professor')
+      } else if (userRole === 'superadmin') {
         navigate('/superadmin')
       }
     } catch (error) {

@@ -5,7 +5,11 @@ import professorSuperadmin from './superadmin/professor'
 import staffSuperadmin from './superadmin/staff'
 import studentSuperadmin from './superadmin/student'
 import driver from './superadmin/vendor'
-
+import studentdashboard from './student/dashboard'
+import attendance from './student/attendance'
+import orders from './student/orders'
+import product from './student/product'
+import studentProfile from './student/studentProfile'
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = (role) => {
@@ -20,6 +24,10 @@ const menuItems = (role) => {
           driver,
           adminProfile,
         ],
+      }
+    case 'student':
+      return {
+        items: [studentdashboard, product, orders, attendance, studentProfile],
       }
   }
 }
