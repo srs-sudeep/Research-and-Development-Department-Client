@@ -89,13 +89,14 @@ const MenuCard = () => {
               sx={{ mt: 0 }}
               primary={
                 <Typography variant="subtitle1" sx={{ color: 'primary.800' }}>
-                  Seamless: Smart Card-Based Seamless Transaction and Activity System.
+                  Seamless: Smart Card-Based Seamless Transaction and Activity
+                  System.
                 </Typography>
               }
               secondary={
                 <Typography variant="caption" sx={{ fontSize: 8 }}>
                   {' '}
-                  For Educational Hubs 
+                  For Educational Hubs
                 </Typography>
               }
             />
