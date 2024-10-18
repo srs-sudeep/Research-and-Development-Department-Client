@@ -4,7 +4,7 @@ import lazyLoad from 'core/utils/lazyLoad'
 import MainLayout from 'layout/MainLayout'
 
 // dashboard routing
-const DashboardDefault = lazyLoad(() => import('views/dashboard'))
+const AdminDashboard = lazyLoad(() => import('views/pages/superAdmin/AdminDashboard'))
 
 const StudentsList = lazyLoad(
   () => import('views/pages/superAdmin/StudentsList'),
@@ -36,7 +36,7 @@ const SuperAdminRoutes = [
       },
       {
         path: 'dashboard',
-        element: <DashboardDefault />,
+        element: <AdminDashboard />,
       },
       {
         path: 'student',

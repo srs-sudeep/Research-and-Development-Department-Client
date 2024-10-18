@@ -59,7 +59,7 @@ const Login = () => {
                             color="secondary.main"
                             gutterBottom
                             variant={downMD ? 'h3' : 'h2'}>
-                            Hi, Welcome to Dhanvantari
+                            Hi, Welcome to Seamless
                           </Typography>
                           <Typography
                             variant="caption"
