@@ -1,9 +1,5 @@
 import {
-  FormControl,
-  InputLabel,
-  MenuItem,
   Paper,
-  Select,
   Table,
   TableBody,
   TableCell,
@@ -15,20 +11,6 @@ import {
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 import MainCard from 'ui-component/cards/MainCard'
-
-// Mock functions to simulate API calls
-const getCoursesScheduledForToday = () => {
-  return new Promise((resolve) => {
-    const mockCourses = [
-      { code: 'CS101', title: 'Introduction to Computer Science' },
-      { code: 'CS102', title: 'Data Structures' },
-      { code: 'CS103', title: 'Algorithms' },
-      { code: 'CS104', title: 'Web Development' },
-      { code: 'CS105', title: 'Database Management Systems' },
-    ]
-    resolve(mockCourses)
-  })
-}
 
 const getAttendanceByDate = (selectedDate, selectedCourseCode) => {
   return new Promise((resolve) => {
@@ -76,7 +58,7 @@ const getAttendanceByDate = (selectedDate, selectedCourseCode) => {
         inTime: '3:00 PM',
         outTime: '4:00 PM',
       },
-    ];
+    ]
 
     // Filter by course code if selected
     const filteredData = selectedCourseCode
@@ -91,7 +73,6 @@ const getAttendanceByDate = (selectedDate, selectedCourseCode) => {
 
 const AttendancePage = () => {
   const [attendanceData, setAttendanceData] = useState([])
-  const [courses, setCourses] = useState([])
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().slice(0, 10),
   ) // Current date
@@ -100,18 +81,8 @@ const AttendancePage = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5)
 
   useEffect(() => {
-    fetchCourses()
     fetchAttendance()
-  }, [selectedDate, selectedCourseCode])
-
-  const fetchCourses = async () => {
-    try {
-      const data = await getCoursesScheduledForToday()
-      setCourses(data)
-    } catch (error) {
-      console.error('Error fetching courses:', error.message)
-    }
-  }
+  }, [selectedDate])
 
   const fetchAttendance = async () => {
     try {
@@ -125,11 +96,6 @@ const AttendancePage = () => {
   const handleChangeDate = (event) => {
     setSelectedDate(event.target.value)
     setPage(0) // Reset to the first page on date change
-  }
-
-  const handleChangeCourseCode = (event) => {
-    setSelectedCourseCode(event.target.value)
-    setPage(0) // Reset to the first page on course code change
   }
 
   const handleChangePage = (event, newPage) => {
