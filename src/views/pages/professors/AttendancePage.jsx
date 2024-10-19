@@ -37,42 +37,42 @@ const getAttendanceByDate = (selectedDate, selectedCourseCode) => {
       {
         id: 1,
         courseCode: 'CS101',
-        roomNo: '101',
+        roomNo: 'student1',
         time: '9:00 AM',
         status: 'Present',
       },
       {
         id: 2,
         courseCode: 'CS102',
-        roomNo: '102',
+        roomNo: 'student2',
         time: '10:00 AM',
         status: 'Absent',
       },
       {
         id: 3,
-        courseCode: 'CS103',
-        roomNo: '103',
+        courseCode: 'CS104',
+        roomNo: 'student3',
         time: '11:00 AM',
         status: 'Present',
       },
       {
         id: 4,
-        courseCode: 'CS101',
-        roomNo: '101',
+        courseCode: 'CS104',
+        roomNo: 'student4',
         time: '1:00 PM',
         status: 'Absent',
       },
       {
         id: 5,
         courseCode: 'CS104',
-        roomNo: '104',
+        roomNo: 'student5',
         time: '2:00 PM',
         status: 'Present',
       },
       {
         id: 6,
         courseCode: 'CS105',
-        roomNo: '105',
+        roomNo: 'student6',
         time: '3:00 PM',
         status: 'Present',
       },
@@ -178,6 +178,7 @@ const AttendancePage = () => {
           <Table>
             <TableHead>
               <TableRow>
+                <TableCell>Student</TableCell>
                 <TableCell>Course Code</TableCell>
                 <TableCell>Time</TableCell>
                 <TableCell>Status</TableCell> {/* Present or Absent */}
@@ -188,6 +189,7 @@ const AttendancePage = () => {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((attendanceRecord) => (
                   <TableRow key={attendanceRecord.id}>
+                    <TableCell>{attendanceRecord.roomNo}</TableCell>
                     <TableCell>{attendanceRecord.courseCode}</TableCell>
                     <TableCell>{attendanceRecord.time}</TableCell>
                     <TableCell>{attendanceRecord.status}</TableCell>{' '}

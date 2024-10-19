@@ -3,32 +3,33 @@ import lazyLoad from 'core/utils/lazyLoad'
 // project imports
 import MainLayout from 'layout/MainLayout'
 
-// students routing
-const StudentDashboard = lazyLoad(
-  () => import('views/pages/students/StudentDashboard'),
+const ProfessorDashboard = lazyLoad(
+  () => import('views/pages/professors/ProfessorDashboard'),
 )
 const AttendancePage = lazyLoad(
-  () => import('views/pages/students/AttendancePage'),
+  () => import('views/pages/professors/AttendancePage'),
 )
 const ProductList = lazyLoad(() => import('views/pages/common/ProductList'))
 const OrderList = lazyLoad(() => import('views/pages/common/OrderList'))
-const StudentProfile = lazyLoad(() => import('views/pages/students/Profile'))
+const ProfessorProfile = lazyLoad(
+  () => import('views/pages/professors/Profile'),
+)
 import { Navigate } from 'react-router-dom'
 
 // ==============================|| STUDENTS ROUTING ||============================== //
 
-const StudentsRoutes = [
+const ProfessorsRoutes = [
   {
-    path: '/student',
+    path: '/professor',
     element: <MainLayout />,
     children: [
       {
         path: '',
-        element: <Navigate to="/student/dashboard" />,
+        element: <Navigate to="/professor/dashboard" />,
       },
       {
         path: 'dashboard',
-        element: <StudentDashboard />,
+        element: <ProfessorDashboard />,
       },
       {
         path: 'attendance',
@@ -44,10 +45,10 @@ const StudentsRoutes = [
       },
       {
         path: 'profile',
-        element: <StudentProfile />,
+        element: <ProfessorProfile />,
       },
     ],
   },
 ]
 
-export default StudentsRoutes
+export default ProfessorsRoutes
