@@ -6,7 +6,7 @@ const validator = async () => {
   try {
     const response = await apiClient.get(API_ENDPOINT)
     const user = response.data.user
-    return { user }
+    return user
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Login failed')
   }

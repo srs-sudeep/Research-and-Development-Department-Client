@@ -9,9 +9,8 @@ const useAuthValidation = () => {
   useEffect(() => {
     const validation = async () => {
       try {
-        const response = await validator()
-        const person = response.user.role
-        console.log(person, response.user.role)
+        const user = await validator()
+        const person = user.role
         if (
           person === 'student' &&
           (location.pathname.startsWith('/superadmin') ||
@@ -45,6 +44,7 @@ const useAuthValidation = () => {
           window.location.pathname = '/superadmin'
         }
       } catch (error) {
+        console.log('errorr aa gayisss')
         if (error.response && error.response.status === 401) {
           localStorage.removeItem('accessToken')
           localStorage.removeItem('refreshToken')
@@ -70,8 +70,9 @@ const useAuthValidation = () => {
         navigate('/login', { replace: true })
       }
     }
+    if (location.pathname === '/') location.pathname = '/login'
     if (location.pathname !== '/login') validation()
-  }, [navigate, location.pathname])
+  }, [navigate, location.pathname, location])
 }
 
 export default useAuthValidation

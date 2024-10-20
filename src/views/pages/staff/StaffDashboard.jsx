@@ -5,17 +5,17 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 
 // project imports
-import EarningCard from '../../dashboard/EarningCard'
-import PopularCard from '../../dashboard/PopularCard'
-import TotalOrderLineChartCard from '../../dashboard/TotalOrderLineChartCard'
-import TotalIncomeDarkCard from '../../dashboard/TotalIncomeDarkCard'
-import TotalIncomeLightCard from '../../dashboard/TotalIncomeLightCard'
-import TotalGrowthBarChart from '../../dashboard/TotalGrowthBarChart'
+// import EarningCard from '../../dashboard/EarningCard'
+// import PopularCard from '../../dashboard/PopularCard'
+// import TotalOrderLineChartCard from '../../dashboard/TotalOrderLineChartCard'
+// import TotalIncomeDarkCard from '../../dashboard/TotalIncomeDarkCard'
+// import TotalIncomeLightCard from '../../dashboard/TotalIncomeLightCard'
+// import TotalGrowthBarChart from '../../dashboard/TotalGrowthBarChart'
 
 import { gridSpacing } from 'store/constant'
 
 // assets
-import StorefrontTwoToneIcon from '@mui/icons-material/StorefrontTwoTone'
+// import StorefrontTwoToneIcon from '@mui/icons-material/StorefrontTwoTone'
 
 // ==============================|| ADMIN DASHBOARD ||============================== //
 
@@ -31,15 +31,15 @@ const StaffDashboard = () => {
       {/* Welcome Message */}
       <Grid item xs={12}>
         <Typography variant="h2" gutterBottom>
-          Welcome Admin
+          Welcome back
         </Typography>
         <Typography variant="subtitle1" color="textSecondary">
-          Here's an overview of the system's performance.
+          Here;s an overview of your account
         </Typography>
       </Grid>
 
       {/* First Row of Cards */}
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <Grid container spacing={gridSpacing}>
           <Grid item lg={4} md={6} sm={6} xs={12}>
             <EarningCard isLoading={isLoading} />
@@ -65,10 +65,10 @@ const StaffDashboard = () => {
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </Grid> */}
 
       {/* Second Row of Graphs */}
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12} md={8}>
             <TotalGrowthBarChart isLoading={isLoading} />
@@ -77,7 +77,7 @@ const StaffDashboard = () => {
             <PopularCard isLoading={isLoading} />
           </Grid>
         </Grid>
-      </Grid>
+      </Grid> */}
     </Grid>
   )
 }
