@@ -15,79 +15,8 @@ import {
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 import MainCard from 'ui-component/cards/MainCard'
-
-// Mock functions to simulate API calls
-const getCoursesScheduledForToday = () => {
-  return new Promise((resolve) => {
-    const mockCourses = [
-      { code: 'CS101', title: 'Introduction to Computer Science' },
-      { code: 'CS102', title: 'Data Structures' },
-      { code: 'CS103', title: 'Algorithms' },
-      { code: 'CS104', title: 'Web Development' },
-      { code: 'CS105', title: 'Database Management Systems' },
-    ]
-    resolve(mockCourses)
-  })
-}
-
-const getAttendanceByDate = (selectedDate, selectedCourseCode) => {
-  return new Promise((resolve) => {
-    // Mock attendance data based on selected course
-    const mockAttendanceData = [
-      {
-        id: 1,
-        courseCode: 'CS101',
-        roomNo: '101',
-        time: '9:00 AM',
-        status: 'Present',
-      },
-      {
-        id: 2,
-        courseCode: 'CS102',
-        roomNo: '102',
-        time: '10:00 AM',
-        status: 'Absent',
-      },
-      {
-        id: 3,
-        courseCode: 'CS103',
-        roomNo: '103',
-        time: '11:00 AM',
-        status: 'Present',
-      },
-      {
-        id: 4,
-        courseCode: 'CS101',
-        roomNo: '101',
-        time: '1:00 PM',
-        status: 'Absent',
-      },
-      {
-        id: 5,
-        courseCode: 'CS104',
-        roomNo: '104',
-        time: '2:00 PM',
-        status: 'Present',
-      },
-      {
-        id: 6,
-        courseCode: 'CS105',
-        roomNo: '105',
-        time: '3:00 PM',
-        status: 'Present',
-      },
-    ]
-
-    // Filter by course code if selected
-    const filteredData = selectedCourseCode
-      ? mockAttendanceData.filter(
-          (record) => record.courseCode === selectedCourseCode,
-        )
-      : mockAttendanceData
-
-    resolve(filteredData)
-  })
-}
+import { getAttendanceByDateForStudent } from 'api/student/attendance'
+import { getCoursesForStudent } from 'api/student/courses'
 
 const AttendancePage = () => {
   const [attendanceData, setAttendanceData] = useState([])
@@ -106,7 +35,7 @@ const AttendancePage = () => {
 
   const fetchCourses = async () => {
     try {
-      const data = await getCoursesScheduledForToday()
+      const data = await getCoursesForStudent()
       setCourses(data)
     } catch (error) {
       console.error('Error fetching courses:', error.message)
@@ -115,7 +44,10 @@ const AttendancePage = () => {
 
   const fetchAttendance = async () => {
     try {
-      const data = await getAttendanceByDate(selectedDate, selectedCourseCode)
+      const data = await getAttendanceByDateForStudent(
+        selectedDate,
+        selectedCourseCode,
+      )
       setAttendanceData(data)
     } catch (error) {
       console.error('Error fetching attendance:', error.message)
@@ -166,9 +98,8 @@ const AttendancePage = () => {
               <em>None</em>
             </MenuItem>
             {courses.map((course) => (
-              <MenuItem key={course.code} value={course.code}>
-                {course.code} - {course.title}{' '}
-                {/* Assuming courses have code and title */}
+              <MenuItem key={course.courseCode} value={course.courseCode}>
+                {course.courseCode} - {course.courseName}{' '}
               </MenuItem>
             ))}
           </Select>
@@ -179,6 +110,7 @@ const AttendancePage = () => {
             <TableHead>
               <TableRow>
                 <TableCell>Course Code</TableCell>
+                <TableCell>Course Name</TableCell>
                 <TableCell>Time</TableCell>
                 <TableCell>Status</TableCell> {/* Present or Absent */}
               </TableRow>
@@ -189,7 +121,8 @@ const AttendancePage = () => {
                 .map((attendanceRecord) => (
                   <TableRow key={attendanceRecord.id}>
                     <TableCell>{attendanceRecord.courseCode}</TableCell>
-                    <TableCell>{attendanceRecord.time}</TableCell>
+                    <TableCell>{attendanceRecord.courseName}</TableCell>
+                    <TableCell>{attendanceRecord.timestamp}</TableCell>
                     <TableCell>{attendanceRecord.status}</TableCell>{' '}
                     {/* Present or Absent */}
                   </TableRow>
