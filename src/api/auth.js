@@ -12,6 +12,7 @@ export const loginApi = async (phone, password) => {
     const { user, tokens } = response.data
     localStorage.setItem('refreshToken', tokens.refresh.token)
     localStorage.setItem('accessToken', tokens.access.token)
+    localStorage.setItem('userRole', user.role)
     localStorage.setItem('user', user.name)
     return { user, tokens }
   } catch (error) {

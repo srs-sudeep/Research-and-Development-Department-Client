@@ -13,7 +13,7 @@ const AuthFooter = () => (
       href="https://berrydashboard.io"
       target="_blank"
       underline="hover">
-      Dhanvantari
+      Seamless
     </Typography>
     <Typography
       variant="subtitle2"

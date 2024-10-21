@@ -54,9 +54,8 @@ const AuthLogin = () => {
     dispatch(loginStart())
     try {
       const data = await loginApi(values.phoneNumber, values.password)
-      localStorage.setItem('userRole', data.user.role)
       dispatch(loginSuccess(data.user, data.refreshToken))
-
+      const userRole = localStorage.getItem('userRole')
       if (userRole === 'student') {
         navigate('/student')
       } else if (userRole === 'staff') {
