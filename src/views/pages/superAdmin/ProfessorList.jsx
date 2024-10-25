@@ -178,7 +178,8 @@ const ProfessorList = () => {
                   Professor Details
                 </Typography>
                 <Typography variant="body1">
-                  <strong>ID Number:</strong>{selectedProfessor.idNumber}
+                  <strong>ID Number:</strong>
+                  {selectedProfessor.idNumber}
                 </Typography>
                 <Typography variant="body1">
                   <strong>Name:</strong> {selectedProfessor.name}
