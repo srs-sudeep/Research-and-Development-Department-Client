@@ -16,7 +16,7 @@ import {
 import { useEffect, useState } from 'react'
 import MainCard from 'ui-component/cards/MainCard'
 import { getCoursesForProfessor } from 'api/professor/courses'
-import { getAttendanceForCourseByDate } from 'api/professor/attendance'
+import { getAttendanceForProfessor } from 'api/professor/attendance'
 
 const AttendancePage = () => {
   const [attendanceData, setAttendanceData] = useState([])
@@ -37,6 +37,7 @@ const AttendancePage = () => {
     try {
       const data = await getCoursesForProfessor()
       setCourses(data)
+      console.log('Courses:', data)
     } catch (error) {
       console.error('Error fetching courses:', error.message)
     }
@@ -44,7 +45,7 @@ const AttendancePage = () => {
 
   const fetchAttendance = async () => {
     try {
-      const data = await getAttendanceForCourseByDate(
+      const data = await getAttendanceForProfessor(
         selectedDate,
         selectedCourseCode,
       )
@@ -98,8 +99,8 @@ const AttendancePage = () => {
               <em>None</em>
             </MenuItem>
             {courses.map((course) => (
-              <MenuItem key={course.code} value={course.code}>
-                {course.code} - {course.title}{' '}
+              <MenuItem key={course.courseCode} value={course.courseCode}>
+                {course.courseCode} - {course.courseName}{' '}
                 {/* Assuming courses have code and title */}
               </MenuItem>
             ))}

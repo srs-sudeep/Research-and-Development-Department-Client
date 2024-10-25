@@ -1,7 +1,7 @@
 import apiClient from 'core/api/apiConfig'
 const API_ENDPOINT = '/attendance'
 
-export const getCoursesForProfessor = async (
+export const getAttendanceForProfessor = async (
   selectedDate,
   selectedCourseCode,
 ) => {
