@@ -17,10 +17,10 @@ import {
   Backdrop,
 } from '@mui/material'
 import MainCard from 'ui-component/cards/MainCard'
-import { getAllStaff } from 'api' // Change to getAllStaff
+import { getAllStaff } from 'api' // Change the API import to fetch staff data
 
 const StaffList = () => {
-  const [staff, setStaff] = useState([]) // Change professors to staff
+  const [staff, setStaff] = useState([])
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [searchTerm, setSearchTerm] = useState('')
@@ -32,22 +32,15 @@ const StaffList = () => {
 
   useEffect(() => {
     fetchData()
-  }, [page, rowsPerPage, searchTerm, order, orderBy])
+  }, [])
 
   const fetchData = async () => {
     try {
-      const params = {
-        page: page + 1, // API expects a 1-based page index
-        limit: rowsPerPage,
-        searchTerm, // Pass the search term for filtering
-      }
-
       const data = await getAllStaff() // Fetch staff from API
-      const { results, totalResults } = data
-      setStaff(results) // Set staff instead of professors
-      setTotalStaff(totalResults) // Update total count for staff
+      setStaff(data)
+      setTotalStaff(data.length)
     } catch (error) {
-      console.error('Error fetching staff:', error.message) // Update error message
+      console.error('Error fetching staff:', error.message)
     }
   }
 
@@ -72,20 +65,17 @@ const StaffList = () => {
   }
 
   const handleRowClick = (staff) => {
-    // Update parameter to staff
-    setSelectedStaff(staff) // Set selected staff instead of professor
+    setSelectedStaff(staff)
     setOpen(true)
   }
 
   const handleClose = () => {
     setOpen(false)
-    setSelectedStaff(null) // Reset selected staff
+    setSelectedStaff(null)
   }
 
   return (
     <MainCard title="Staff List">
-      {' '}
-      {/* Update title */}
       <Paper>
         <TextField
           label="Search"
@@ -101,18 +91,18 @@ const StaffList = () => {
               <TableRow>
                 <TableCell>
                   <TableSortLabel
-                    active={orderBy === 'firstName'}
-                    direction={orderBy === 'firstName' ? order : 'asc'}
-                    onClick={() => handleRequestSort('firstName')}>
-                    First Name
+                    active={orderBy === 'idNumber'}
+                    direction={orderBy === 'idNumber' ? order : 'asc'}
+                    onClick={() => handleRequestSort('idNumber')}>
+                    ID Number
                   </TableSortLabel>
                 </TableCell>
                 <TableCell>
                   <TableSortLabel
-                    active={orderBy === 'lastName'}
-                    direction={orderBy === 'lastName' ? order : 'asc'}
-                    onClick={() => handleRequestSort('lastName')}>
-                    Last Name
+                    active={orderBy === 'name'}
+                    direction={orderBy === 'name' ? order : 'asc'}
+                    onClick={() => handleRequestSort('name')}>
+                    Name
                   </TableSortLabel>
                 </TableCell>
                 <TableCell>
@@ -134,35 +124,30 @@ const StaffList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {staff.map(
-                (
-                  staffMember, // Update mapping
-                ) => (
-                  <TableRow
-                    key={staffMember._id}
-                    hover
-                    onClick={() => handleRowClick(staffMember)}>
-                    {' '}
-                    {/* Update parameter */}
-                    <TableCell>{staffMember.firstName}</TableCell>
-                    <TableCell>{staffMember.lastName}</TableCell>
-                    <TableCell>{staffMember.email}</TableCell>
-                    <TableCell>{staffMember.phoneNumber}</TableCell>
-                  </TableRow>
-                ),
-              )}
+              {staff.map((staff) => (
+                <TableRow
+                  key={staff.userId}
+                  hover
+                  onClick={() => handleRowClick(staff)}>
+                  <TableCell>{staff.idNumber}</TableCell>
+                  <TableCell>{staff.name}</TableCell>
+                  <TableCell>{staff.email}</TableCell>
+                  <TableCell>{staff.phoneNumber}</TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </TableContainer>
         <TablePagination
           component="div"
-          count={totalStaff} // Update total count
+          count={totalStaff} // Total count of all staff entries
           page={page}
           onPageChange={handleChangePage}
           rowsPerPage={rowsPerPage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+
       {/* Modal for displaying staff details */}
       <Modal
         open={open}
@@ -187,26 +172,22 @@ const StaffList = () => {
               boxShadow: 24,
               p: 4,
             }}>
-            {selectedStaff && ( // Update selected staff
+            {selectedStaff && (
               <>
                 <Typography variant="h1" gutterBottom>
-                  Staff Details {/* Update title */}
+                  Staff Details
                 </Typography>
                 <Typography variant="body1">
-                  <strong>First Name:</strong> {selectedStaff.firstName}
+                  <strong>ID Number:</strong> {selectedStaff.idNumber}
                 </Typography>
                 <Typography variant="body1">
-                  <strong>Last Name:</strong> {selectedStaff.lastName}
+                  <strong>Name:</strong> {selectedStaff.name}
                 </Typography>
                 <Typography variant="body1">
                   <strong>Email:</strong> {selectedStaff.email}
                 </Typography>
                 <Typography variant="body1">
                   <strong>Phone Number:</strong> {selectedStaff.phoneNumber}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Joined At:</strong>{' '}
-                  {new Date(selectedStaff.joinedAt).toLocaleString()}
                 </Typography>
               </>
             )}

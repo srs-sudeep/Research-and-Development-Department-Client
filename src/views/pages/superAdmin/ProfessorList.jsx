@@ -17,7 +17,7 @@ import {
   Backdrop,
 } from '@mui/material'
 import MainCard from 'ui-component/cards/MainCard'
-import { getAllProfessors } from 'api'
+import { getAllProfessors } from 'api' // Change the API import to fetch professor data
 
 const ProfessorList = () => {
   const [professors, setProfessors] = useState([])
@@ -32,22 +32,13 @@ const ProfessorList = () => {
 
   useEffect(() => {
     fetchData()
-  }, [page, rowsPerPage, searchTerm, order, orderBy])
+  }, [])
 
   const fetchData = async () => {
     try {
-      const params = {
-        page: page + 1, // API expects a 1-based page index
-        limit: rowsPerPage,
-        // You can include sorting if needed
-        // sortBy: `${orderBy}:${order}`,
-        searchTerm, // Pass the search term for filtering
-      }
-
       const data = await getAllProfessors() // Fetch professors from API
-      const { results, totalResults } = data
-      setProfessors(results)
-      setTotalProfessors(totalResults)
+      setProfessors(data)
+      setTotalProfessors(data.length)
     } catch (error) {
       console.error('Error fetching professors:', error.message)
     }
@@ -100,18 +91,18 @@ const ProfessorList = () => {
               <TableRow>
                 <TableCell>
                   <TableSortLabel
-                    active={orderBy === 'firstName'}
-                    direction={orderBy === 'firstName' ? order : 'asc'}
-                    onClick={() => handleRequestSort('firstName')}>
-                    First Name
+                    active={orderBy === 'idNumber'}
+                    direction={orderBy === 'idNumber' ? order : 'asc'}
+                    onClick={() => handleRequestSort('idNumber')}>
+                    ID Number
                   </TableSortLabel>
                 </TableCell>
                 <TableCell>
                   <TableSortLabel
-                    active={orderBy === 'lastName'}
-                    direction={orderBy === 'lastName' ? order : 'asc'}
-                    onClick={() => handleRequestSort('lastName')}>
-                    Last Name
+                    active={orderBy === 'name'}
+                    direction={orderBy === 'name' ? order : 'asc'}
+                    onClick={() => handleRequestSort('name')}>
+                    Name
                   </TableSortLabel>
                 </TableCell>
                 <TableCell>
@@ -135,11 +126,11 @@ const ProfessorList = () => {
             <TableBody>
               {professors.map((professor) => (
                 <TableRow
-                  key={professor._id}
+                  key={professor.userId}
                   hover
                   onClick={() => handleRowClick(professor)}>
-                  <TableCell>{professor.firstName}</TableCell>
-                  <TableCell>{professor.lastName}</TableCell>
+                  <TableCell>{professor.idNumber}</TableCell>
+                  <TableCell>{professor.name}</TableCell>
                   <TableCell>{professor.email}</TableCell>
                   <TableCell>{professor.phoneNumber}</TableCell>
                 </TableRow>
@@ -187,20 +178,16 @@ const ProfessorList = () => {
                   Professor Details
                 </Typography>
                 <Typography variant="body1">
-                  <strong>First Name:</strong> {selectedProfessor.firstName}
+                  <strong>ID Number:</strong>{selectedProfessor.idNumber}
                 </Typography>
                 <Typography variant="body1">
-                  <strong>Last Name:</strong> {selectedProfessor.lastName}
+                  <strong>Name:</strong> {selectedProfessor.name}
                 </Typography>
                 <Typography variant="body1">
                   <strong>Email:</strong> {selectedProfessor.email}
                 </Typography>
                 <Typography variant="body1">
                   <strong>Phone Number:</strong> {selectedProfessor.phoneNumber}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Joined At:</strong>{' '}
-                  {new Date(selectedProfessor.joinedAt).toLocaleString()}
                 </Typography>
               </>
             )}

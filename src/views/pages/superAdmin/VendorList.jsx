@@ -17,7 +17,7 @@ import {
   Backdrop,
 } from '@mui/material'
 import MainCard from 'ui-component/cards/MainCard'
-import { getAllVendors } from 'api' // API call for fetching vendors
+import { getAllVendors } from 'api' // Change the API import to fetch vendor data
 
 const VendorList = () => {
   const [vendors, setVendors] = useState([])
@@ -32,21 +32,13 @@ const VendorList = () => {
 
   useEffect(() => {
     fetchData()
-  }, [page, rowsPerPage, searchTerm, order, orderBy])
+  }, [])
 
   const fetchData = async () => {
     try {
-      const params = {
-        page: page + 1, // API expects a 1-based page index
-        limit: rowsPerPage,
-        searchTerm, // Pass the search term for filtering
-      }
-
       const data = await getAllVendors() // Fetch vendors from API
-      const { results, totalResults } = data
-      console.log(results)
-      setVendors(results)
-      setTotalVendors(totalResults)
+      setVendors(data)
+      setTotalVendors(data.length)
     } catch (error) {
       console.error('Error fetching vendors:', error.message)
     }
@@ -99,18 +91,18 @@ const VendorList = () => {
               <TableRow>
                 <TableCell>
                   <TableSortLabel
-                    active={orderBy === 'name'}
-                    direction={orderBy === 'name' ? order : 'asc'}
-                    onClick={() => handleRequestSort('name')}>
-                    Name
+                    active={orderBy === 'idNumber'}
+                    direction={orderBy === 'idNumber' ? order : 'asc'}
+                    onClick={() => handleRequestSort('idNumber')}>
+                    ID Number
                   </TableSortLabel>
                 </TableCell>
                 <TableCell>
                   <TableSortLabel
-                    active={orderBy === 'ldap'}
-                    direction={orderBy === 'ldap' ? order : 'asc'}
-                    onClick={() => handleRequestSort('ldap')}>
-                    Ldap
+                    active={orderBy === 'name'}
+                    direction={orderBy === 'name' ? order : 'asc'}
+                    onClick={() => handleRequestSort('name')}>
+                    Name
                   </TableSortLabel>
                 </TableCell>
                 <TableCell>
@@ -134,13 +126,13 @@ const VendorList = () => {
             <TableBody>
               {vendors.map((vendor) => (
                 <TableRow
-                  key={vendor._id}
+                  key={vendor.userId}
                   hover
                   onClick={() => handleRowClick(vendor)}>
-                  <TableCell>{vendor.userDetails.name}</TableCell>
-                  <TableCell>{vendor.userDetails.ldap}</TableCell>
-                  <TableCell>{vendor.userDetails.email}</TableCell>
-                  <TableCell>{vendor.userDetails.phoneNumber}</TableCell>
+                  <TableCell>{vendor.idNumber}</TableCell>
+                  <TableCell>{vendor.name}</TableCell>
+                  <TableCell>{vendor.email}</TableCell>
+                  <TableCell>{vendor.phoneNumber}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -186,21 +178,16 @@ const VendorList = () => {
                   Vendor Details
                 </Typography>
                 <Typography variant="body1">
-                  <strong>Name:</strong> {selectedVendor.userDetails.name}
+                  <strong>ID Number:</strong> {selectedVendor.idNumber}
                 </Typography>
                 <Typography variant="body1">
-                  <strong>Ldap:</strong> {selectedVendor.userDetails.ldap}
+                  <strong>Name:</strong> {selectedVendor.name}
                 </Typography>
                 <Typography variant="body1">
-                  <strong>Email:</strong> {selectedVendor.userDetails.email}
+                  <strong>Email:</strong> {selectedVendor.email}
                 </Typography>
                 <Typography variant="body1">
-                  <strong>Phone Number:</strong>{' '}
-                  {selectedVendor.userDetails.phoneNumber}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Joined At:</strong>{' '}
-                  {new Date(selectedVendor.joinedAt).toLocaleString()}
+                  <strong>Phone Number:</strong> {selectedVendor.phoneNumber}
                 </Typography>
               </>
             )}

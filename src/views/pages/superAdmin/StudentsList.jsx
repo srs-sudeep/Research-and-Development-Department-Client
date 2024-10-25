@@ -32,20 +32,13 @@ const StudentList = () => {
 
   useEffect(() => {
     fetchData()
-  }, [page, rowsPerPage, searchTerm, order, orderBy])
+  }, [])
 
   const fetchData = async () => {
     try {
-      // const params = {
-      //   page: page + 1, // API expects a 1-based page index
-      //   limit: rowsPerPage,
-      //   // sortBy: `${orderBy}:${order}`,
-      // }
-
       const data = await getAllStudents() // Fetch students from API
-      const { results, totalResults } = data
-      setStudents(results)
-      setTotalStudents(totalResults)
+      setStudents(data)
+      setTotalStudents(data.length)
     } catch (error) {
       console.error('Error fetching students:', error.message)
     }
@@ -98,18 +91,18 @@ const StudentList = () => {
               <TableRow>
                 <TableCell>
                   <TableSortLabel
-                    active={orderBy === 'firstName'}
-                    direction={orderBy === 'firstName' ? order : 'asc'}
-                    onClick={() => handleRequestSort('firstName')}>
-                    First Name
+                    active={orderBy === 'idNumber'}
+                    direction={orderBy === 'idNumber' ? order : 'asc'}
+                    onClick={() => handleRequestSort('idNumber')}>
+                    ID Number
                   </TableSortLabel>
                 </TableCell>
                 <TableCell>
                   <TableSortLabel
-                    active={orderBy === 'lastName'}
-                    direction={orderBy === 'lastName' ? order : 'asc'}
-                    onClick={() => handleRequestSort('lastName')}>
-                    Last Name
+                    active={orderBy === 'name'}
+                    direction={orderBy === 'name' ? order : 'asc'}
+                    onClick={() => handleRequestSort('name')}>
+                    Name
                   </TableSortLabel>
                 </TableCell>
                 <TableCell>
@@ -133,11 +126,11 @@ const StudentList = () => {
             <TableBody>
               {students.map((student) => (
                 <TableRow
-                  key={student._id}
+                  key={student.userId}
                   hover
                   onClick={() => handleRowClick(student)}>
-                  <TableCell>{student.firstName}</TableCell>
-                  <TableCell>{student.lastName}</TableCell>
+                  <TableCell>{student.idNumber}</TableCell>
+                  <TableCell>{student.name}</TableCell>
                   <TableCell>{student.email}</TableCell>
                   <TableCell>{student.phoneNumber}</TableCell>
                 </TableRow>
@@ -185,20 +178,16 @@ const StudentList = () => {
                   Student Details
                 </Typography>
                 <Typography variant="body1">
-                  <strong>First Name:</strong> {selectedStudent.firstName}
+                  <strong>ID Number:</strong> {selectedStudent.idNumber}
                 </Typography>
                 <Typography variant="body1">
-                  <strong>Last Name:</strong> {selectedStudent.lastName}
+                  <strong>Name:</strong> {selectedStudent.name}
                 </Typography>
                 <Typography variant="body1">
                   <strong>Email:</strong> {selectedStudent.email}
                 </Typography>
                 <Typography variant="body1">
                   <strong>Phone Number:</strong> {selectedStudent.phoneNumber}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Enrolled At:</strong>{' '}
-                  {new Date(selectedStudent.enrolledAt).toLocaleString()}
                 </Typography>
               </>
             )}
