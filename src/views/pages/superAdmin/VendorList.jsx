@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react'
 import {
+  Backdrop,
+  Box,
+  Fade,
+  Modal,
+  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
-  TableRow,
   TablePagination,
-  Paper,
-  TextField,
+  TableRow,
   TableSortLabel,
-  Modal,
-  Box,
-  Fade,
+  TextField,
   Typography,
-  Backdrop,
 } from '@mui/material'
+import { getAllVendors } from 'api'; // Change the API import to fetch vendor data
+import { useEffect, useState } from 'react'
 import MainCard from 'ui-component/cards/MainCard'
-import { getAllVendors } from 'api' // Change the API import to fetch vendor data
 
 const VendorList = () => {
   const [vendors, setVendors] = useState([])

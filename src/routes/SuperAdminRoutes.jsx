@@ -8,12 +8,16 @@ const AdminDashboard = lazyLoad(
   () => import('views/pages/superAdmin/AdminDashboard'),
 )
 
+// Student routing
 const StudentsList = lazyLoad(
   () => import('views/pages/superAdmin/StudentsList'),
 )
+const StudentRegister = lazyLoad(
+  () => import('views/pages/superAdmin/StudentRegister'),
+)
 
-//Operator routing
-const OperatorList = lazyLoad(
+//Professor routing
+const ProfessorList = lazyLoad(
   () => import('views/pages/superAdmin/ProfessorList'),
 )
 
@@ -45,7 +49,7 @@ const SuperAdminRoutes = [
         children: [
           {
             path: 'list',
-            element: <StudentsList />,
+            element: <StudentRegister />,
           },
         ],
       },
@@ -54,7 +58,7 @@ const SuperAdminRoutes = [
         children: [
           {
             path: 'list',
-            element: <OperatorList />,
+            element: <ProfessorList />,
           },
         ],
       },

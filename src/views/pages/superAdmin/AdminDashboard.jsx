@@ -5,17 +5,10 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 
 // project imports
-import EarningCard from '../../dashboard/EarningCard'
-import PopularCard from '../../dashboard/PopularCard'
-import TotalOrderLineChartCard from '../../dashboard/TotalOrderLineChartCard'
-import TotalIncomeDarkCard from '../../dashboard/TotalIncomeDarkCard'
-import TotalIncomeLightCard from '../../dashboard/TotalIncomeLightCard'
-import TotalGrowthBarChart from '../../dashboard/TotalGrowthBarChart'
 
 import { gridSpacing } from 'store/constant'
 
 // assets
-import StorefrontTwoToneIcon from '@mui/icons-material/StorefrontTwoTone'
 
 // ==============================|| ADMIN DASHBOARD ||============================== //
 
