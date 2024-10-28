@@ -15,7 +15,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import { getAllVendors } from 'api'; // Change the API import to fetch vendor data
+import { getAllVendors } from 'api' // Change the API import to fetch vendor data
 import { useEffect, useState } from 'react'
 import MainCard from 'ui-component/cards/MainCard'
 
