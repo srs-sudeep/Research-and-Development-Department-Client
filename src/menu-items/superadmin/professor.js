@@ -23,6 +23,14 @@ const professorSuperadmin = {
       icon: icons.IconUser, // You might want to change this to a different icon for professors
       breadcrumbs: false,
     },
+    {
+      id: 'registerprofessor',
+      title: 'Register Professor',
+      type: 'item',
+      url: '/superadmin/professor/register',
+      icon: icons.IconUser, // You might want to change this to a different icon for professors
+      breadcrumbs: false,
+    },
   ],
 }
 

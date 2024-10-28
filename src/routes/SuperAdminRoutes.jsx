@@ -12,20 +12,30 @@ const AdminDashboard = lazyLoad(
 const StudentsList = lazyLoad(
   () => import('views/pages/superAdmin/StudentsList'),
 )
-const StudentRegister = lazyLoad(
-  () => import('views/pages/superAdmin/StudentRegister'),
+const RegisterStudentPage = lazyLoad(
+  () => import('views/pages/superAdmin/RegisterStudentPage'),
 )
 
 //Professor routing
 const ProfessorList = lazyLoad(
   () => import('views/pages/superAdmin/ProfessorList'),
 )
+const RegisterProfessorPage = lazyLoad(
+  () => import('views/pages/superAdmin/RegisterProfessorPage'),
+)
 
 //Staff List
 const StaffList = lazyLoad(() => import('views/pages/superAdmin/StaffList'))
+const RegisterStaffPage = lazyLoad(
+  () => import('views/pages/superAdmin/RegisterStaffPage'),
+)
 
 //Vendor Routing
 const VendorList = lazyLoad(() => import('views/pages/superAdmin/VendorList'))
+const RegisterVendorPage = lazyLoad(
+  () => import('views/pages/superAdmin/RegisterVendorPage'),
+)
+
 const Profile = lazyLoad(() => import('views/pages/superAdmin/Profile'))
 import { Navigate } from 'react-router-dom'
 
@@ -49,7 +59,11 @@ const SuperAdminRoutes = [
         children: [
           {
             path: 'list',
-            element: <StudentRegister />,
+            element: <StudentsList />,
+          },
+          {
+            path: 'register',
+            element: <RegisterStudentPage />,
           },
         ],
       },
@@ -60,6 +74,10 @@ const SuperAdminRoutes = [
             path: 'list',
             element: <ProfessorList />,
           },
+          {
+            path: 'register',
+            element: <RegisterProfessorPage />,
+          },
         ],
       },
       {
@@ -69,6 +87,10 @@ const SuperAdminRoutes = [
             path: 'list',
             element: <StaffList />,
           },
+          {
+            path: 'register',
+            element: <RegisterStaffPage />,
+          },
         ],
       },
       {
@@ -77,6 +99,10 @@ const SuperAdminRoutes = [
           {
             path: 'list',
             element: <VendorList />,
+          },
+          {
+            path: 'register',
+            element: <RegisterVendorPage />,
           },
         ],
       },

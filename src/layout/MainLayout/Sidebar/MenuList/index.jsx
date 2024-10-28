@@ -1,10 +1,9 @@
 // material-ui
 import { Typography } from '@mui/material'
-import { useSelector } from 'react-redux'
 
 // project imports
-import NavGroup from './NavGroup'
 import menuItems from 'menu-items'
+import NavGroup from './NavGroup'
 
 // ==============================|| SIDEBAR MENU LIST ||============================== //
 

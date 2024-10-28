@@ -22,6 +22,14 @@ const vendorSuperadmin = {
       icon: icons.IconTruck,
       breadcrumbs: false,
     },
+    {
+      id: 'registervendor',
+      title: 'Register Vendor',
+      type: 'item',
+      url: '/superadmin/vendor/register',
+      icon: icons.IconTruck,
+      breadcrumbs: false,
+    },
   ],
 }
 

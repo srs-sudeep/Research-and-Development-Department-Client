@@ -8,12 +8,12 @@ const icons = { IconUser }
 
 const adminProfile = {
   id: 'adminProfile',
-  title: 'ADMIN PROFILE',
+  title: 'Admin Profile',
   type: 'group',
   children: [
     {
       id: 'admin Profile',
-      title: 'ADMIN PROFILE',
+      title: 'Admin Profile',
       type: 'item',
       url: '/superadmin/profile',
       icon: icons.IconUser,

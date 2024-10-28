@@ -23,6 +23,14 @@ const staffSuperadmin = {
       icon: icons.IconUser, // Use the same or a different icon for staff
       breadcrumbs: false,
     },
+    {
+      id: 'registerstaff',
+      title: 'Register Staff', // Change title to Register Staff
+      type: 'item',
+      url: '/superadmin/staff/register',
+      icon: icons.IconUser, // Use the same or a different icon for staff
+      breadcrumbs: false,
+    },
   ],
 }
 

@@ -23,6 +23,14 @@ const studentSuperadmin = {
       icon: icons.IconUser,
       breadcrumbs: false,
     },
+    {
+      id: 'registerstudent',
+      title: 'Register Student',
+      type: 'item',
+      url: '/superadmin/student/register',
+      icon: icons.IconUser,
+      breadcrumbs: false,
+    },
   ],
 }
 
