@@ -23,6 +23,9 @@ const ProfessorList = lazyLoad(
 const RegisterProfessorPage = lazyLoad(
   () => import('views/pages/superAdmin/RegisterProfessorPage'),
 )
+const RegisterCoursePage = lazyLoad(
+  () => import('views/pages/superAdmin/RegisterCoursePage'),
+)
 
 //Staff List
 const StaffList = lazyLoad(() => import('views/pages/superAdmin/StaffList'))
@@ -77,6 +80,10 @@ const SuperAdminRoutes = [
           {
             path: 'register',
             element: <RegisterProfessorPage />,
+          },
+          {
+            path: 'register-course',
+            element: <RegisterCoursePage />,
           },
         ],
       },
