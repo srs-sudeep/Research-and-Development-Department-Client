@@ -35,6 +35,10 @@ const StudentsRoutes = [
         element: <AttendancePage />,
       },
       {
+        path: 'visitlogs',
+        element: <AttendancePage />,
+      },
+      {
         path: 'product',
         element: <ProductList />,
       },

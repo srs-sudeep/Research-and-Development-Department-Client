@@ -13,7 +13,7 @@ import { getVisitLogsForDate } from 'api/staff/visitlogs'
 import { useEffect, useState } from 'react'
 import MainCard from 'ui-component/cards/MainCard'
 
-const AttendancePage = () => {
+const VisitLogs = () => {
   const [attendanceData, setAttendanceData] = useState([])
   const [selectedDate, setSelectedDate] = useState('')
   const [page, setPage] = useState(0)
@@ -28,7 +28,7 @@ const AttendancePage = () => {
       const data = await getVisitLogsForDate(selectedDate)
       setAttendanceData(data)
     } catch (error) {
-      console.error('Error fetching attendance:', error.message)
+      console.error('Error fetching visit logs:', error.message)
     }
   }
 
@@ -47,7 +47,7 @@ const AttendancePage = () => {
   }
 
   return (
-    <MainCard title="Attendance Page">
+    <MainCard title="Visit Logs">
       <Paper>
         <TextField
           label="Select Date"
@@ -96,4 +96,4 @@ const AttendancePage = () => {
   )
 }
 
-export default AttendancePage
+export default VisitLogs

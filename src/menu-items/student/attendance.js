@@ -8,6 +8,16 @@ import {
 // constant
 const icons = { IconDashboard, IconUser, IconSchool }
 
+var program = null
+try {
+  program = localStorage.getItem('program')
+} catch (error) {
+  console.error('Failed to get program value:', error)
+}
+
+const hasVisitLogs =
+  program === 'M.Tech' || program === 'M.Sc' || program === 'PhD'
+
 // ==============================|| ATTENDANCE MENU ITEMS ||============================== //
 
 const attendance = {
@@ -23,7 +33,15 @@ const attendance = {
       icon: icons.IconSchool, // You might want to use a school icon here
       breadcrumbs: false,
     },
-  ],
+    hasVisitLogs && {
+      id: 'student-visitlogs',
+      title: 'Visit Logs',
+      type: 'item',
+      url: '/student/visitlogs',
+      icon: icons.IconSchool,
+      breadcrumbs: false,
+    },
+  ].filter(Boolean),
 }
 
 export default attendance
