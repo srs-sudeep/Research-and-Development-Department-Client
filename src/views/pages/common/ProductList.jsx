@@ -14,78 +14,42 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  CardMedia,
 } from '@mui/material'
-
-// Mock function to simulate fetching vendors and their transaction data from an API
-const fetchVendorsAndTransactions = async () => {
-  return [
-    {
-      id: 1,
-      name: 'Vendor A',
-      transactions: [
-        {
-          id: 1,
-          date: '2024-10-10',
-          amount: 300,
-          orders: [
-            { id: 1, product: 'Product 1', quantity: 2 },
-            { id: 2, product: 'Product 2', quantity: 1 },
-          ],
-        },
-        {
-          id: 2,
-          date: '2024-10-15',
-          amount: 500,
-          orders: [
-            { id: 3, product: 'Product 3', quantity: 3 },
-            { id: 4, product: 'Product 4', quantity: 2 },
-          ],
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: 'Vendor B',
-      transactions: [
-        {
-          id: 3,
-          date: '2024-10-12',
-          amount: 400,
-          orders: [
-            { id: 5, product: 'Product 5', quantity: 5 },
-            { id: 6, product: 'Product 6', quantity: 4 },
-          ],
-        },
-      ],
-    },
-  ]
-}
+import { getAllVendors, getVendorProducts } from 'api' // Assuming API functions are imported
 
 const ProductList = () => {
   const [vendors, setVendors] = useState([])
   const [selectedVendor, setSelectedVendor] = useState('')
-  const [transactions, setTransactions] = useState([])
+  const [products, setProducts] = useState([]) // State for products of the selected vendor
   const [openDialog, setOpenDialog] = useState(false)
   const [selectedOrders, setSelectedOrders] = useState([])
 
+  // Fetch all vendors on component mount
   useEffect(() => {
-    const loadData = async () => {
-      const data = await fetchVendorsAndTransactions()
-      setVendors(data)
+    const loadVendors = async () => {
+      const data = await getAllVendors()
+      console.log(data);
+      setVendors(data) // Assume 'results' contains the list of vendors
       if (data.length > 0) {
-        setSelectedVendor(data[0].id) // Set the first vendor as default
+        setSelectedVendor(data[0]._id) // Set the first vendor's _id as default
       }
     }
-    loadData()
+    loadVendors()
   }, [])
 
+  // Fetch products whenever a vendor is selected
   useEffect(() => {
     if (selectedVendor) {
-      const vendor = vendors.find((v) => v.id === selectedVendor)
-      setTransactions(vendor ? vendor.transactions : [])
+      const fetchProducts = async () => {
+        const productsData = await getVendorProducts(selectedVendor) // Backend API call
+        setProducts(productsData)
+      }
+      fetchProducts()
     }
-  }, [selectedVendor, vendors])
+  }, [selectedVendor])
 
+  // Handle dialog for orders (optional, depends on your actual structure)
   const handleTransactionClick = (orders) => {
     setSelectedOrders(orders)
     setOpenDialog(true)
@@ -99,48 +63,52 @@ const ProductList = () => {
   return (
     <Box sx={{ padding: 2 }}>
       <Typography variant="h4" align="center" gutterBottom>
-        Vendor Transactions
+        Vendor Products
       </Typography>
 
       <FormControl fullWidth sx={{ mb: 2 }}>
         <InputLabel>Select Vendor</InputLabel>
         <Select
           value={selectedVendor}
-          onChange={(e) => setSelectedVendor(Number(e.target.value))}>
+          onChange={(e) => setSelectedVendor(e.target.value)} // Ensure _id is selected
+        >
           {vendors.map((vendor) => (
-            <MenuItem key={vendor.id} value={vendor.id}>
-              {vendor.name}
+            <MenuItem key={vendor._id} value={vendor._id}>
+              {vendor.userDetails.name} {/* Display vendor name from userDetails */}
             </MenuItem>
           ))}
         </Select>
       </FormControl>
 
       <Grid container spacing={3}>
-        {transactions.length > 0 ? (
-          transactions.map((transaction) => (
-            <Grid item xs={12} sm={6} md={4} key={transaction.id}>
+        {products.length > 0 ? (
+          products.map((product) => (
+            <Grid item xs={12} sm={6} md={4} key={product.id}>
               <Card>
+                {/* Add CardMedia to display the image */}
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image={product.imageUrl} // Assuming imageUrl is the field with image URL
+                  alt={product.name}
+                />
                 <CardContent>
                   <Typography variant="h6" color="primary">
-                    Date: {transaction.date}
+                    Product: {product.name}
                   </Typography>
                   <Typography variant="body2">
-                    <strong>Transaction Amount:</strong> ${transaction.amount}
+                    <strong>Price:</strong> ${product.price}
                   </Typography>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => handleTransactionClick(transaction.orders)}
-                    sx={{ mt: 2 }}>
-                    View Orders
-                  </Button>
+                  <Typography variant="body2">
+                    <strong>Quantity:</strong> {product.stock}
+                  </Typography>
                 </CardContent>
               </Card>
             </Grid>
           ))
         ) : (
           <Typography variant="body1" align="center" sx={{ width: '100%' }}>
-            No transactions available for the selected vendor.
+            No products available for the selected vendor.
           </Typography>
         )}
       </Grid>

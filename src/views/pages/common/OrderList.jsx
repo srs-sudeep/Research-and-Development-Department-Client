@@ -1,140 +1,233 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TablePagination,
+  Paper,
+  TextField,
+  TableSortLabel,
+  Modal,
   Box,
-  Grid,
-  Card,
-  CardContent,
+  Fade,
   Typography,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
+  Backdrop,
 } from '@mui/material'
+import MainCard from 'ui-component/cards/MainCard'
+import { getAllOrdersById } from '../../../api'
 
-// Mock function to simulate fetching vendors and products data from an API
-const fetchVendorsAndProducts = async () => {
-  return [
-    {
-      id: 1,
-      name: 'Vendor A',
-      products: [
-        {
-          id: 1,
-          name: 'Product 1',
-          price: 100,
-          quantity: 10,
-          image: 'https://via.placeholder.com/150',
-        },
-        {
-          id: 2,
-          name: 'Product 2',
-          price: 200,
-          quantity: 5,
-          image: 'https://via.placeholder.com/150',
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: 'Vendor B',
-      products: [
-        {
-          id: 3,
-          name: 'Product 3',
-          price: 150,
-          quantity: 8,
-          image: 'https://via.placeholder.com/150',
-        },
-        {
-          id: 4,
-          name: 'Product 4',
-          price: 250,
-          quantity: 12,
-          image: 'https://via.placeholder.com/150',
-        },
-      ],
-    },
-  ]
-}
-
-const ProductList = () => {
-  const [vendors, setVendors] = useState([])
-  const [selectedVendor, setSelectedVendor] = useState('')
-  const [filteredProducts, setFilteredProducts] = useState([])
+const OrderList = () => {
+  const [orders, setOrders] = useState([])
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(5)
+  const [searchTerm, setSearchTerm] = useState('')
+  const [order, setOrder] = useState('asc')
+  const [orderBy, setOrderBy] = useState('createdAt')
+  const [totalOrders, setTotalOrders] = useState(0)
+  const [selectedOrder, setSelectedOrder] = useState(null)
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    const loadData = async () => {
-      const data = await fetchVendorsAndProducts()
-      setVendors(data)
-      if (data.length > 0) {
-        setSelectedVendor(data[0].id) // Set the first vendor as default
-      }
-    }
-    loadData()
-  }, [])
+    fetchOrders()
+  }, [page, rowsPerPage, searchTerm, order, orderBy])
 
-  useEffect(() => {
-    if (selectedVendor) {
-      const vendor = vendors.find((v) => v.id === selectedVendor)
-      setFilteredProducts(vendor ? vendor.products : [])
+  // Simulate fetch data from API
+  const fetchOrders = async () => {
+    const responseData = await getAllOrdersById()
+    console.log("This is the respons: ", responseData);
+    setOrders(responseData)
+    setTotalOrders(responseData.length)
+  }
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'pending':
+        return '#FFC107'
+      case 'confirmed':
+        return '#4CAF50'
+      case 'failed':
+        return '#F44336'
+      default:
+        return '#000'
     }
-  }, [selectedVendor, vendors])
+  }
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value)
+    setPage(0)
+  }
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage)
+  }
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10))
+    setPage(0)
+  }
+
+  const handleRequestSort = (property) => {
+    const isAsc = orderBy === property && order === 'asc'
+    setOrder(isAsc ? 'desc' : 'asc')
+    setOrderBy(property)
+  }
+
+  const handleRowClick = (order) => {
+    setSelectedOrder(order)
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+    setSelectedOrder(null)
+  }
 
   return (
-    <Box sx={{ padding: 2 }}>
-      <Typography variant="h4" align="center" gutterBottom>
-        Product List
-      </Typography>
-
-      <FormControl fullWidth sx={{ mb: 2 }}>
-        <InputLabel>Select Vendor</InputLabel>
-        <Select
-          value={selectedVendor}
-          onChange={(e) => setSelectedVendor(Number(e.target.value))}>
-          {vendors.map((vendor) => (
-            <MenuItem key={vendor.id} value={vendor.id}>
-              {vendor.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-
-      <Grid container spacing={3}>
-        {filteredProducts.length > 0 ? (
-          filteredProducts.map((product) => (
-            <Grid item xs={12} sm={6} md={4} key={product.id}>
-              <Card>
-                <CardContent>
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    style={{
-                      width: '100%',
-                      height: 'auto',
-                      borderRadius: '4px',
-                    }}
-                  />
-                  <Typography variant="h6" color="primary">
-                    {product.name}
+    <MainCard title="Order List">
+      <Paper>
+        <TextField
+          label="Search"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === 'userName'}
+                    direction={orderBy === 'userName' ? order : 'asc'}
+                    onClick={() => handleRequestSort('userName')}>
+                    User Name
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === 'totalAmount'}
+                    direction={orderBy === 'totalAmount' ? order : 'asc'}
+                    onClick={() => handleRequestSort('totalAmount')}>
+                    Total Amount
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === 'status'}
+                    direction={orderBy === 'status' ? order : 'asc'}
+                    onClick={() => handleRequestSort('status')}>
+                    Status
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === 'createdAt'}
+                    direction={orderBy === 'createdAt' ? order : 'asc'}
+                    onClick={() => handleRequestSort('createdAt')}>
+                    Created At
+                  </TableSortLabel>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {orders
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((order) => (
+                  <TableRow
+                    key={order._id}
+                    hover
+                    onClick={() => handleRowClick(order)}>
+                    <TableCell>{order.userId.name}</TableCell>
+                    <TableCell>{order.totalAmount}</TableCell>
+                    <TableCell>
+                      <span
+                        style={{
+                          color: getStatusColor(order.status),
+                          fontWeight: 'bold',
+                        }}>
+                        {order.status.charAt(0).toUpperCase() +
+                          order.status.slice(1)}
+                      </span>
+                    </TableCell>
+                    <TableCell>
+                    {selectedOrder && selectedOrder.createdAt ? new Date(selectedOrder.createdAt).toLocaleString() :  new Date(Date.now).toLocaleString()}
+                    </TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          component="div"
+          count={totalOrders}
+          page={page}
+          onPageChange={handleChangePage}
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Paper>
+      {/* Modal for displaying order details */}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        slots={{ backdrop: Backdrop }}
+        slotProps={{
+          backdrop: {
+            timeout: 500,
+          },
+        }}>
+        <Fade in={open}>
+          <Box
+            sx={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: 400,
+              bgcolor: 'background.paper',
+              border: '2px solid #white',
+              boxShadow: 24,
+              p: 4,
+            }}>
+            {selectedOrder && (
+              <>
+                <Typography variant="h1" gutterBottom>
+                  Order Details
+                </Typography>
+                <Typography variant="body1">
+                  <strong>User Name:</strong> {selectedOrder.userName}
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Total Amount:</strong> {selectedOrder.totalAmount}
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Status:</strong> {selectedOrder.status}
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Created At:</strong>{' '}
+                  {selectedOrder && selectedOrder.createdAt ? new Date(selectedOrder.createdAt).toLocaleString() : 'Date not available'}
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  <strong>Items:</strong>
+                </Typography>
+                {selectedOrder.items.map((item, index) => (
+                  <Typography key={index} variant="body2">
+                    {`Product ID: ${item.productName}, Quantity: ${item.quantity}, Price: ${item.price}`}
                   </Typography>
-                  <Typography variant="body2">
-                    <strong>Price:</strong> ${product.price}
-                  </Typography>
-                  <Typography variant="body2">
-                    <strong>Quantity:</strong> {product.quantity}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))
-        ) : (
-          <Typography variant="body1" align="center" sx={{ width: '100%' }}>
-            No products available for the selected vendor.
-          </Typography>
-        )}
-      </Grid>
-    </Box>
+                ))}
+              </>
+            )}
+          </Box>
+        </Fade>
+      </Modal>
+    </MainCard>
   )
 }
 
-export default ProductList
+export default OrderList

@@ -13,6 +13,7 @@ import attendance from './student/attendance'
 import studentdashboard from './student/dashboard'
 import orders from './student/orders'
 import product from './student/product'
+import messTransaction from './student/messTransaction'
 import studentProfile from './student/studentProfile'
 import adminProfile from './superadmin/adminProfile'
 import dashboard from './superadmin/dashboard'
@@ -38,7 +39,7 @@ const menuItems = (role) => {
       }
     case 'student':
       return {
-        items: [studentdashboard, product, orders, attendance, studentProfile],
+        items: [studentdashboard, messTransaction, product, orders, attendance, studentProfile],
       }
     case 'professor':
       return {
