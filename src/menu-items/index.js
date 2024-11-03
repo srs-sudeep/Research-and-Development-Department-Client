@@ -39,7 +39,14 @@ const menuItems = (role) => {
       }
     case 'student':
       return {
-        items: [studentdashboard, messTransaction, product, orders, attendance, studentProfile],
+        items: [
+          studentdashboard,
+          messTransaction,
+          product,
+          orders,
+          attendance,
+          studentProfile,
+        ],
       }
     case 'professor':
       return {

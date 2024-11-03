@@ -37,7 +37,7 @@ const OrderList = () => {
   // Simulate fetch data from API
   const fetchOrders = async () => {
     const responseData = await getAllOrdersById()
-    console.log("This is the respons: ", responseData);
+    console.log('This is the respons: ', responseData)
     setOrders(responseData)
     setTotalOrders(responseData.length)
   }
@@ -155,7 +155,9 @@ const OrderList = () => {
                       </span>
                     </TableCell>
                     <TableCell>
-                    {selectedOrder && selectedOrder.createdAt ? new Date(selectedOrder.createdAt).toLocaleString() :  new Date(Date.now).toLocaleString()}
+                      {selectedOrder && selectedOrder.createdAt
+                        ? new Date(selectedOrder.createdAt).toLocaleString()
+                        : new Date(Date.now).toLocaleString()}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -211,7 +213,9 @@ const OrderList = () => {
                 </Typography>
                 <Typography variant="body1">
                   <strong>Created At:</strong>{' '}
-                  {selectedOrder && selectedOrder.createdAt ? new Date(selectedOrder.createdAt).toLocaleString() : 'Date not available'}
+                  {selectedOrder && selectedOrder.createdAt
+                    ? new Date(selectedOrder.createdAt).toLocaleString()
+                    : 'Date not available'}
                 </Typography>
                 <Typography variant="body1" gutterBottom>
                   <strong>Items:</strong>

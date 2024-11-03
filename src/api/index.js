@@ -18,5 +18,5 @@ export {
   getIndiStudent,
   getVendorProducts,
   getAllOrdersById,
-  getAllMessTransaction
+  getAllMessTransaction,
 }
