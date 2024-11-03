@@ -29,7 +29,7 @@ const ProductList = () => {
   useEffect(() => {
     const loadVendors = async () => {
       const data = await getAllVendors()
-      console.log(data);
+      console.log(data)
       setVendors(data) // Assume 'results' contains the list of vendors
       if (data.length > 0) {
         setSelectedVendor(data[0]._id) // Set the first vendor's _id as default
@@ -74,7 +74,8 @@ const ProductList = () => {
         >
           {vendors.map((vendor) => (
             <MenuItem key={vendor._id} value={vendor._id}>
-              {vendor.userDetails.name} {/* Display vendor name from userDetails */}
+              {vendor.userDetails.name}{' '}
+              {/* Display vendor name from userDetails */}
             </MenuItem>
           ))}
         </Select>

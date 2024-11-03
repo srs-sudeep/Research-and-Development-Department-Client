@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import {
   Table,
   TableBody,
@@ -9,33 +9,33 @@ import {
   TablePagination,
   Paper,
   TextField,
-} from '@mui/material';
-import MainCard from 'ui-component/cards/MainCard';
-import { format } from 'date-fns';
-import { getAllMessTransaction } from 'api';
+} from '@mui/material'
+import MainCard from 'ui-component/cards/MainCard'
+import { format } from 'date-fns'
+import { getAllMessTransaction } from 'api'
 
 const MessTransaction = () => {
-  const [studentData, setStudentData] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [studentId, setStudentId] = useState(''); // Replace with actual logic to get student ID
+  const [studentData, setStudentData] = useState([])
+  const [searchTerm, setSearchTerm] = useState('')
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [studentId, setStudentId] = useState('') // Replace with actual logic to get student ID
 
   // Fetch mess transactions from the backend
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        console.log("Hello");
-        const response = await getAllMessTransaction();
-        setStudentData(response);
+        console.log('Hello')
+        const response = await getAllMessTransaction()
+        setStudentData(response)
       } catch (error) {
-        console.error('Failed to fetch transactions:', error);
+        console.error('Failed to fetch transactions:', error)
       }
-    };
-    fetchTransactions();
-  }, []);
+    }
+    fetchTransactions()
+  }, [])
 
-  console.log("Hello");
+  console.log('Hello')
 
   return (
     <MainCard title="Mess Transactions">
@@ -64,26 +64,34 @@ const MessTransaction = () => {
                 {studentData
                   .filter((transaction) =>
                     transaction.students.some((student) =>
-                      student.name.toLowerCase().includes(searchTerm.toLowerCase())
-                    )
+                      student.name
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase()),
+                    ),
                   )
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((transaction, index) => (
                     <TableRow key={transaction.id || index} hover>
                       <TableCell>
-                        {transaction.vendorId.userId.name ? transaction.vendorId.userId.name : 'N/A'}
+                        {transaction.vendorId.userId.name
+                          ? transaction.vendorId.userId.name
+                          : 'N/A'}
                       </TableCell>
                       <TableCell>
-                        {transaction.students.length > 0 ? transaction.students[0].idNumber : 'N/A'}
+                        {transaction.students.length > 0
+                          ? transaction.students[0].idNumber
+                          : 'N/A'}
                       </TableCell>
                       <TableCell>
-                        {format(new Date(transaction.date), 'dd/MM/yyyy HH:mm:ss')}
+                        {format(
+                          new Date(transaction.date),
+                          'dd/MM/yyyy HH:mm:ss',
+                        )}
                       </TableCell>
                       <TableCell>{transaction.type}</TableCell>
                     </TableRow>
                   ))}
               </TableBody>
-
             </Table>
           </TableContainer>
 
@@ -101,7 +109,7 @@ const MessTransaction = () => {
         </Paper>
       </div>
     </MainCard>
-  );
-};
+  )
+}
 
-export default MessTransaction;
+export default MessTransaction
