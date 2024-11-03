@@ -11,6 +11,8 @@ export const getAttendanceByDateForStudent = async (date, courseCode) => {
     })
     return response.data
   } catch (error) {
-    throw new Error(error.response?.data?.message || 'Failed to fetch courses')
+    throw new Error(
+      error.response?.data?.message || 'Failed to fetch attendance',
+    )
   }
 }

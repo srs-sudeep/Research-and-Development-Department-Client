@@ -2,7 +2,8 @@ import lazyLoad from 'core/utils/lazyLoad'
 
 // project imports
 import MainLayout from 'layout/MainLayout'
-import { element } from 'prop-types'
+import { Navigate } from 'react-router-dom'
+import MessTransaction from 'views/pages/students/MessTransaction'
 
 // students routing
 const StudentDashboard = lazyLoad(
@@ -11,11 +12,11 @@ const StudentDashboard = lazyLoad(
 const AttendancePage = lazyLoad(
   () => import('views/pages/students/AttendancePage'),
 )
+const VisitLogs = lazyLoad(() => import('views/pages/students/VisitLogs'))
+
 const ProductList = lazyLoad(() => import('views/pages/common/ProductList'))
 const OrderList = lazyLoad(() => import('views/pages/common/OrderList'))
 const StudentProfile = lazyLoad(() => import('views/pages/students/Profile'))
-import { Navigate } from 'react-router-dom'
-import MessTransaction from 'views/pages/students/MessTransaction'
 
 // ==============================|| STUDENTS ROUTING ||============================== //
 
@@ -42,7 +43,7 @@ const StudentsRoutes = [
       },
       {
         path: 'visitlogs',
-        element: <AttendancePage />,
+        element: <VisitLogs />,
       },
       {
         path: 'product',
