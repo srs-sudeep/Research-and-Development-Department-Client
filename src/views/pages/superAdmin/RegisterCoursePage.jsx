@@ -61,6 +61,13 @@ const RegisterStudentPage = () => {
     if (validateForm()) {
       try {
         registerCourse(formData)
+        setFormData({
+          professorId: '',
+          courseName: '',
+          courseCode: '',
+          semester: '',
+          students: [],
+        })
         console.log('Form submitted:', formData)
         alert('Course registered successfully')
       } catch (error) {

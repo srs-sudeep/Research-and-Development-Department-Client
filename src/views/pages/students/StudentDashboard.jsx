@@ -159,7 +159,7 @@ const Dashboard = () => {
             <div className="absolute left-0 top-0 h-full w-1 bg-orange-500"></div>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-gray-600">
-              Today's Attendance
+                Today's Attendance
               </CardTitle>
               <div className="rounded-full bg-orange-100 p-2 transition-colors duration-300 group-hover:bg-orange-200">
                 <Calendar className="h-4 w-4 text-orange-600" />
