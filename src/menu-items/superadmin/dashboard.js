@@ -19,6 +19,14 @@ const dashboard = {
       icon: icons.IconDashboard,
       breadcrumbs: false,
     },
+    {
+      id: 'analysis',
+      title: 'Analytics',
+      type: 'item',
+      url: '/superadmin/analytics',
+      icon: icons.IconDashboard,
+      breadcrumbs: false,
+    },
   ],
 }
 

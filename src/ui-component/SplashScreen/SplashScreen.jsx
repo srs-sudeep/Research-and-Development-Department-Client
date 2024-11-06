@@ -1,9 +1,15 @@
 import React, { useEffect } from 'react'
-import gif from '/gif/Dhanvantari Loader.gif'
+import Preloader from '/videos/Preloader.mp4'
 const SplashScreen = () => {
   return (
-    <div className="loader bg-white">
-      <img src={gif} className="h-[100vh] w-[100vw]" alt="Loading" />
+    <div className="loader fixed inset-0 flex items-center justify-center bg-white">
+      <video
+        src={Preloader}
+        autoPlay
+        loop
+        muted
+        className="h-full w-full object-cover"
+      />
     </div>
   )
 }
