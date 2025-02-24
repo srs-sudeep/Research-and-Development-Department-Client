@@ -38,9 +38,7 @@ const AuthLogin = () => {
     const accessToken = localStorage.getItem('accessToken')
     const userRole = localStorage.getItem('userRole')
     if (accessToken && userRole) {
-      if (userRole === 'student') {
-        navigate('/student')
-      } else if (userRole === 'staff') {
+      if (userRole === 'staff') {
         navigate('/staff')
       } else if (userRole === 'professor') {
         navigate('/professor')
@@ -56,9 +54,7 @@ const AuthLogin = () => {
       const data = await loginApi(values.phoneNumber, values.password)
       dispatch(loginSuccess(data.user, data.refreshToken))
       const userRole = localStorage.getItem('userRole')
-      if (userRole === 'student') {
-        navigate('/student')
-      } else if (userRole === 'staff') {
+      if (userRole === 'staff') {
         navigate('/staff')
       } else if (userRole === 'professor') {
         navigate('/professor')

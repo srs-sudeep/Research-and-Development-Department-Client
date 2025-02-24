@@ -7,25 +7,10 @@ import {
   Divider,
   useTheme,
 } from '@mui/material'
-import { getIndiStudent } from 'api'
 import MainCard from 'ui-component/cards/MainCard'
 
 const StaffProfile = () => {
-  const [studentDetails, setStudentDetails] = useState({})
   const theme = useTheme()
-
-  useEffect(() => {
-    fetchStudentDetails()
-  }, [])
-
-  const fetchStudentDetails = async () => {
-    try {
-      const response = await getIndiStudent()
-      setStudentDetails(response)
-    } catch (error) {
-      console.error('Error fetching student details:', error.message)
-    }
-  }
 
   return (
     <MainCard title="Student Profile">
@@ -56,7 +41,7 @@ const StaffProfile = () => {
                   fontSize: theme.typography.body1.fontSize,
                   fontWeight: theme.typography.body1.fontWeight,
                 }}>
-                <strong>Name:</strong> {studentDetails.name}{' '}
+                <strong>Name:</strong> 
               </Typography>
               <Typography
                 variant="body1"
@@ -64,7 +49,7 @@ const StaffProfile = () => {
                   fontSize: theme.typography.body1.fontSize,
                   fontWeight: theme.typography.body1.fontWeight,
                 }}>
-                <strong>Roll Number:</strong> {studentDetails.rollNumber}{' '}
+                <strong>Roll Number:</strong> 
               </Typography>
               <Typography
                 variant="body1"
@@ -72,7 +57,7 @@ const StaffProfile = () => {
                   fontSize: theme.typography.body1.fontSize,
                   fontWeight: theme.typography.body1.fontWeight,
                 }}>
-                <strong>Email:</strong> {studentDetails.email}
+                <strong>Email:</strong> 
               </Typography>
               <Typography
                 variant="body1"
@@ -80,7 +65,7 @@ const StaffProfile = () => {
                   fontSize: theme.typography.body1.fontSize,
                   fontWeight: theme.typography.body1.fontWeight,
                 }}>
-                <strong>Student ID:</strong> {studentDetails.id}{' '}
+                <strong>Student ID:</strong> 
               </Typography>
             </Box>
 
@@ -101,7 +86,7 @@ const StaffProfile = () => {
                   fontSize: theme.typography.body1.fontSize,
                   fontWeight: theme.typography.body1.fontWeight,
                 }}>
-                <strong>Phone Number:</strong> {studentDetails.phoneNumber}{' '}
+                <strong>Phone Number:</strong> 
               </Typography>
               <Typography
                 variant="body1"
@@ -109,7 +94,7 @@ const StaffProfile = () => {
                   fontSize: theme.typography.body1.fontSize,
                   fontWeight: theme.typography.body1.fontWeight,
                 }}>
-                <strong>Course:</strong> {studentDetails.course}{' '}
+                <strong>Course:</strong> 
               </Typography>
             </Box>
           </Box>
