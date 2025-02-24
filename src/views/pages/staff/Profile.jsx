@@ -41,7 +41,7 @@ const StaffProfile = () => {
                   fontSize: theme.typography.body1.fontSize,
                   fontWeight: theme.typography.body1.fontWeight,
                 }}>
-                <strong>Name:</strong> 
+                <strong>Name:</strong>
               </Typography>
               <Typography
                 variant="body1"
@@ -49,7 +49,7 @@ const StaffProfile = () => {
                   fontSize: theme.typography.body1.fontSize,
                   fontWeight: theme.typography.body1.fontWeight,
                 }}>
-                <strong>Roll Number:</strong> 
+                <strong>Roll Number:</strong>
               </Typography>
               <Typography
                 variant="body1"
@@ -57,7 +57,7 @@ const StaffProfile = () => {
                   fontSize: theme.typography.body1.fontSize,
                   fontWeight: theme.typography.body1.fontWeight,
                 }}>
-                <strong>Email:</strong> 
+                <strong>Email:</strong>
               </Typography>
               <Typography
                 variant="body1"
@@ -65,7 +65,7 @@ const StaffProfile = () => {
                   fontSize: theme.typography.body1.fontSize,
                   fontWeight: theme.typography.body1.fontWeight,
                 }}>
-                <strong>Student ID:</strong> 
+                <strong>Student ID:</strong>
               </Typography>
             </Box>
 
@@ -86,7 +86,7 @@ const StaffProfile = () => {
                   fontSize: theme.typography.body1.fontSize,
                   fontWeight: theme.typography.body1.fontWeight,
                 }}>
-                <strong>Phone Number:</strong> 
+                <strong>Phone Number:</strong>
               </Typography>
               <Typography
                 variant="body1"
@@ -94,7 +94,7 @@ const StaffProfile = () => {
                   fontSize: theme.typography.body1.fontSize,
                   fontWeight: theme.typography.body1.fontWeight,
                 }}>
-                <strong>Course:</strong> 
+                <strong>Course:</strong>
               </Typography>
             </Box>
           </Box>
