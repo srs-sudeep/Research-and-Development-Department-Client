@@ -7,9 +7,9 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import { useState } from 'react'
-
+import { useEffect, useState } from 'react'
 import registerStaff from 'api/superadmin/registerStaff'
+import { getAllProjects } from 'api'
 
 const RegisterStaffPage = () => {
   const [formData, setFormData] = useState({
@@ -21,8 +21,8 @@ const RegisterStaffPage = () => {
     idNumber: '',
     upto: '',
     dob: '',
-    project: '',
-    issuingAuthority: '',
+    projectId: '',
+    issuerAuthority: '',
     addr1: '',
     addr2: '',
     doj: '',
@@ -31,10 +31,24 @@ const RegisterStaffPage = () => {
   })
 
   const [errors, setErrors] = useState({})
+  const [projects, setProjects] = useState([]) // State for storing fetched projects
 
-  const Projects = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
   const genderOptions = ['Male', 'Female', 'Other']
   const employmentTypes = ['Permanent', 'Contractual', 'Visiting']
+
+  // Fetch all projects when the component mounts
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const fetchedProjects = await getAllProjects()
+        setProjects(fetchedProjects) // Update the state with fetched projects
+      } catch (error) {
+        console.error('Failed to fetch projects:', error)
+      }
+    }
+
+    fetchProjects()
+  }, [])
 
   const validateForm = () => {
     const newErrors = {}
@@ -44,11 +58,11 @@ const RegisterStaffPage = () => {
       newErrors.email = 'Invalid email format'
     }
 
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
-    if (!passwordRegex.test(formData.password)) {
-      newErrors.password =
-        'Password must be at least 8 characters with one letter and one number'
-    }
+    // const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+    // if (!passwordRegex.test(formData.password)) {
+    //   newErrors.password =
+    //     'Password must be at least 8 characters with one letter and one number'
+    // }
 
     const phoneRegex = /^[0-9]{10}$/
     if (!phoneRegex.test(formData.phoneNumber)) {
@@ -183,7 +197,7 @@ const RegisterStaffPage = () => {
               helperText={errors.gender}
               required>
               {genderOptions.map((option) => (
-                <MenuItem key={option} value={option}>
+                <MenuItem key={option} value={option.toLowerCase()}>
                   {option}
                 </MenuItem>
               ))}
@@ -226,11 +240,11 @@ const RegisterStaffPage = () => {
             <TextField
               fullWidth
               label="Issuing Authority"
-              name="issuerauthority"
-              value={formData.issuingAuthority}
+              name="issuerAuthority"
+              value={formData.issuerAuthority}
               onChange={handleChange}
-              error={!!errors.issuingAuthority}
-              helperText={errors.issuingAuthority}
+              error={!!errors.issuerAuthority}
+              helperText={errors.issuerAuthority}
               required
             />
           </Grid>
@@ -240,7 +254,7 @@ const RegisterStaffPage = () => {
               fullWidth
               type="date"
               label="Valid Upto"
-              name="validupto"
+              name="upto"
               value={formData.upto}
               onChange={handleChange}
               error={!!errors.upto}
@@ -276,15 +290,15 @@ const RegisterStaffPage = () => {
               fullWidth
               select
               label="Project"
-              name="project"
-              value={formData.project}
+              name="projectId"
+              value={formData.projectId}
               onChange={handleChange}
-              error={!!errors.project}
-              helperText={errors.project}
+              error={!!errors.projectId}
+              helperText={errors.projectId}
               required>
-              {Projects.map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option}
+              {projects.map((project) => (
+                <MenuItem key={project.id} value={project._id}>
+                  {project.name}
                 </MenuItem>
               ))}
             </TextField>
@@ -327,22 +341,17 @@ const RegisterStaffPage = () => {
               error={!!errors.employmenttype}
               helperText={errors.employmenttype}
               required>
-              {employmentTypes.map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option}
+              {employmentTypes.map((type) => (
+                <MenuItem key={type} value={type.toLowerCase()}>
+                  {type}
                 </MenuItem>
               ))}
             </TextField>
           </Grid>
 
           <Grid item xs={12}>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              size="large"
-              sx={{ mt: 3 }}>
-              Register Staff
+            <Button type="submit" variant="contained" color="primary">
+              Register
             </Button>
           </Grid>
         </Grid>

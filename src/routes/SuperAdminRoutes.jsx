@@ -9,6 +9,14 @@ const AdminDashboard = lazyLoad(
 )
 const Analytics = lazyLoad(() => import('views/pages/superAdmin/Analytics'))
 
+//Project routing
+const ProjectList = lazyLoad(
+  () => import('views/pages/superAdmin/ProjectList'),
+)
+const RegisterProjectPage = lazyLoad(
+  () => import('views/pages/superAdmin/RegisterProjectPage'),
+)
+
 //Professor routing
 const ProfessorList = lazyLoad(
   () => import('views/pages/superAdmin/ProfessorList'),
@@ -46,6 +54,19 @@ const SuperAdminRoutes = [
         element: <Analytics />,
       },
       {
+        path: 'project',
+        children: [
+          {
+            path: 'list',
+            element: <ProjectList />,
+          },
+          {
+            path: 'register',
+            element: <RegisterProjectPage />,
+          },
+        ],
+      },
+      {
         path: 'professor',
         children: [
           {
@@ -55,7 +76,7 @@ const SuperAdminRoutes = [
           {
             path: 'register',
             element: <RegisterProfessorPage />,
-          }
+          },
         ],
       },
       {

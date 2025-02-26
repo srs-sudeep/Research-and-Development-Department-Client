@@ -5,6 +5,7 @@ import staffProfile from './staff/staffProfile'
 import adminProfile from './superadmin/adminProfile'
 import dashboard from './superadmin/dashboard'
 import professorSuperadmin from './superadmin/professor'
+import projectSuperadmin from './superadmin/project'
 import staffSuperadmin from './superadmin/staff'
 
 // ==============================|| MENU ITEMS ||============================== //
@@ -13,7 +14,7 @@ const menuItems = (role) => {
   switch (role) {
     case 'superadmin':
       return {
-        items: [dashboard, professorSuperadmin, staffSuperadmin, adminProfile],
+        items: [dashboard, projectSuperadmin, professorSuperadmin, staffSuperadmin, adminProfile],
       }
     case 'professor':
       return {
