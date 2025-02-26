@@ -6,11 +6,6 @@ import MainLayout from 'layout/MainLayout'
 const ProfessorDashboard = lazyLoad(
   () => import('views/pages/professors/ProfessorDashboard'),
 )
-const AttendancePage = lazyLoad(
-  () => import('views/pages/professors/AttendancePage'),
-)
-const ProductList = lazyLoad(() => import('views/pages/common/ProductList'))
-const OrderList = lazyLoad(() => import('views/pages/common/OrderList'))
 const ProfessorProfile = lazyLoad(
   () => import('views/pages/professors/Profile'),
 )
@@ -30,18 +25,6 @@ const ProfessorsRoutes = [
       {
         path: 'dashboard',
         element: <ProfessorDashboard />,
-      },
-      {
-        path: 'attendance',
-        element: <AttendancePage />,
-      },
-      {
-        path: 'product',
-        element: <ProductList />,
-      },
-      {
-        path: 'order',
-        element: <OrderList />,
       },
       {
         path: 'profile',

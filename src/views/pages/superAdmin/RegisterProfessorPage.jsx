@@ -39,11 +39,11 @@ const RegisterProfessorPage = () => {
       newErrors.email = 'Invalid email format'
     }
 
-    // const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
-    // if (!passwordRegex.test(formData.password)) {
-    //   newErrors.password =
-    //     'Password must be at least 8 characters with one letter and one number'
-    // }
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+    if (!passwordRegex.test(formData.password)) {
+      newErrors.password =
+        'Password must be at least 8 characters with one letter and one number'
+    }
 
     const phoneRegex = /^[0-9]{10}$/
     if (!phoneRegex.test(formData.phoneNumber)) {

@@ -19,28 +19,20 @@ const RegisterStaffPage = () => {
     phoneNumber: '',
     ldap: '',
     idNumber: '',
-    designation: '',
-    department: '',
-    validupto: '',
+    upto: '',
     dob: '',
-    emergencyphone: '',
-    bloodgroup: '',
-    signature_filename: '',
-    issuerauthority: '',
+    project: '',
+    issuingAuthority: '',
     addr1: '',
     addr2: '',
-    aadhar: '',
     doj: '',
     employmenttype: '',
-    photo_filename: '',
     gender: '',
-    uid: '',
-    totalAmount: '',
   })
 
   const [errors, setErrors] = useState({})
 
-  const bloodGroups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']
+  const Projects = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
   const genderOptions = ['Male', 'Female', 'Other']
   const employmentTypes = ['Permanent', 'Contractual', 'Visiting']
 
@@ -61,13 +53,6 @@ const RegisterStaffPage = () => {
     const phoneRegex = /^[0-9]{10}$/
     if (!phoneRegex.test(formData.phoneNumber)) {
       newErrors.phoneNumber = 'Phone number must be 10 digits'
-    }
-    if (!phoneRegex.test(formData.emergencyphone)) {
-      newErrors.emergencyphone = 'Emergency phone number must be 10 digits'
-    }
-
-    if (formData.aadhar.length !== 12 || !/^\d+$/.test(formData.aadhar)) {
-      newErrors.aadhar = 'Aadhar number must be 12 digits'
     }
 
     Object.keys(formData).forEach((key) => {
@@ -240,38 +225,12 @@ const RegisterStaffPage = () => {
           <Grid item xs={12} md={6}>
             <TextField
               fullWidth
-              label="Designation"
-              name="designation"
-              value={formData.designation}
-              onChange={handleChange}
-              error={!!errors.designation}
-              helperText={errors.designation}
-              required
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label="Department"
-              name="department"
-              value={formData.department}
-              onChange={handleChange}
-              error={!!errors.department}
-              helperText={errors.department}
-              required
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label="Issuer Authority"
+              label="Issuing Authority"
               name="issuerauthority"
-              value={formData.issuerauthority}
+              value={formData.issuingAuthority}
               onChange={handleChange}
-              error={!!errors.issuerauthority}
-              helperText={errors.issuerauthority}
+              error={!!errors.issuingAuthority}
+              helperText={errors.issuingAuthority}
               required
             />
           </Grid>
@@ -282,10 +241,10 @@ const RegisterStaffPage = () => {
               type="date"
               label="Valid Upto"
               name="validupto"
-              value={formData.validupto}
+              value={formData.upto}
               onChange={handleChange}
-              error={!!errors.validupto}
-              helperText={errors.validupto}
+              error={!!errors.upto}
+              helperText={errors.upto}
               InputLabelProps={{ shrink: true }}
               required
             />
@@ -315,28 +274,15 @@ const RegisterStaffPage = () => {
           <Grid item xs={12} md={6}>
             <TextField
               fullWidth
-              label="Emergency Phone"
-              name="emergencyphone"
-              value={formData.emergencyphone}
-              onChange={handleChange}
-              error={!!errors.emergencyphone}
-              helperText={errors.emergencyphone}
-              required
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
               select
-              label="Blood Group"
-              name="bloodgroup"
-              value={formData.bloodgroup}
+              label="Project"
+              name="project"
+              value={formData.project}
               onChange={handleChange}
-              error={!!errors.bloodgroup}
-              helperText={errors.bloodgroup}
+              error={!!errors.project}
+              helperText={errors.project}
               required>
-              {bloodGroups.map((option) => (
+              {Projects.map((option) => (
                 <MenuItem key={option} value={option}>
                   {option}
                 </MenuItem>
@@ -366,19 +312,6 @@ const RegisterStaffPage = () => {
               onChange={handleChange}
               error={!!errors.addr2}
               helperText={errors.addr2}
-              required
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label="Aadhar Number"
-              name="aadhar"
-              value={formData.aadhar}
-              onChange={handleChange}
-              error={!!errors.aadhar}
-              helperText={errors.aadhar}
               required
             />
           </Grid>

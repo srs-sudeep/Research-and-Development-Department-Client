@@ -6,11 +6,6 @@ import MainLayout from 'layout/MainLayout'
 const StaffDashboard = lazyLoad(
   () => import('views/pages/staff/StaffDashboard'),
 )
-const AttendancePage = lazyLoad(
-  () => import('views/pages/staff/AttendancePage'),
-)
-const ProductList = lazyLoad(() => import('views/pages/common/ProductList'))
-const OrderList = lazyLoad(() => import('views/pages/common/OrderList'))
 const StaffProfile = lazyLoad(() => import('views/pages/staff/Profile'))
 import { Navigate } from 'react-router-dom'
 
@@ -28,18 +23,6 @@ const StaffRoutes = [
       {
         path: 'dashboard',
         element: <StaffDashboard />,
-      },
-      {
-        path: 'attendance',
-        element: <AttendancePage />,
-      },
-      {
-        path: 'product',
-        element: <ProductList />,
-      },
-      {
-        path: 'order',
-        element: <OrderList />,
       },
       {
         path: 'profile',
