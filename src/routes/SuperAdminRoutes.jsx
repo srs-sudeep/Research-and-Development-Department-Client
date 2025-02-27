@@ -8,13 +8,16 @@ const AdminDashboard = lazyLoad(
   () => import('views/pages/superAdmin/AdminDashboard'),
 )
 const Analytics = lazyLoad(() => import('views/pages/superAdmin/Analytics'))
-
+const AdminPayroles = lazyLoad(() => import('views/pages/superAdmin/AdminPayroles'))
 //Project routing
 const ProjectList = lazyLoad(
   () => import('views/pages/superAdmin/ProjectList'),
 )
 const RegisterProjectPage = lazyLoad(
   () => import('views/pages/superAdmin/RegisterProjectPage'),
+)
+const ProjectIndividual = lazyLoad(
+  () => import('views/pages/superAdmin/ProjectIndividual'),
 )
 
 //Professor routing
@@ -24,13 +27,18 @@ const ProfessorList = lazyLoad(
 const RegisterProfessorPage = lazyLoad(
   () => import('views/pages/superAdmin/RegisterProfessorPage'),
 )
+const ProfessorIndividual = lazyLoad(
+  () => import('views/pages/superAdmin/ProfessorIndividual'),
+)
 
 //Staff List
 const StaffList = lazyLoad(() => import('views/pages/superAdmin/StaffList'))
 const RegisterStaffPage = lazyLoad(
   () => import('views/pages/superAdmin/RegisterStaffPage'),
 )
-
+const StaffIndividual = lazyLoad(
+  () => import('views/pages/superAdmin/StaffIndividual'),
+)
 const Profile = lazyLoad(() => import('views/pages/superAdmin/Profile'))
 import { Navigate } from 'react-router-dom'
 
@@ -54,6 +62,10 @@ const SuperAdminRoutes = [
         element: <Analytics />,
       },
       {
+        path: 'payrole',
+        element: <AdminPayroles />,
+      },
+      {
         path: 'project',
         children: [
           {
@@ -63,6 +75,10 @@ const SuperAdminRoutes = [
           {
             path: 'register',
             element: <RegisterProjectPage />,
+          },
+          {
+            path: ':id',
+            element: <ProjectIndividual />,
           },
         ],
       },
@@ -77,6 +93,10 @@ const SuperAdminRoutes = [
             path: 'register',
             element: <RegisterProfessorPage />,
           },
+          {
+            path: ':id',
+            element: <ProfessorIndividual />,
+          },
         ],
       },
       {
@@ -89,6 +109,10 @@ const SuperAdminRoutes = [
           {
             path: 'register',
             element: <RegisterStaffPage />,
+          },
+          {
+            path: ':id',
+            element: <StaffIndividual />,
           },
         ],
       },

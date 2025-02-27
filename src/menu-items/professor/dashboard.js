@@ -19,6 +19,13 @@ const professorDashboard = {
       icon: icons.IconDashboard,
       breadcrumbs: false,
     },
+    {
+      id: 'payrole',
+      title: 'Payrole',
+      type: 'item',
+      url: '/professor/payrole',
+      icon: icons.IconDashboard,
+    },
   ],
 }
 

@@ -7,6 +7,7 @@ const StaffDashboard = lazyLoad(
   () => import('views/pages/staff/StaffDashboard'),
 )
 const StaffProfile = lazyLoad(() => import('views/pages/staff/Profile'))
+const StaffPayrole = lazyLoad(() => import('views/pages/staff/StaffPayrole'))
 import { Navigate } from 'react-router-dom'
 
 // ==============================|| STUDENTS ROUTING ||============================== //
@@ -27,6 +28,10 @@ const StaffRoutes = [
       {
         path: 'profile',
         element: <StaffProfile />,
+      },
+      {
+        path: 'payrole',
+        element: <StaffPayrole />,
       },
     ],
   },

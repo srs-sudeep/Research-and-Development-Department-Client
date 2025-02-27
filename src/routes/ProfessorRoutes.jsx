@@ -9,6 +9,9 @@ const ProfessorDashboard = lazyLoad(
 const ProfessorProfile = lazyLoad(
   () => import('views/pages/professors/Profile'),
 )
+const ProfessorPayrole = lazyLoad(
+  () => import('views/pages/professors/ProfessorPayrole'),
+)
 import { Navigate } from 'react-router-dom'
 
 // ==============================|| STUDENTS ROUTING ||============================== //
@@ -29,6 +32,10 @@ const ProfessorsRoutes = [
       {
         path: 'profile',
         element: <ProfessorProfile />,
+      },
+      {
+        path: 'payrole',
+        element: <ProfessorPayrole />,
       },
     ],
   },

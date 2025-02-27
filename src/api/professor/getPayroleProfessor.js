@@ -1,7 +1,7 @@
 import apiClient from 'core/api/apiConfig'
-const API_ENDPOINT = '/courses'
+const API_ENDPOINT = '/payrole'
 
-export const getCoursesForProfessor = async () => {
+const getPayroleProfessor = async () => {
   try {
     const response = await apiClient.get(`${API_ENDPOINT}/professor`)
     return response.data
@@ -9,3 +9,4 @@ export const getCoursesForProfessor = async () => {
     throw new Error(error.response?.data?.message || 'Failed to fetch courses')
   }
 }
+export default getPayroleProfessor;

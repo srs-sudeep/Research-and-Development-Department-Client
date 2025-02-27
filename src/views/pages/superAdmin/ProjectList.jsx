@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   Table,
   TableBody,
@@ -20,12 +21,13 @@ import MainCard from 'ui-component/cards/MainCard'
 import { getAllProjects } from 'api' // Change the API import to fetch project data
 
 const ProjectList = () => {
+  const navigate = useNavigate()
   const [projects, setProjects] = useState([])
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [searchTerm, setSearchTerm] = useState('')
   const [order, setOrder] = useState('asc')
-  const [orderBy, setOrderBy] = useState('projectId')
+  const [orderBy, setOrderBy] = useState('name')
   const [totalProjects, setTotalProjects] = useState(0) // For pagination
   const [selectedProject, setSelectedProject] = useState(null) // For modal
   const [open, setOpen] = useState(false) // Modal open state
@@ -68,6 +70,7 @@ const ProjectList = () => {
   const handleRowClick = (project) => {
     setSelectedProject(project)
     setOpen(true)
+    navigate(`/superadmin/project/${project._id}`)
   }
 
   const handleClose = () => {
@@ -77,7 +80,9 @@ const ProjectList = () => {
 
   // Filter and search projects
   const filteredProjects = projects.filter((project) =>
-    project.name.toLowerCase().includes(searchTerm.toLowerCase())
+    project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    project.projectId.toString().includes(searchTerm) ||
+    project.PI?.name?.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
   // Sort projects
@@ -93,21 +98,25 @@ const ProjectList = () => {
 
   return (
     <MainCard title="Project List">
+      <TextField
+        label="Search Projects"
+        variant="outlined"
+        fullWidth
+        value={searchTerm}
+        onChange={handleSearchChange}
+        sx={{ mb: 2 }}
+      />
       <Paper>
-        <TextField
-          label="Search by Project Name"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          value={searchTerm}
-          onChange={handleSearchChange}
-        />
         <TableContainer>
           <Table>
             <TableHead>
               <TableRow>
                 <TableCell>
-                  <TableSortLabel>
+                  <TableSortLabel
+                    active={orderBy === 'projectId'}
+                    direction={orderBy === 'projectId' ? order : 'asc'}
+                    onClick={() => handleRequestSort('projectId')}
+                  >
                     Project ID
                   </TableSortLabel>
                 </TableCell>
@@ -115,13 +124,21 @@ const ProjectList = () => {
                   <TableSortLabel
                     active={orderBy === 'name'}
                     direction={orderBy === 'name' ? order : 'asc'}
-                    onClick={() => handleRequestSort('name')}>
-                    Project Name
+                    onClick={() => handleRequestSort('name')}
+                  >
+                    Name
                   </TableSortLabel>
                 </TableCell>
-                <TableCell>Start Date</TableCell>
-                <TableCell>End Date</TableCell>
-                <TableCell>Completion Status</TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === 'PI'}
+                    direction={orderBy === 'PI' ? order : 'asc'}
+                    onClick={() => handleRequestSort('PI')}
+                  >
+                    Principal Investigator
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>Status</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -129,14 +146,17 @@ const ProjectList = () => {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((project) => (
                   <TableRow
-                    key={project.projectId}
+                    key={project._id}
                     hover
-                    onClick={() => handleRowClick(project)}>
+                    onClick={() => handleRowClick(project)}
+                    sx={{ cursor: 'pointer' }}
+                  >
                     <TableCell>{project.projectId}</TableCell>
                     <TableCell>{project.name}</TableCell>
-                    <TableCell>{new Date(project.startDate).toLocaleDateString()}</TableCell>
-                    <TableCell>{new Date(project.endDate).toLocaleDateString()}</TableCell>
-                    <TableCell>{project.isCompleted ? 'Completed' : 'Ongoing'}</TableCell>
+                    <TableCell>{project.PI?.name}</TableCell>
+                    <TableCell>
+                      {project.isCompleted ? 'Completed' : 'In Progress'}
+                    </TableCell>
                   </TableRow>
                 ))}
             </TableBody>

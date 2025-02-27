@@ -19,6 +19,13 @@ const staffDashboard = {
       icon: icons.IconDashboard,
       breadcrumbs: false,
     },
+    {
+      id: 'payrole',
+      title: 'Payrole',
+      type: 'item',
+      url: '/staff/payrole',
+      icon: icons.IconDashboard,
+    },
   ],
 }
 

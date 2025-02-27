@@ -27,6 +27,13 @@ const dashboard = {
       icon: icons.IconDashboard,
       breadcrumbs: false,
     },
+    {
+      id: 'payrole',
+      title: 'Payrole',
+      type: 'item',
+      url: '/superadmin/payrole',
+      icon: icons.IconDashboard,
+    },
   ],
 }
 

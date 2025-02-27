@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   Table,
   TableBody,
@@ -10,25 +11,19 @@ import {
   Paper,
   TextField,
   TableSortLabel,
-  Modal,
-  Box,
-  Fade,
-  Typography,
-  Backdrop,
 } from '@mui/material'
 import MainCard from 'ui-component/cards/MainCard'
 import { getAllStaff } from 'api' // Change the API import to fetch staff data
 
 const StaffList = () => {
+  const navigate = useNavigate()
   const [staff, setStaff] = useState([])
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [searchTerm, setSearchTerm] = useState('')
   const [order, setOrder] = useState('asc')
   const [orderBy, setOrderBy] = useState('firstName')
-  const [totalStaff, setTotalStaff] = useState(0) // For pagination
-  const [selectedStaff, setSelectedStaff] = useState(null) // For modal
-  const [open, setOpen] = useState(false) // Modal open state
+  const [totalStaff, setTotalStaff] = useState(0)
 
   useEffect(() => {
     fetchData()
@@ -36,7 +31,7 @@ const StaffList = () => {
 
   const fetchData = async () => {
     try {
-      const data = await getAllStaff() // Fetch staff from API
+      const data = await getAllStaff()
       setStaff(data)
       setTotalStaff(data.length)
     } catch (error) {
@@ -46,7 +41,7 @@ const StaffList = () => {
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value)
-    setPage(0) // Reset to first page when searching
+    setPage(0)
   }
 
   const handleChangePage = (event, newPage) => {
@@ -55,7 +50,7 @@ const StaffList = () => {
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10))
-    setPage(0) // Reset to first page when changing rows per page
+    setPage(0)
   }
 
   const handleRequestSort = (property) => {
@@ -65,13 +60,7 @@ const StaffList = () => {
   }
 
   const handleRowClick = (staff) => {
-    setSelectedStaff(staff)
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-    setSelectedStaff(null)
+    navigate(`/superadmin/staff/${staff._id}`)
   }
 
   return (
@@ -128,7 +117,8 @@ const StaffList = () => {
                 <TableRow
                   key={staff.userId}
                   hover
-                  onClick={() => handleRowClick(staff)}>
+                  onClick={() => handleRowClick(staff)}
+                  style={{ cursor: 'pointer' }}>
                   <TableCell>{staff.idNumber}</TableCell>
                   <TableCell>{staff.name}</TableCell>
                   <TableCell>{staff.email}</TableCell>
@@ -140,60 +130,13 @@ const StaffList = () => {
         </TableContainer>
         <TablePagination
           component="div"
-          count={totalStaff} // Total count of all staff entries
+          count={totalStaff}
           page={page}
           onPageChange={handleChangePage}
           rowsPerPage={rowsPerPage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-
-      {/* Modal for displaying staff details */}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        slots={{ backdrop: Backdrop }}
-        slotProps={{
-          backdrop: {
-            timeout: 500,
-          },
-        }}>
-        <Fade in={open}>
-          <Box
-            sx={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: 400,
-              bgcolor: 'background.paper',
-              border: '2px solid #white',
-              boxShadow: 24,
-              p: 4,
-            }}>
-            {selectedStaff && (
-              <>
-                <Typography variant="h1" gutterBottom>
-                  Staff Details
-                </Typography>
-                <Typography variant="body1">
-                  <strong>ID Number:</strong> {selectedStaff.idNumber}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Name:</strong> {selectedStaff.name}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Email:</strong> {selectedStaff.email}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Phone Number:</strong> {selectedStaff.phoneNumber}
-                </Typography>
-              </>
-            )}
-          </Box>
-        </Fade>
-      </Modal>
     </MainCard>
   )
 }

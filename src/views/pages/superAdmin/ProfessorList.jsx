@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   Table,
   TableBody,
@@ -20,6 +21,7 @@ import MainCard from 'ui-component/cards/MainCard'
 import { getAllProfessors } from 'api' // Change the API import to fetch professor data
 
 const ProfessorList = () => {
+  const navigate = useNavigate()
   const [professors, setProfessors] = useState([])
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
@@ -65,8 +67,7 @@ const ProfessorList = () => {
   }
 
   const handleRowClick = (professor) => {
-    setSelectedProfessor(professor)
-    setOpen(true)
+    navigate(`/superadmin/professor/${professor._id}`)
   }
 
   const handleClose = () => {
@@ -76,15 +77,15 @@ const ProfessorList = () => {
 
   return (
     <MainCard title="Professor List">
+      <TextField
+        label="Search Professors"
+        variant="outlined"
+        fullWidth
+        value={searchTerm}
+        onChange={handleSearchChange}
+        sx={{ mb: 2 }}
+      />
       <Paper>
-        <TextField
-          label="Search"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          value={searchTerm}
-          onChange={handleSearchChange}
-        />
         <TableContainer>
           <Table>
             <TableHead>
@@ -124,17 +125,33 @@ const ProfessorList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {professors.map((professor) => (
-                <TableRow
-                  key={professor.userId}
-                  hover
-                  onClick={() => handleRowClick(professor)}>
-                  <TableCell>{professor.idNumber}</TableCell>
-                  <TableCell>{professor.name}</TableCell>
-                  <TableCell>{professor.email}</TableCell>
-                  <TableCell>{professor.phoneNumber}</TableCell>
-                </TableRow>
-              ))}
+              {professors
+                .filter(
+                  (professor) =>
+                    professor.name
+                      .toLowerCase()
+                      .includes(searchTerm.toLowerCase()) ||
+                    professor.email
+                      .toLowerCase()
+                      .includes(searchTerm.toLowerCase()) ||
+                    professor.idNumber
+                      .toLowerCase()
+                      .includes(searchTerm.toLowerCase())
+                )
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((professor) => (
+                  <TableRow
+                    key={professor._id}
+                    hover
+                    onClick={() => handleRowClick(professor)}
+                    sx={{ cursor: 'pointer' }}
+                  >
+                    <TableCell>{professor.idNumber}</TableCell>
+                    <TableCell>{professor.name}</TableCell>
+                    <TableCell>{professor.email}</TableCell>
+                    <TableCell>{professor.phoneNumber}</TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
