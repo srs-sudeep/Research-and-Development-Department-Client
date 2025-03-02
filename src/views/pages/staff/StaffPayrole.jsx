@@ -15,7 +15,6 @@ import {
   TableRow,
   Paper,
   Typography,
-  IconButton,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import MainCard from 'ui-component/cards/MainCard';
@@ -34,6 +33,7 @@ const StaffPayrole = () => {
     startDate: '',
     endDate: '',
   });
+  const [pdfFile, setPdfFile] = useState(null); // State for PDF file
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -65,6 +65,7 @@ const StaffPayrole = () => {
       startDate: '',
       endDate: '',
     });
+    setPdfFile(null); // Reset PDF file
   };
 
   const handleViewModalOpen = (payrole) => {
@@ -85,16 +86,44 @@ const StaffPayrole = () => {
     }));
   };
 
+  const handlePdfChange = (e) => {
+    setPdfFile(e.target.files[0]); // Set the selected file
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData); // Logs formData correctly
+  
+    const payroleData = new FormData(); // Use FormData for file upload
+    payroleData.append('pid', formData.pid);
+    payroleData.append('countOfDays', formData.countOfDays);
+    payroleData.append('amount', formData.amount);
+    payroleData.append('startDate', formData.startDate);
+    payroleData.append('endDate', formData.endDate);
+  
+    if (pdfFile) {
+      payroleData.append('file', pdfFile); // Append the PDF file
+    }
+  
+    // // To log FormData contents, you need to iterate over it
+    // for (let [key, value] of payroleData.entries()) {
+    //   if (value instanceof File) {
+    //     console.log(`${key}: ${value.name}, ${value.type}, ${value.size} bytes`);
+    //   } else {
+    //     console.log(`${key}: ${value}`);
+    //   }
+    // }
+  
     try {
-      await createPayrole(formData);
+      await createPayrole(payroleData); // Send FormData including the PDF file
       handleCreateModalClose();
       fetchPayroles();
     } catch (error) {
       console.error('Error creating payrole:', error);
     }
   };
+  
+  
 
   return (
     <MainCard title="Payrole Management">
@@ -113,6 +142,7 @@ const StaffPayrole = () => {
           <TableHead>
             <TableRow>
               <TableCell>Project ID</TableCell>
+              <TableCell>Staff ID</TableCell>
               <TableCell>Days</TableCell>
               <TableCell>Amount</TableCell>
               <TableCell>Start Date</TableCell>
@@ -129,6 +159,7 @@ const StaffPayrole = () => {
                 sx={{ cursor: 'pointer' }}
               >
                 <TableCell>{payrole.pid.name}</TableCell>
+                <TableCell>{payrole.staffId.name}</TableCell>
                 <TableCell>{payrole.countOfDays}</TableCell>
                 <TableCell>₹{payrole.amount}</TableCell>
                 <TableCell>{format(new Date(payrole.startDate), 'dd/MM/yyyy')}</TableCell>
@@ -193,6 +224,11 @@ const StaffPayrole = () => {
                 required
                 fullWidth
                 InputLabelProps={{ shrink: true }}
+              />
+              <p style={{ marginTop: '10px' }} className='text-gray-500 text-xs'>Upload PDF/Image of attendance sheet</p>
+              <input
+                type="file"
+                onChange={handlePdfChange}
               />
             </Box>
           </DialogContent>

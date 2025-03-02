@@ -47,7 +47,6 @@ const ProfessorIndividual = () => {
         ...data,
         dob: data.dob ? new Date(data.dob).toISOString().split('T')[0] : '',
       };
-      console.log(formattedData[0]);
       setProfessorData(formattedData[0]);
       setOriginalData(formattedData[0]);
     } catch (error) {
@@ -55,6 +54,22 @@ const ProfessorIndividual = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Create a new variable for only the required fields
+  const requiredProfessorData = {
+    name: professorData.name,
+    password: professorData.password,
+    email: professorData.email,
+    idNumber: professorData.idNumber,
+    ldap: professorData.ldap,
+    phoneNumber: professorData.phoneNumber,
+    dob: professorData.dob,
+    designation: professorData.designation,
+    department: professorData.department,
+    gender: professorData.gender,
+    addr1: professorData.addr1,
+    addr2: professorData.addr2,
   };
 
   const handleInputChange = (e) => {
@@ -67,7 +82,8 @@ const ProfessorIndividual = () => {
 
   const handleSave = async () => {
     try {
-      await updateProfessor(id, professorData);
+      console.log(requiredProfessorData);
+      await updateProfessor(id, requiredProfessorData); // Send only required fields
       setIsEditing(false);
       fetchProfessorDetails();
     } catch (error) {
@@ -114,7 +130,7 @@ const ProfessorIndividual = () => {
               <TextField
                 label="Name"
                 name="name"
-                value={professorData.name || ''}
+                value={requiredProfessorData.name || ''}
                 onChange={handleInputChange}
                 disabled={!isEditing}
                 fullWidth
@@ -122,7 +138,7 @@ const ProfessorIndividual = () => {
               <TextField
                 label="Email"
                 name="email"
-                value={professorData.email || ''}
+                value={requiredProfessorData.email || ''}
                 onChange={handleInputChange}
                 disabled={!isEditing}
                 fullWidth
@@ -130,7 +146,7 @@ const ProfessorIndividual = () => {
               <TextField
                 label="Phone Number"
                 name="phoneNumber"
-                value={professorData.phoneNumber || ''}
+                value={requiredProfessorData.phoneNumber || ''}
                 onChange={handleInputChange}
                 disabled={!isEditing}
                 fullWidth
@@ -139,7 +155,7 @@ const ProfessorIndividual = () => {
                 label="Date of Birth"
                 name="dob"
                 type="date"
-                value={professorData.dob || ''}
+                value={requiredProfessorData.dob || ''}
                 onChange={handleInputChange}
                 disabled={!isEditing}
                 fullWidth
@@ -149,7 +165,7 @@ const ProfessorIndividual = () => {
                 select
                 label="Gender"
                 name="gender"
-                value={professorData.gender || ''}
+                value={requiredProfessorData.gender || ''}
                 onChange={handleInputChange}
                 disabled={!isEditing}
                 fullWidth
@@ -167,7 +183,7 @@ const ProfessorIndividual = () => {
               <TextField
                 label="LDAP ID"
                 name="ldap"
-                value={professorData.ldap || ''}
+                value={requiredProfessorData.ldap || ''}
                 onChange={handleInputChange}
                 disabled={!isEditing}
                 fullWidth
@@ -175,7 +191,7 @@ const ProfessorIndividual = () => {
               <TextField
                 label="ID Number"
                 name="idNumber"
-                value={professorData.idNumber || ''}
+                value={requiredProfessorData.idNumber || ''}
                 onChange={handleInputChange}
                 disabled={!isEditing}
                 fullWidth
@@ -183,7 +199,7 @@ const ProfessorIndividual = () => {
               <TextField
                 label="Department"
                 name="department"
-                value={professorData.department || ''}
+                value={requiredProfessorData.department || ''}
                 onChange={handleInputChange}
                 disabled={!isEditing}
                 fullWidth
@@ -191,7 +207,7 @@ const ProfessorIndividual = () => {
               <TextField
                 label="Designation"
                 name="designation"
-                value={professorData.designation || ''}
+                value={requiredProfessorData.designation || ''}
                 onChange={handleInputChange}
                 disabled={!isEditing}
                 fullWidth
@@ -205,7 +221,7 @@ const ProfessorIndividual = () => {
               <TextField
                 label="Address Line 1"
                 name="addr1"
-                value={professorData.addr1 || ''}
+                value={requiredProfessorData.addr1 || ''}
                 onChange={handleInputChange}
                 disabled={!isEditing}
                 fullWidth
@@ -213,7 +229,7 @@ const ProfessorIndividual = () => {
               <TextField
                 label="Address Line 2"
                 name="addr2"
-                value={professorData.addr2 || ''}
+                value={requiredProfessorData.addr2 || ''}
                 onChange={handleInputChange}
                 disabled={!isEditing}
                 fullWidth

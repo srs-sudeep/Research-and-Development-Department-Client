@@ -13,7 +13,7 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
-import { getIndiStaff } from 'api';
+import { getIndiStaff, updateStaff } from 'api';
 import MainCard from 'ui-component/cards/MainCard';
 
 const StaffIndividual = () => {
@@ -69,9 +69,26 @@ const StaffIndividual = () => {
   };
 
   const handleSave = async () => {
+    const requiredStaffData = {
+      name: staffData.name,
+      password: staffData.password,
+      email: staffData.email,
+      idNumber: staffData.idNumber,
+      ldap: staffData.ldap,
+      phoneNumber: staffData.phoneNumber,
+      dob: staffData.dob,
+      doj: staffData.doj,
+      upto: staffData.upto,
+      gender: staffData.gender,
+      addr1: staffData.addr1,
+      addr2: staffData.addr2,
+      projectId: staffData.projectId,
+      employmenttype: staffData.employmenttype,
+      issuerAuthority: staffData.issuerAuthority,
+    };
+
     try {
-      await updateStaff(id, staffData);
-      // await axios.put(`/api/staff/${id}`, staffData);
+      await updateStaff(id, requiredStaffData);
       setIsEditing(false);
       fetchStaffDetails();
     } catch (error) {
@@ -244,8 +261,8 @@ const StaffIndividual = () => {
                 fullWidth
               >
                 <MenuItem value="permanent">Permanent</MenuItem>
-                <MenuItem value="contract">Contract</MenuItem>
-                <MenuItem value="temporary">Temporary</MenuItem>
+                <MenuItem value="contractual">Contractual</MenuItem>
+                <MenuItem value="visiting">Visiting</MenuItem>
               </TextField>
             </Box>
           </Grid>
