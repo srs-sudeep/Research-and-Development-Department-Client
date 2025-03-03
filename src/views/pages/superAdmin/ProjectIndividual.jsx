@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import {
   Box,
   TextField,
@@ -12,15 +12,15 @@ import {
   Chip,
   FormControlLabel,
   Switch,
-} from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import SaveIcon from '@mui/icons-material/Save';
-import CloseIcon from '@mui/icons-material/Close';
-import { getIndiProject, updateProject } from 'api';
-import MainCard from 'ui-component/cards/MainCard';
+} from '@mui/material'
+import EditIcon from '@mui/icons-material/Edit'
+import SaveIcon from '@mui/icons-material/Save'
+import CloseIcon from '@mui/icons-material/Close'
+import { getIndiProject, updateProject } from 'api'
+import MainCard from 'ui-component/cards/MainCard'
 
 const ProjectIndividual = () => {
-  const { id } = useParams();
+  const { id } = useParams()
   const [projectData, setProjectData] = useState({
     name: '',
     projectId: '',
@@ -29,67 +29,71 @@ const ProjectIndividual = () => {
     startDate: '',
     endDate: '',
     staffList: [],
-    isCompleted: false
-  });
-  const [isEditing, setIsEditing] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [originalData, setOriginalData] = useState(null);
+    isCompleted: false,
+  })
+  const [isEditing, setIsEditing] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [originalData, setOriginalData] = useState(null)
 
   useEffect(() => {
-    fetchProjectDetails();
-  }, [id]);
+    fetchProjectDetails()
+  }, [id])
 
   const fetchProjectDetails = async () => {
     try {
-      setLoading(true);
-      const data = await getIndiProject(id);
+      setLoading(true)
+      const data = await getIndiProject(id)
       const formattedData = {
         ...data,
-        startDate: data.startDate ? new Date(data.startDate).toISOString().split('T')[0] : '',
-        endDate: data.endDate ? new Date(data.endDate).toISOString().split('T')[0] : '',
-      };
-      setProjectData(formattedData);
-      setOriginalData(formattedData);
+        startDate: data.startDate
+          ? new Date(data.startDate).toISOString().split('T')[0]
+          : '',
+        endDate: data.endDate
+          ? new Date(data.endDate).toISOString().split('T')[0]
+          : '',
+      }
+      setProjectData(formattedData)
+      setOriginalData(formattedData)
     } catch (error) {
-      console.error('Error fetching project details:', error);
+      console.error('Error fetching project details:', error)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setProjectData((prev) => ({
       ...prev,
-      [name]: value
-    }));
-  };
+      [name]: value,
+    }))
+  }
 
   const handleSwitchChange = (e) => {
-    const { name, checked } = e.target;
+    const { name, checked } = e.target
     setProjectData((prev) => ({
       ...prev,
-      [name]: checked
-    }));
-  };
+      [name]: checked,
+    }))
+  }
 
   const handleSave = async () => {
     try {
-      await updateProject(id, projectData);
-      setIsEditing(false);
-      fetchProjectDetails();
+      await updateProject(id, projectData)
+      setIsEditing(false)
+      fetchProjectDetails()
     } catch (error) {
-      console.error('Error updating project details:', error);
+      console.error('Error updating project details:', error)
     }
-  };
+  }
 
   const handleCancel = () => {
-    setProjectData(originalData);
-    setIsEditing(false);
-  };
+    setProjectData(originalData)
+    setIsEditing(false)
+  }
 
   if (loading) {
-    return <Typography>Loading...</Typography>;
+    return <Typography>Loading...</Typography>
   }
 
   return (
@@ -117,7 +121,9 @@ const ProjectIndividual = () => {
 
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
-            <Typography variant="h6" sx={{ mb: 2 }}>Basic Information</Typography>
+            <Typography variant="h6" sx={{ mb: 2 }}>
+              Basic Information
+            </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <TextField
                 label="Project Name"
@@ -143,7 +149,9 @@ const ProjectIndividual = () => {
                 fullWidth
               />
               <Box>
-                <Typography variant="subtitle2" gutterBottom>Co-Principal Investigators</Typography>
+                <Typography variant="subtitle2" gutterBottom>
+                  Co-Principal Investigators
+                </Typography>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
                   {projectData.coPI?.map((copi) => (
                     <Chip key={copi._id} label={copi.name} />
@@ -154,7 +162,9 @@ const ProjectIndividual = () => {
           </Grid>
 
           <Grid item xs={12} md={6}>
-            <Typography variant="h6" sx={{ mb: 2 }}>Timeline Information</Typography>
+            <Typography variant="h6" sx={{ mb: 2 }}>
+              Timeline Information
+            </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <TextField
                 label="Start Date"
@@ -191,7 +201,9 @@ const ProjectIndividual = () => {
           </Grid>
 
           <Grid item xs={12}>
-            <Typography variant="h6" sx={{ mb: 2 }}>Staff Information</Typography>
+            <Typography variant="h6" sx={{ mb: 2 }}>
+              Staff Information
+            </Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
               {projectData.staffList?.map((staff) => (
                 <Chip key={staff._id} label={staff.name} />
@@ -201,7 +213,7 @@ const ProjectIndividual = () => {
         </Grid>
       </Box>
     </MainCard>
-  );
-};
+  )
+}
 
-export default ProjectIndividual;
+export default ProjectIndividual

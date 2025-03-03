@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import {
   Box,
   TextField,
@@ -9,15 +9,15 @@ import {
   MenuItem,
   IconButton,
   Stack,
-} from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import SaveIcon from '@mui/icons-material/Save';
-import CloseIcon from '@mui/icons-material/Close';
-import { getIndiStaff, updateStaff } from 'api';
-import MainCard from 'ui-component/cards/MainCard';
+} from '@mui/material'
+import EditIcon from '@mui/icons-material/Edit'
+import SaveIcon from '@mui/icons-material/Save'
+import CloseIcon from '@mui/icons-material/Close'
+import { getIndiStaff, updateStaff } from 'api'
+import MainCard from 'ui-component/cards/MainCard'
 
 const StaffIndividual = () => {
-  const { id } = useParams();
+  const { id } = useParams()
   const [staffData, setStaffData] = useState({
     name: '',
     email: '',
@@ -31,42 +31,42 @@ const StaffIndividual = () => {
     addr1: '',
     addr2: '',
     projectId: '',
-    employmenttype: ''
-  });
-  const [isEditing, setIsEditing] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [originalData, setOriginalData] = useState(null);
+    employmenttype: '',
+  })
+  const [isEditing, setIsEditing] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [originalData, setOriginalData] = useState(null)
 
   useEffect(() => {
-    fetchStaffDetails();
-  }, [id]);
+    fetchStaffDetails()
+  }, [id])
 
   const fetchStaffDetails = async () => {
     try {
-      setLoading(true);
-      const data = await getIndiStaff(id);
+      setLoading(true)
+      const data = await getIndiStaff(id)
       const formattedData = {
         ...data,
         dob: data.dob ? new Date(data.dob).toISOString().split('T')[0] : '',
         doj: data.doj ? new Date(data.doj).toISOString().split('T')[0] : '',
         upto: data.upto ? new Date(data.upto).toISOString().split('T')[0] : '',
-      };
-      setStaffData(formattedData);
-      setOriginalData(formattedData);
+      }
+      setStaffData(formattedData)
+      setOriginalData(formattedData)
     } catch (error) {
-      console.error('Error fetching staff details:', error);
+      console.error('Error fetching staff details:', error)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setStaffData((prev) => ({
       ...prev,
-      [name]: value
-    }));
-  };
+      [name]: value,
+    }))
+  }
 
   const handleSave = async () => {
     const requiredStaffData = {
@@ -84,25 +84,25 @@ const StaffIndividual = () => {
       addr2: staffData.addr2,
       projectId: staffData.projectId,
       employmenttype: staffData.employmenttype,
-      issuerAuthority: staffData.issuerAuthority,
-    };
+      salary: staffData.salary,
+    }
 
     try {
-      await updateStaff(id, requiredStaffData);
-      setIsEditing(false);
-      fetchStaffDetails();
+      await updateStaff(id, requiredStaffData)
+      setIsEditing(false)
+      fetchStaffDetails()
     } catch (error) {
-      console.error('Error updating staff details:', error);
+      console.error('Error updating staff details:', error)
     }
-  };
+  }
 
   const handleCancel = () => {
-    setStaffData(originalData);
-    setIsEditing(false);
-  };
+    setStaffData(originalData)
+    setIsEditing(false)
+  }
 
   if (loading) {
-    return <Typography>Loading...</Typography>;
+    return <Typography>Loading...</Typography>
   }
 
   return (
@@ -130,7 +130,9 @@ const StaffIndividual = () => {
 
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
-            <Typography variant="h6" sx={{ mb: 2 }}>Personal Information</Typography>
+            <Typography variant="h6" sx={{ mb: 2 }}>
+              Personal Information
+            </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <TextField
                 label="Name"
@@ -173,8 +175,7 @@ const StaffIndividual = () => {
                 value={staffData.gender || ''}
                 onChange={handleInputChange}
                 disabled={!isEditing}
-                fullWidth
-              >
+                fullWidth>
                 <MenuItem value="male">Male</MenuItem>
                 <MenuItem value="female">Female</MenuItem>
                 <MenuItem value="other">Other</MenuItem>
@@ -183,7 +184,9 @@ const StaffIndividual = () => {
           </Grid>
 
           <Grid item xs={12} md={6}>
-            <Typography variant="h6" sx={{ mb: 2 }}>Employment Information</Typography>
+            <Typography variant="h6" sx={{ mb: 2 }}>
+              Employment Information
+            </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <TextField
                 label="LDAP ID"
@@ -225,7 +228,9 @@ const StaffIndividual = () => {
           </Grid>
 
           <Grid item xs={12}>
-            <Typography variant="h6" sx={{ mb: 2 }}>Additional Information</Typography>
+            <Typography variant="h6" sx={{ mb: 2 }}>
+              Additional Information
+            </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <TextField
                 label="Project ID"
@@ -258,8 +263,7 @@ const StaffIndividual = () => {
                 value={staffData.employmenttype || ''}
                 onChange={handleInputChange}
                 disabled={!isEditing}
-                fullWidth
-              >
+                fullWidth>
                 <MenuItem value="permanent">Permanent</MenuItem>
                 <MenuItem value="contractual">Contractual</MenuItem>
                 <MenuItem value="visiting">Visiting</MenuItem>
@@ -269,7 +273,7 @@ const StaffIndividual = () => {
         </Grid>
       </Box>
     </MainCard>
-  );
-};
+  )
+}
 
-export default StaffIndividual;
+export default StaffIndividual

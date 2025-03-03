@@ -27,14 +27,15 @@ const NavCollapse = ({ menu, level }) => {
   const navigate = useNavigate()
 
   const [open, setOpen] = useState(false)
-  const [selected, setSelected] = useState(null)
+  const [selected, setSelected] = useState(1)
 
   const handleClick = () => {
     setOpen(!open)
     setSelected(!selected ? menu.id : null)
-    if (menu?.id !== 'authentication') {
-      navigate(menu.children[0]?.url)
-    }
+    // Remove the automatic navigation
+    // if (menu?.id !== 'authentication') {
+    //   navigate(menu.children[0]?.url)
+    // }
   }
 
   const { pathname } = useLocation()
@@ -56,14 +57,12 @@ const NavCollapse = ({ menu, level }) => {
         if (item.children?.length) {
           checkOpenForParent(item.children, menu.id)
         }
-        if (item.url === pathname) {
+        if (pathname === item.url) {  // Changed from item.url === pathname
           setSelected(menu.id)
           setOpen(true)
         }
       })
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname, menu.children])
 
   // menu collapse & item

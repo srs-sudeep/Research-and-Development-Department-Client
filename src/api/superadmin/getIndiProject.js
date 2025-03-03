@@ -6,9 +6,7 @@ const getIndiProject = async (id) => {
     const response = await apiClient.get(`${API_ENDPOINT}/${id}`)
     return response.data
   } catch (error) {
-    throw new Error(
-      error.response?.data?.message || 'Failed to fetch project',
-    )
+    throw new Error(error.response?.data?.message || 'Failed to fetch project')
   }
 }
 

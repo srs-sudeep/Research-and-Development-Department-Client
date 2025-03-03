@@ -6,7 +6,7 @@ const Dashboard = () => {
       <div className="mx-auto max-w-7xl space-y-8 p-6">
         {/* Header */}
         <div className="flex flex-col">
-          <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
+          <h1 className="text-3xl font-bold text-gray-800">Staff Dashboard</h1>
           <p className="text-gray-500">Welcome back, {userName}!</p>
         </div>
       </div>

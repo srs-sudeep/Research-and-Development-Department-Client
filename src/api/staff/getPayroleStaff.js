@@ -6,7 +6,9 @@ const getPayroleStaff = async () => {
     const response = await apiClient.get(`${API_ENDPOINT}`)
     return response.data
   } catch (error) {
-    throw new Error(error.response?.data?.message || 'Failed to fetch staff details')
+    throw new Error(
+      error.response?.data?.message || 'Failed to fetch staff details',
+    )
   }
 }
 

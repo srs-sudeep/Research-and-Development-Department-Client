@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import {
   Box,
   Button,
@@ -15,46 +15,46 @@ import {
   Paper,
   Typography,
   Chip,
-} from '@mui/material';
-import MainCard from 'ui-component/cards/MainCard';
-import { getAllPayroles } from 'api';
-import { format } from 'date-fns';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import PendingIcon from '@mui/icons-material/Pending';
+} from '@mui/material'
+import MainCard from 'ui-component/cards/MainCard'
+import { getAllPayroles } from 'api'
+import { format } from 'date-fns'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import PendingIcon from '@mui/icons-material/Pending'
 
 const AdminPayroles = () => {
-  const [payroles, setPayroles] = useState([]);
-  const [openViewModal, setOpenViewModal] = useState(false);
-  const [selectedPayrole, setSelectedPayrole] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [payroles, setPayroles] = useState([])
+  const [openViewModal, setOpenViewModal] = useState(false)
+  const [selectedPayrole, setSelectedPayrole] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetchPayroles();
-  }, []);
+    fetchPayroles()
+  }, [])
 
   const fetchPayroles = async () => {
     try {
-      const data = await getAllPayroles();
-      setPayroles(data);
+      const data = await getAllPayroles()
+      setPayroles(data)
     } catch (error) {
-      console.error('Error fetching payroles:', error);
+      console.error('Error fetching payroles:', error)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const handleViewModalOpen = (payrole) => {
-    setSelectedPayrole(payrole);
-    setOpenViewModal(true);
-  };
+    setSelectedPayrole(payrole)
+    setOpenViewModal(true)
+  }
 
   const handleViewModalClose = () => {
-    setOpenViewModal(false);
-    setSelectedPayrole(null);
-  };
+    setOpenViewModal(false)
+    setSelectedPayrole(null)
+  }
 
   if (loading) {
-    return <Typography>Loading...</Typography>;
+    return <Typography>Loading...</Typography>
   }
 
   return (
@@ -77,18 +77,20 @@ const AdminPayroles = () => {
                 key={payrole._id}
                 hover
                 onClick={() => handleViewModalOpen(payrole)}
-                sx={{ cursor: 'pointer' }}
-              >
+                sx={{ cursor: 'pointer' }}>
                 <TableCell>{payrole.staffId.userId.name}</TableCell>
                 <TableCell>{payrole.pid.name}</TableCell>
                 <TableCell>{payrole.countOfDays}</TableCell>
                 <TableCell>₹{payrole.amount}</TableCell>
                 <TableCell>
-                  {format(new Date(payrole.startDate), 'dd/MM/yyyy')} - {format(new Date(payrole.endDate), 'dd/MM/yyyy')}
+                  {format(new Date(payrole.startDate), 'dd/MM/yyyy')} -{' '}
+                  {format(new Date(payrole.endDate), 'dd/MM/yyyy')}
                 </TableCell>
                 <TableCell>
                   <Chip
-                    icon={payrole.isVerified ? <CheckCircleIcon /> : <PendingIcon />}
+                    icon={
+                      payrole.isVerified ? <CheckCircleIcon /> : <PendingIcon />
+                    }
                     label={payrole.isVerified ? 'Verified' : 'Pending'}
                     color={payrole.isVerified ? 'success' : 'warning'}
                     size="small"
@@ -101,19 +103,27 @@ const AdminPayroles = () => {
       </TableContainer>
 
       {/* View Payrole Modal */}
-      <Dialog open={openViewModal} onClose={handleViewModalClose} maxWidth="sm" fullWidth>
+      <Dialog
+        open={openViewModal}
+        onClose={handleViewModalClose}
+        maxWidth="sm"
+        fullWidth>
         <DialogTitle>Payrole Details</DialogTitle>
         <DialogContent>
           {selectedPayrole && (
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 2 }}>
+            <Box
+              sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 2 }}>
               <Typography>
-                <strong>Staff Name:</strong> {selectedPayrole.staffId.userId.name}
+                <strong>Staff Name:</strong>{' '}
+                {selectedPayrole.staffId.userId.name}
               </Typography>
               <Typography>
-                <strong>Staff Email:</strong> {selectedPayrole.staffId.userId.email}
+                <strong>Staff Email:</strong>{' '}
+                {selectedPayrole.staffId.userId.email}
               </Typography>
               <Typography>
-                <strong>Staff Phone:</strong> {selectedPayrole.staffId.userId.phoneNumber}
+                <strong>Staff Phone:</strong>{' '}
+                {selectedPayrole.staffId.userId.phoneNumber}
               </Typography>
               <Typography>
                 <strong>LDAP ID:</strong> {selectedPayrole.staffId.userId.ldap}
@@ -138,7 +148,13 @@ const AdminPayroles = () => {
               <Typography>
                 <strong>Status:</strong>{' '}
                 <Chip
-                  icon={selectedPayrole.isVerified ? <CheckCircleIcon /> : <PendingIcon />}
+                  icon={
+                    selectedPayrole.isVerified ? (
+                      <CheckCircleIcon />
+                    ) : (
+                      <PendingIcon />
+                    )
+                  }
                   label={selectedPayrole.isVerified ? 'Verified' : 'Pending'}
                   color={selectedPayrole.isVerified ? 'success' : 'warning'}
                   size="small"
@@ -152,7 +168,7 @@ const AdminPayroles = () => {
         </DialogActions>
       </Dialog>
     </MainCard>
-  );
-};
+  )
+}
 
-export default AdminPayroles;
+export default AdminPayroles

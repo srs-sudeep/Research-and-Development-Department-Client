@@ -79,19 +79,24 @@ const ProjectList = () => {
   }
 
   // Filter and search projects
-  const filteredProjects = projects.filter((project) =>
-    project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    project.projectId.toString().includes(searchTerm) ||
-    project.PI?.name?.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredProjects = projects.filter(
+    (project) =>
+      project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      project.projectId.toString().includes(searchTerm) ||
+      project.PI?.name?.toLowerCase().includes(searchTerm.toLowerCase()),
   )
 
   // Sort projects
   const sortedProjects = filteredProjects.sort((a, b) => {
     if (orderBy === 'projectId') {
-      return order === 'asc' ? a.projectId - b.projectId : b.projectId - a.projectId
+      return order === 'asc'
+        ? a.projectId - b.projectId
+        : b.projectId - a.projectId
     }
     if (orderBy === 'name') {
-      return order === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)
+      return order === 'asc'
+        ? a.name.localeCompare(b.name)
+        : b.name.localeCompare(a.name)
     }
     return 0
   })
@@ -115,8 +120,7 @@ const ProjectList = () => {
                   <TableSortLabel
                     active={orderBy === 'projectId'}
                     direction={orderBy === 'projectId' ? order : 'asc'}
-                    onClick={() => handleRequestSort('projectId')}
-                  >
+                    onClick={() => handleRequestSort('projectId')}>
                     Project ID
                   </TableSortLabel>
                 </TableCell>
@@ -124,8 +128,7 @@ const ProjectList = () => {
                   <TableSortLabel
                     active={orderBy === 'name'}
                     direction={orderBy === 'name' ? order : 'asc'}
-                    onClick={() => handleRequestSort('name')}
-                  >
+                    onClick={() => handleRequestSort('name')}>
                     Name
                   </TableSortLabel>
                 </TableCell>
@@ -133,8 +136,7 @@ const ProjectList = () => {
                   <TableSortLabel
                     active={orderBy === 'PI'}
                     direction={orderBy === 'PI' ? order : 'asc'}
-                    onClick={() => handleRequestSort('PI')}
-                  >
+                    onClick={() => handleRequestSort('PI')}>
                     Principal Investigator
                   </TableSortLabel>
                 </TableCell>
@@ -149,8 +151,7 @@ const ProjectList = () => {
                     key={project._id}
                     hover
                     onClick={() => handleRowClick(project)}
-                    sx={{ cursor: 'pointer' }}
-                  >
+                    sx={{ cursor: 'pointer' }}>
                     <TableCell>{project.projectId}</TableCell>
                     <TableCell>{project.name}</TableCell>
                     <TableCell>{project.PI?.name}</TableCell>

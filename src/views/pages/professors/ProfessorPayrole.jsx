@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import {
   Box,
   Dialog,
@@ -17,60 +17,60 @@ import {
   Checkbox,
   IconButton,
   Tooltip,
-} from '@mui/material';
-import MainCard from 'ui-component/cards/MainCard';
-import { getPayroleProfessor, updatePayrole } from 'api';
-import { format } from 'date-fns';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import PendingIcon from '@mui/icons-material/Pending';
+} from '@mui/material'
+import MainCard from 'ui-component/cards/MainCard'
+import { getPayroleProfessor, updatePayrole } from 'api'
+import { format } from 'date-fns'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import PendingIcon from '@mui/icons-material/Pending'
+import FilePreview from 'ui-component/FilePreview'
 
 const ProfessorPayrole = () => {
-  const [payroles, setPayroles] = useState([]);
-  const [openViewModal, setOpenViewModal] = useState(false);
-  const [selectedPayrole, setSelectedPayrole] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [payroles, setPayroles] = useState([])
+  const [openViewModal, setOpenViewModal] = useState(false)
+  const [selectedPayrole, setSelectedPayrole] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetchPayroles();
-  }, []);
+    fetchPayroles()
+  }, [])
 
   const fetchPayroles = async () => {
     try {
-      const data = await getPayroleProfessor();
-      setPayroles(data);
+      const data = await getPayroleProfessor()
+      setPayroles(data)
     } catch (error) {
-      console.error('Error fetching payroles:', error);
+      console.error('Error fetching payroles:', error)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
-  const handleViewModalOpen = (event, payrole) => {
-    // Prevent checkbox click from opening modal
-    if (event.target.type !== 'checkbox') {
-      setSelectedPayrole(payrole);
-      setOpenViewModal(true);
-    }
-  };
+  const handleViewModalOpen = (payrole) => {
+    setSelectedPayrole(payrole)
+    setOpenViewModal(true)
+  }
 
   const handleViewModalClose = () => {
-    setOpenViewModal(false);
-    setSelectedPayrole(null);
-  };
+    setOpenViewModal(false)
+    setSelectedPayrole(null)
+  }
 
   const handleVerificationChange = async (payroleId, currentStatus) => {
     try {
-      await updatePayrole(payroleId, { isVerified: !currentStatus });
+      await updatePayrole(payroleId, { isVerified: !currentStatus })
       // Update local state
-      setPayroles(payroles.map(payrole => 
-        payrole._id === payroleId 
-          ? { ...payrole, isVerified: !currentStatus }
-          : payrole
-      ));
+      setPayroles(
+        payroles.map((payrole) =>
+          payrole._id === payroleId
+            ? { ...payrole, isVerified: !currentStatus }
+            : payrole,
+        ),
+      )
     } catch (error) {
-      console.error('Error updating payrole verification:', error);
+      console.error('Error updating payrole verification:', error)
     }
-  };
+  }
 
   return (
     <MainCard title="Payrole Verification">
@@ -89,20 +89,24 @@ const ProfessorPayrole = () => {
           </TableHead>
           <TableBody>
             {payroles.map((payrole) => (
-              <TableRow
-                key={payrole._id}
-                hover
-                onClick={(e) => handleViewModalOpen(e, payrole)}
-                sx={{ cursor: 'pointer' }}
-              >
-                <TableCell>{payrole.staffId.userId.name}</TableCell>
-                <TableCell>{payrole.pid.name}</TableCell>
-                <TableCell>{payrole.countOfDays}</TableCell>
-                <TableCell>₹{payrole.amount}</TableCell>
-                <TableCell>
-                  {format(new Date(payrole.startDate), 'dd/MM/yyyy')} - {format(new Date(payrole.endDate), 'dd/MM/yyyy')}
+              <TableRow key={payrole._id} hover sx={{ cursor: 'pointer' }}>
+                <TableCell onClick={() => handleViewModalOpen(payrole)}>
+                  {payrole.staffId.userId.name}
                 </TableCell>
-                <TableCell>
+                <TableCell onClick={() => handleViewModalOpen(payrole)}>
+                  {payrole.pid.name}
+                </TableCell>
+                <TableCell onClick={() => handleViewModalOpen(payrole)}>
+                  {payrole.countOfDays}
+                </TableCell>
+                <TableCell onClick={() => handleViewModalOpen(payrole)}>
+                  ₹{payrole.amount}
+                </TableCell>
+                <TableCell onClick={() => handleViewModalOpen(payrole)}>
+                  {format(new Date(payrole.startDate), 'dd/MM/yyyy')} -{' '}
+                  {format(new Date(payrole.endDate), 'dd/MM/yyyy')}
+                </TableCell>
+                <TableCell onClick={() => handleViewModalOpen(payrole)}>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                     {payrole.isVerified ? (
                       <Tooltip title="Verified">
@@ -116,10 +120,12 @@ const ProfessorPayrole = () => {
                     {payrole.isVerified ? 'Verified' : 'Pending'}
                   </Box>
                 </TableCell>
-                <TableCell align="center" onClick={(e) => e.stopPropagation()}>
+                <TableCell align="center">
                   <Checkbox
                     checked={payrole.isVerified}
-                    onChange={() => handleVerificationChange(payrole._id, payrole.isVerified)}
+                    onChange={() =>
+                      handleVerificationChange(payrole._id, payrole.isVerified)
+                    }
                     color="primary"
                   />
                 </TableCell>
@@ -130,13 +136,20 @@ const ProfessorPayrole = () => {
       </TableContainer>
 
       {/* View Payrole Modal */}
-      <Dialog open={openViewModal} onClose={handleViewModalClose} maxWidth="sm" fullWidth>
+      <Dialog
+        open={openViewModal}
+        onClose={handleViewModalClose}
+        maxWidth="sm"
+        fullWidth>
         <DialogTitle>Payrole Details</DialogTitle>
         <DialogContent>
           {selectedPayrole && (
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 2 }}>
+            <div className='flex gap-2 justify-between items-center'>
+              <Box
+              sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 2 }}>
               <Typography>
-                <strong>Staff Name:</strong> {selectedPayrole.staffId.userId.name}
+                <strong>Staff Name:</strong>{' '}
+                {selectedPayrole.staffId.userId.name}
               </Typography>
               <Typography>
                 <strong>Project:</strong> {selectedPayrole.pid.name}
@@ -157,7 +170,9 @@ const ProfessorPayrole = () => {
               </Typography>
               <Typography>
                 <strong>Status:</strong>{' '}
-                <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 1 }}>
+                <Box
+                  component="span"
+                  sx={{ display: 'inline-flex', alignItems: 'center', gap: 1 }}>
                   {selectedPayrole.isVerified ? (
                     <CheckCircleIcon color="success" fontSize="small" />
                   ) : (
@@ -167,6 +182,8 @@ const ProfessorPayrole = () => {
                 </Box>
               </Typography>
             </Box>
+            <FilePreview filePath={`http://localhost:5000/uploads/${selectedPayrole.file.name}`} />
+            </div>
           )}
         </DialogContent>
         <DialogActions>
@@ -174,7 +191,7 @@ const ProfessorPayrole = () => {
         </DialogActions>
       </Dialog>
     </MainCard>
-  );
-};
+  )
+}
 
-export default ProfessorPayrole; 
+export default ProfessorPayrole

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import {
   Box,
   Button,
@@ -15,96 +15,96 @@ import {
   TableRow,
   Paper,
   Typography,
-} from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import MainCard from 'ui-component/cards/MainCard';
-import { createPayrole, getPayroleStaff } from 'api';
-import { format } from 'date-fns';
+} from '@mui/material'
+import AddIcon from '@mui/icons-material/Add'
+import MainCard from 'ui-component/cards/MainCard'
+import { createPayrole, getPayroleStaff } from 'api'
+import { format } from 'date-fns'
 
 const StaffPayrole = () => {
-  const [payroles, setPayroles] = useState([]);
-  const [openCreateModal, setOpenCreateModal] = useState(false);
-  const [openViewModal, setOpenViewModal] = useState(false);
-  const [selectedPayrole, setSelectedPayrole] = useState(null);
+  const [payroles, setPayroles] = useState([])
+  const [openCreateModal, setOpenCreateModal] = useState(false)
+  const [openViewModal, setOpenViewModal] = useState(false)
+  const [selectedPayrole, setSelectedPayrole] = useState(null)
   const [formData, setFormData] = useState({
     pid: '',
     countOfDays: '',
     amount: '',
     startDate: '',
     endDate: '',
-  });
-  const [pdfFile, setPdfFile] = useState(null); // State for PDF file
-  const [loading, setLoading] = useState(true);
+  })
+  const [pdfFile, setPdfFile] = useState(null) // State for PDF file
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetchPayroles();
-  }, []);
+    fetchPayroles()
+  }, [])
 
   const fetchPayroles = async () => {
     try {
-      const data = await getPayroleStaff();
-      console.log(data);
-      setPayroles(data);
+      const data = await getPayroleStaff()
+      console.log(data)
+      setPayroles(data)
     } catch (error) {
-      console.error('Error fetching payroles:', error);
+      console.error('Error fetching payroles:', error)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const handleCreateModalOpen = () => {
-    setOpenCreateModal(true);
-  };
+    setOpenCreateModal(true)
+  }
 
   const handleCreateModalClose = () => {
-    setOpenCreateModal(false);
+    setOpenCreateModal(false)
     setFormData({
       pid: '',
       countOfDays: '',
       amount: '',
       startDate: '',
       endDate: '',
-    });
-    setPdfFile(null); // Reset PDF file
-  };
+    })
+    setPdfFile(null) // Reset PDF file
+  }
 
   const handleViewModalOpen = (payrole) => {
-    setSelectedPayrole(payrole);
-    setOpenViewModal(true);
-  };
+    setSelectedPayrole(payrole)
+    setOpenViewModal(true)
+  }
 
   const handleViewModalClose = () => {
-    setOpenViewModal(false);
-    setSelectedPayrole(null);
-  };
+    setOpenViewModal(false)
+    setSelectedPayrole(null)
+  }
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormData((prev) => ({
       ...prev,
       [name]: value,
-    }));
-  };
+    }))
+  }
 
   const handlePdfChange = (e) => {
-    setPdfFile(e.target.files[0]); // Set the selected file
-  };
+    setPdfFile(e.target.files[0]) // Set the selected file
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(formData); // Logs formData correctly
-  
-    const payroleData = new FormData(); // Use FormData for file upload
-    payroleData.append('pid', formData.pid);
-    payroleData.append('countOfDays', formData.countOfDays);
-    payroleData.append('amount', formData.amount);
-    payroleData.append('startDate', formData.startDate);
-    payroleData.append('endDate', formData.endDate);
-  
+    e.preventDefault()
+    console.log(formData) // Logs formData correctly
+
+    const payroleData = new FormData() // Use FormData for file upload
+    payroleData.append('pid', formData.pid)
+    payroleData.append('countOfDays', formData.countOfDays)
+    payroleData.append('amount', formData.amount)
+    payroleData.append('startDate', formData.startDate)
+    payroleData.append('endDate', formData.endDate)
+
     if (pdfFile) {
-      payroleData.append('file', pdfFile); // Append the PDF file
+      payroleData.append('file', pdfFile) // Append the PDF file
     }
-  
+
     // // To log FormData contents, you need to iterate over it
     // for (let [key, value] of payroleData.entries()) {
     //   if (value instanceof File) {
@@ -113,17 +113,15 @@ const StaffPayrole = () => {
     //     console.log(`${key}: ${value}`);
     //   }
     // }
-  
+
     try {
-      await createPayrole(payroleData); // Send FormData including the PDF file
-      handleCreateModalClose();
-      fetchPayroles();
+      await createPayrole(payroleData) // Send FormData including the PDF file
+      handleCreateModalClose()
+      fetchPayroles()
     } catch (error) {
-      console.error('Error creating payrole:', error);
+      console.error('Error creating payrole:', error)
     }
-  };
-  
-  
+  }
 
   return (
     <MainCard title="Payrole Management">
@@ -131,8 +129,7 @@ const StaffPayrole = () => {
         <Button
           variant="contained"
           startIcon={<AddIcon />}
-          onClick={handleCreateModalOpen}
-        >
+          onClick={handleCreateModalOpen}>
           Add New Payrole
         </Button>
       </Box>
@@ -142,7 +139,6 @@ const StaffPayrole = () => {
           <TableHead>
             <TableRow>
               <TableCell>Project ID</TableCell>
-              <TableCell>Staff ID</TableCell>
               <TableCell>Days</TableCell>
               <TableCell>Amount</TableCell>
               <TableCell>Start Date</TableCell>
@@ -156,15 +152,19 @@ const StaffPayrole = () => {
                 key={payrole._id}
                 hover
                 onClick={() => handleViewModalOpen(payrole)}
-                sx={{ cursor: 'pointer' }}
-              >
+                sx={{ cursor: 'pointer' }}>
                 <TableCell>{payrole.pid.name}</TableCell>
-                <TableCell>{payrole.staffId.name}</TableCell>
                 <TableCell>{payrole.countOfDays}</TableCell>
                 <TableCell>₹{payrole.amount}</TableCell>
-                <TableCell>{format(new Date(payrole.startDate), 'dd/MM/yyyy')}</TableCell>
-                <TableCell>{format(new Date(payrole.endDate), 'dd/MM/yyyy')}</TableCell>
-                <TableCell>{payrole.isVerified ? 'Verified' : 'Pending'}</TableCell>
+                <TableCell>
+                  {format(new Date(payrole.startDate), 'dd/MM/yyyy')}
+                </TableCell>
+                <TableCell>
+                  {format(new Date(payrole.endDate), 'dd/MM/yyyy')}
+                </TableCell>
+                <TableCell>
+                  {payrole.isVerified ? 'Verified' : 'Pending'}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -172,7 +172,11 @@ const StaffPayrole = () => {
       </TableContainer>
 
       {/* Create Payrole Modal */}
-      <Dialog open={openCreateModal} onClose={handleCreateModalClose} maxWidth="sm" fullWidth>
+      <Dialog
+        open={openCreateModal}
+        onClose={handleCreateModalClose}
+        maxWidth="sm"
+        fullWidth>
         <DialogTitle>Create New Payrole</DialogTitle>
         <form onSubmit={handleSubmit}>
           <DialogContent>
@@ -225,11 +229,12 @@ const StaffPayrole = () => {
                 fullWidth
                 InputLabelProps={{ shrink: true }}
               />
-              <p style={{ marginTop: '10px' }} className='text-gray-500 text-xs'>Upload PDF/Image of attendance sheet</p>
-              <input
-                type="file"
-                onChange={handlePdfChange}
-              />
+              <p
+                style={{ marginTop: '10px' }}
+                className="text-xs text-gray-500">
+                Upload PDF/Image of attendance sheet
+              </p>
+              <input type="file" onChange={handlePdfChange} />
             </Box>
           </DialogContent>
           <DialogActions>
@@ -242,7 +247,11 @@ const StaffPayrole = () => {
       </Dialog>
 
       {/* View Payrole Modal */}
-      <Dialog open={openViewModal} onClose={handleViewModalClose} maxWidth="sm" fullWidth>
+      <Dialog
+        open={openViewModal}
+        onClose={handleViewModalClose}
+        maxWidth="sm"
+        fullWidth>
         <DialogTitle>Payrole Details</DialogTitle>
         <DialogContent>
           {selectedPayrole && (
@@ -276,7 +285,7 @@ const StaffPayrole = () => {
         </DialogActions>
       </Dialog>
     </MainCard>
-  );
-};
+  )
+}
 
-export default StaffPayrole;
+export default StaffPayrole

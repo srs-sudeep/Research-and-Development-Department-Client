@@ -136,7 +136,7 @@ const ProfessorList = () => {
                       .includes(searchTerm.toLowerCase()) ||
                     professor.idNumber
                       .toLowerCase()
-                      .includes(searchTerm.toLowerCase())
+                      .includes(searchTerm.toLowerCase()),
                 )
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((professor) => (
@@ -144,8 +144,7 @@ const ProfessorList = () => {
                     key={professor._id}
                     hover
                     onClick={() => handleRowClick(professor)}
-                    sx={{ cursor: 'pointer' }}
-                  >
+                    sx={{ cursor: 'pointer' }}>
                     <TableCell>{professor.idNumber}</TableCell>
                     <TableCell>{professor.name}</TableCell>
                     <TableCell>{professor.email}</TableCell>

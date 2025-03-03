@@ -22,7 +22,7 @@ const RegisterStaffPage = () => {
     upto: '',
     dob: '',
     projectId: '',
-    issuerAuthority: '',
+    salary: 0,
     addr1: '',
     addr2: '',
     doj: '',
@@ -239,12 +239,13 @@ const RegisterStaffPage = () => {
           <Grid item xs={12} md={6}>
             <TextField
               fullWidth
-              label="Issuing Authority"
-              name="issuerAuthority"
-              value={formData.issuerAuthority}
+              label="Salary"
+              name="salary"
+              type='number'
+              value={formData.salary}
               onChange={handleChange}
-              error={!!errors.issuerAuthority}
-              helperText={errors.issuerAuthority}
+              error={!!errors.salary}
+              helperText={errors.salary}
               required
             />
           </Grid>

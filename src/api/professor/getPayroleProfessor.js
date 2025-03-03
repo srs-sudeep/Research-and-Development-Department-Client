@@ -9,4 +9,4 @@ const getPayroleProfessor = async () => {
     throw new Error(error.response?.data?.message || 'Failed to fetch courses')
   }
 }
-export default getPayroleProfessor;
+export default getPayroleProfessor

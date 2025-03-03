@@ -8,11 +8,11 @@ const AdminDashboard = lazyLoad(
   () => import('views/pages/superAdmin/AdminDashboard'),
 )
 const Analytics = lazyLoad(() => import('views/pages/superAdmin/Analytics'))
-const AdminPayroles = lazyLoad(() => import('views/pages/superAdmin/AdminPayroles'))
-//Project routing
-const ProjectList = lazyLoad(
-  () => import('views/pages/superAdmin/ProjectList'),
+const AdminPayroles = lazyLoad(
+  () => import('views/pages/superAdmin/AdminPayroles'),
 )
+//Project routing
+const ProjectList = lazyLoad(() => import('views/pages/superAdmin/ProjectList'))
 const RegisterProjectPage = lazyLoad(
   () => import('views/pages/superAdmin/RegisterProjectPage'),
 )

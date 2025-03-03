@@ -14,7 +14,13 @@ const menuItems = (role) => {
   switch (role) {
     case 'superadmin':
       return {
-        items: [dashboard, projectSuperadmin, professorSuperadmin, staffSuperadmin, adminProfile],
+        items: [
+          dashboard,
+          projectSuperadmin,
+          professorSuperadmin,
+          staffSuperadmin,
+          adminProfile,
+        ],
       }
     case 'professor':
       return {
