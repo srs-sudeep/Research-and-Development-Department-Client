@@ -27,7 +27,7 @@ const NavCollapse = ({ menu, level }) => {
   const navigate = useNavigate()
 
   const [open, setOpen] = useState(false)
-  const [selected, setSelected] = useState(1)
+  const [selected, setSelected] = useState(0)
 
   const handleClick = () => {
     setOpen(!open)

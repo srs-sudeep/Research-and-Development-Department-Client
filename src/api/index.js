@@ -15,6 +15,7 @@ import updateStaff from './staff/updateStaff'
 import updateProfessor from './professor/updateProfessor'
 import getIndiProject from './superadmin/getIndiProject'
 import updateProject from './superadmin/updateProject'
+import getIndiUser from './user/getIndiUser'
 export {
   logoutAPi,
   getIndiAdmin,
@@ -33,4 +34,5 @@ export {
   updateProfessor,
   getIndiProject,
   updateProject,
+  getIndiUser,
 }

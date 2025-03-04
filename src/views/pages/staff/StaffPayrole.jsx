@@ -20,6 +20,7 @@ import AddIcon from '@mui/icons-material/Add'
 import MainCard from 'ui-component/cards/MainCard'
 import { createPayrole, getPayroleStaff } from 'api'
 import { format } from 'date-fns'
+import FilePreview from 'ui-component/FilePreview'
 
 const StaffPayrole = () => {
   const [payroles, setPayroles] = useState([])
@@ -246,7 +247,8 @@ const StaffPayrole = () => {
         <DialogTitle>Payrole Details</DialogTitle>
         <DialogContent>
           {selectedPayrole && (
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <div className='flex items-center justify-between gap-2'>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <Typography>
                 <strong>Project:</strong> {selectedPayrole.pid.name}
               </Typography>
@@ -269,6 +271,10 @@ const StaffPayrole = () => {
                 {selectedPayrole.isVerified ? 'Verified' : 'Pending'}
               </Typography>
             </Box>
+            <FilePreview
+            filePath={`http://localhost:5000/${selectedPayrole.file.path}`}
+          />
+            </div>
           )}
         </DialogContent>
         <DialogActions>

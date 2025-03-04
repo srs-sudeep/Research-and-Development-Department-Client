@@ -23,7 +23,6 @@ import Transitions from 'ui-component/extended/Transitions'
 
 // assets
 import { IconLogout, IconUser } from '@tabler/icons-react'
-import { logoutAPi } from 'api'
 const username = localStorage.getItem('user')
 const ProfileSection = () => {
   const theme = useTheme()
@@ -160,7 +159,7 @@ const ProfileSection = () => {
                         sx={{
                           borderRadius: `${customization.borderRadius}px`,
                         }}
-                        onClick={() => navigate('/profile')}>
+                        onClick={() => navigate('profile')}>
                         <ListItemIcon>
                           <IconUser stroke={1.5} size="1.3rem" />
                         </ListItemIcon>

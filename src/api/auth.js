@@ -14,6 +14,7 @@ export const loginApi = async (phone, password) => {
     localStorage.setItem('accessToken', tokens.access.token)
     localStorage.setItem('userRole', user.role)
     localStorage.setItem('user', user.name)
+    localStorage.setItem('id', user.id)
     console.log(user)
     if (user.role === 'student') {
       localStorage.setItem('program', user.program)
@@ -22,4 +23,4 @@ export const loginApi = async (phone, password) => {
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Login failed')
   }
-}
+};
