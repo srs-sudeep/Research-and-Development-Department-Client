@@ -144,45 +144,56 @@ const ProfessorPayrole = () => {
         <DialogTitle>Payrole Details</DialogTitle>
         <DialogContent>
           {selectedPayrole && (
-            <div className='flex gap-2 justify-between items-center'>
+            <div className="flex items-center justify-between gap-2">
               <Box
-              sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 2 }}>
-              <Typography>
-                <strong>Staff Name:</strong>{' '}
-                {selectedPayrole.staffId.userId.name}
-              </Typography>
-              <Typography>
-                <strong>Project:</strong> {selectedPayrole.pid.name}
-              </Typography>
-              <Typography>
-                <strong>Number of Days:</strong> {selectedPayrole.countOfDays}
-              </Typography>
-              <Typography>
-                <strong>Amount:</strong> ₹{selectedPayrole.amount}
-              </Typography>
-              <Typography>
-                <strong>Start Date:</strong>{' '}
-                {format(new Date(selectedPayrole.startDate), 'dd/MM/yyyy')}
-              </Typography>
-              <Typography>
-                <strong>End Date:</strong>{' '}
-                {format(new Date(selectedPayrole.endDate), 'dd/MM/yyyy')}
-              </Typography>
-              <Typography>
-                <strong>Status:</strong>{' '}
-                <Box
-                  component="span"
-                  sx={{ display: 'inline-flex', alignItems: 'center', gap: 1 }}>
-                  {selectedPayrole.isVerified ? (
-                    <CheckCircleIcon color="success" fontSize="small" />
-                  ) : (
-                    <PendingIcon color="warning" fontSize="small" />
-                  )}
-                  {selectedPayrole.isVerified ? 'Verified' : 'Pending'}
-                </Box>
-              </Typography>
-            </Box>
-            <FilePreview filePath={`http://localhost:5000/uploads/${selectedPayrole.file.name}`} />
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 2,
+                  mt: 2,
+                }}>
+                <Typography>
+                  <strong>Staff Name:</strong>{' '}
+                  {selectedPayrole.staffId.userId.name}
+                </Typography>
+                <Typography>
+                  <strong>Project:</strong> {selectedPayrole.pid.name}
+                </Typography>
+                <Typography>
+                  <strong>Number of Days:</strong> {selectedPayrole.countOfDays}
+                </Typography>
+                <Typography>
+                  <strong>Amount:</strong> ₹{selectedPayrole.amount}
+                </Typography>
+                <Typography>
+                  <strong>Start Date:</strong>{' '}
+                  {format(new Date(selectedPayrole.startDate), 'dd/MM/yyyy')}
+                </Typography>
+                <Typography>
+                  <strong>End Date:</strong>{' '}
+                  {format(new Date(selectedPayrole.endDate), 'dd/MM/yyyy')}
+                </Typography>
+                <Typography>
+                  <strong>Status:</strong>{' '}
+                  <Box
+                    component="span"
+                    sx={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 1,
+                    }}>
+                    {selectedPayrole.isVerified ? (
+                      <CheckCircleIcon color="success" fontSize="small" />
+                    ) : (
+                      <PendingIcon color="warning" fontSize="small" />
+                    )}
+                    {selectedPayrole.isVerified ? 'Verified' : 'Pending'}
+                  </Box>
+                </Typography>
+              </Box>
+              <FilePreview
+                filePath={`http://localhost:5000/${selectedPayrole.file.path}`}
+              />
             </div>
           )}
         </DialogContent>

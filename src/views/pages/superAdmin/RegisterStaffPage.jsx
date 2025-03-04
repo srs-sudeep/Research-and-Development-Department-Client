@@ -241,7 +241,7 @@ const RegisterStaffPage = () => {
               fullWidth
               label="Salary"
               name="salary"
-              type='number'
+              type="number"
               value={formData.salary}
               onChange={handleChange}
               error={!!errors.salary}

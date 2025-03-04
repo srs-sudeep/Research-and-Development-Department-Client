@@ -105,15 +105,6 @@ const StaffPayrole = () => {
       payroleData.append('file', pdfFile) // Append the PDF file
     }
 
-    // // To log FormData contents, you need to iterate over it
-    // for (let [key, value] of payroleData.entries()) {
-    //   if (value instanceof File) {
-    //     console.log(`${key}: ${value.name}, ${value.type}, ${value.size} bytes`);
-    //   } else {
-    //     console.log(`${key}: ${value}`);
-    //   }
-    // }
-
     try {
       await createPayrole(payroleData) // Send FormData including the PDF file
       handleCreateModalClose()
@@ -232,9 +223,9 @@ const StaffPayrole = () => {
               <p
                 style={{ marginTop: '10px' }}
                 className="text-xs text-gray-500">
-                Upload PDF/Image of attendance sheet
+                Upload scanned PDF of attendance sheet
               </p>
-              <input type="file" onChange={handlePdfChange} />
+              <input type="file" accept=".pdf" onChange={handlePdfChange} />
             </Box>
           </DialogContent>
           <DialogActions>
