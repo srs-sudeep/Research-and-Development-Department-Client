@@ -17,6 +17,7 @@ import {
   Checkbox,
   IconButton,
   Tooltip,
+  Chip,
 } from '@mui/material'
 import MainCard from 'ui-component/cards/MainCard'
 import { getPayroleProfessor, updatePayrole } from 'api'
@@ -107,18 +108,14 @@ const ProfessorPayrole = () => {
                   {format(new Date(payrole.endDate), 'dd/MM/yyyy')}
                 </TableCell>
                 <TableCell onClick={() => handleViewModalOpen(payrole)}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    {payrole.isVerified ? (
-                      <Tooltip title="Verified">
-                        <CheckCircleIcon color="success" />
-                      </Tooltip>
-                    ) : (
-                      <Tooltip title="Pending">
-                        <PendingIcon color="warning" />
-                      </Tooltip>
-                    )}
-                    {payrole.isVerified ? 'Verified' : 'Pending'}
-                  </Box>
+                <Chip
+                    icon={
+                      payrole.isVerified ? <CheckCircleIcon /> : <PendingIcon />
+                    }
+                    label={payrole.isVerified ? 'Verified' : 'Pending'}
+                    color={payrole.isVerified ? 'success' : 'warning'}
+                    size="small"
+                  />
                 </TableCell>
                 <TableCell align="center">
                   <Checkbox

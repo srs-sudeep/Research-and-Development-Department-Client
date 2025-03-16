@@ -13,7 +13,7 @@ import {
   TableSortLabel,
 } from '@mui/material'
 import MainCard from 'ui-component/cards/MainCard'
-import { getAllStaff } from 'api' // Change the API import to fetch staff data
+import { getAllStaff, getAllProjects } from 'api' // Change the API import to fetch staff data
 
 const StaffList = () => {
   const navigate = useNavigate()
@@ -60,7 +60,7 @@ const StaffList = () => {
   }
 
   const handleRowClick = (staff) => {
-    navigate(`/superadmin/staff/${staff._id}`)
+    navigate(`/superadmin/staff/${staff.userId}`)
   }
 
   return (

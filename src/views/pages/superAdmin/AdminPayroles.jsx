@@ -15,9 +15,10 @@ import {
   Paper,
   Typography,
   Chip,
+  Checkbox,
 } from '@mui/material'
 import MainCard from 'ui-component/cards/MainCard'
-import { getAllPayroles } from 'api'
+import { getAllPayroles, getIndiProject, updatePayrole, updateProject } from 'api'
 import { format } from 'date-fns'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import PendingIcon from '@mui/icons-material/Pending'
@@ -57,6 +58,39 @@ const AdminPayroles = () => {
     return <Typography>Loading...</Typography>
   }
 
+  const handleVerificationChange = async (payroleId, currentStatus, projectId, amount) => {
+    try {
+      // Toggle the verification status
+      const newStatus = !currentStatus;
+  
+      // Update the payrole verification status
+      await updatePayrole(payroleId, { isAdminVerified: newStatus });
+  
+      // Fetch the current project data to get the existing fund
+      const project = await getIndiProject(projectId); // Assume this fetches the project data
+      const currentFund = project.fund;
+  
+      // Adjust the fund based on the new status
+      const fundAdjustment = newStatus ? -amount : amount;
+  
+      // Update the project fund by adding the adjustment to the current fund
+      await updateProject(projectId, { fund: currentFund + fundAdjustment });
+  
+      // Update local state
+      setPayroles(
+        payroles.map((payrole) =>
+          payrole._id === payroleId
+            ? { ...payrole, isAdminVerified: newStatus }
+            : payrole
+        )
+      );
+    } catch (error) {
+      console.error('Error updating payrole verification:', error);
+    }
+  };
+  
+  
+
   return (
     <MainCard title="All Payroles">
       <TableContainer component={Paper}>
@@ -68,7 +102,8 @@ const AdminPayroles = () => {
               <TableCell>Days</TableCell>
               <TableCell>Amount</TableCell>
               <TableCell>Period</TableCell>
-              <TableCell>Status</TableCell>
+              <TableCell>PI Status</TableCell>
+              <TableCell>Verification</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -76,17 +111,16 @@ const AdminPayroles = () => {
               <TableRow
                 key={payrole._id}
                 hover
-                onClick={() => handleViewModalOpen(payrole)}
                 sx={{ cursor: 'pointer' }}>
-                <TableCell>{payrole.staffId.userId.name}</TableCell>
-                <TableCell>{payrole.pid.name}</TableCell>
-                <TableCell>{payrole.countOfDays}</TableCell>
-                <TableCell>₹{payrole.amount}</TableCell>
-                <TableCell>
+                <TableCell onClick={() => handleViewModalOpen(payrole)}>{payrole.staffId.userId.name}</TableCell>
+                <TableCell onClick={() => handleViewModalOpen(payrole)}>{payrole.pid.name}</TableCell>
+                <TableCell onClick={() => handleViewModalOpen(payrole)}>{payrole.countOfDays}</TableCell>
+                <TableCell onClick={() => handleViewModalOpen(payrole)}>₹{payrole.amount}</TableCell>
+                <TableCell onClick={() => handleViewModalOpen(payrole)}>
                   {format(new Date(payrole.startDate), 'dd/MM/yyyy')} -{' '}
                   {format(new Date(payrole.endDate), 'dd/MM/yyyy')}
                 </TableCell>
-                <TableCell>
+                <TableCell onClick={() => handleViewModalOpen(payrole)}>
                   <Chip
                     icon={
                       payrole.isVerified ? <CheckCircleIcon /> : <PendingIcon />
@@ -94,6 +128,16 @@ const AdminPayroles = () => {
                     label={payrole.isVerified ? 'Verified' : 'Pending'}
                     color={payrole.isVerified ? 'success' : 'warning'}
                     size="small"
+                  />
+                </TableCell>
+                <TableCell align="center">
+                  <Checkbox
+                    disabled={!payrole.isVerified}
+                    checked={payrole.isAdminVerified}
+                    onChange={() =>
+                      handleVerificationChange(payrole._id, payrole.isAdminVerified, payrole.pid._id, payrole.amount)
+                    }
+                    color="primary"
                   />
                 </TableCell>
               </TableRow>

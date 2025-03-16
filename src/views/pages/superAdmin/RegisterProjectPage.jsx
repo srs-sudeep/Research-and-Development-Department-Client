@@ -50,6 +50,7 @@ const RegisterProjectPage = () => {
     startDate: '',
     endDate: '',
     staffList: [],
+    fund: 0,
     isCompleted: 'false', // Updated to string 'false' by default for radio buttons
   })
 
@@ -72,6 +73,9 @@ const RegisterProjectPage = () => {
     }
     if (!formData.endDate) {
       newErrors.endDate = 'End date is required'
+    }
+    if (!formData.fund) {
+      newErrors.fund = 'Project fund is required'
     }
 
     setErrors(newErrors)
@@ -241,6 +245,19 @@ const RegisterProjectPage = () => {
               error={!!errors.endDate}
               helperText={errors.endDate}
               InputLabelProps={{ shrink: true }}
+              required
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <TextField
+              fullWidth
+              label="Project Fund"
+              name="fund"
+              value={formData.fund}
+              onChange={handleChange}
+              error={!!errors.fund}
+              helperText={errors.fund}
               required
             />
           </Grid>

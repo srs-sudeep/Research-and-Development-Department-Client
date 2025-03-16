@@ -1,5 +1,5 @@
 import apiClient from 'core/api/apiConfig'
-const API_ENDPOINT = '/staffs'
+const API_ENDPOINT = '/projects'
 
 const updateProject = async (id, projectData) => {
   try {

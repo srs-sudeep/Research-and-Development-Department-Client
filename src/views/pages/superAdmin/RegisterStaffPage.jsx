@@ -28,6 +28,7 @@ const RegisterStaffPage = () => {
     doj: '',
     employmenttype: '',
     gender: '',
+    start: '',
   })
 
   const [errors, setErrors] = useState({})
@@ -303,6 +304,21 @@ const RegisterStaffPage = () => {
                 </MenuItem>
               ))}
             </TextField>
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <TextField
+              fullWidth
+              type="date"
+              label="Start Date"
+              name="start"
+              value={formData.start}
+              onChange={handleChange}
+              error={!!errors.start}
+              helperText={errors.start}
+              InputLabelProps={{ shrink: true }}
+              required
+            />
           </Grid>
 
           <Grid item xs={12} md={6}>

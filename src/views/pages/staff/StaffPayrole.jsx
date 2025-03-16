@@ -15,10 +15,13 @@ import {
   TableRow,
   Paper,
   Typography,
+  Chip,
 } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import MainCard from 'ui-component/cards/MainCard'
-import { createPayrole, getPayroleStaff } from 'api'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import PendingIcon from '@mui/icons-material/Pending'
+import { createPayrole, getIndiProject, getIndiStaff, getPayroleStaff } from 'api'
 import { format } from 'date-fns'
 import FilePreview from 'ui-component/FilePreview'
 
@@ -36,15 +39,16 @@ const StaffPayrole = () => {
   })
   const [pdfFile, setPdfFile] = useState(null) // State for PDF file
   const [loading, setLoading] = useState(true)
+  const [salary, setSalary] = useState(0)
 
   useEffect(() => {
     fetchPayroles()
+    fetchProject()
   }, [])
 
   const fetchPayroles = async () => {
     try {
       const data = await getPayroleStaff()
-      console.log(data)
       setPayroles(data)
     } catch (error) {
       console.error('Error fetching payroles:', error)
@@ -52,6 +56,23 @@ const StaffPayrole = () => {
       setLoading(false)
     }
   }
+
+  const fetchProject = async () => {
+    try {
+      const data = await getIndiStaff(localStorage.getItem('id'))
+      const pro = await getIndiProject(data.projectId)
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        pid: pro.projectId,
+      }))
+      setSalary(data.salary)
+    } catch (error) {
+      console.error('Error fetching payroles:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+  
 
   const handleCreateModalOpen = () => {
     setOpenCreateModal(true)
@@ -80,12 +101,73 @@ const StaffPayrole = () => {
   }
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
-  }
+    const { name, value } = e.target;
+  
+    setFormData((prev) => {
+      let updatedFormData = { ...prev, [name]: value };
+  
+      // Calculate the endDate based on startDate and countOfDays
+      if (name === 'startDate' || name === 'countOfDays') {
+        const { startDate, countOfDays } = updatedFormData;
+  
+        if (startDate && countOfDays) {
+          const start = new Date(startDate);
+          const daysToAdd = parseInt(countOfDays, 10);
+  
+          // Set the endDate by adding the countOfDays to the startDate
+          const end = new Date(start);
+          end.setDate(end.getDate() + daysToAdd - 1); // Subtract 1 to ensure inclusive count
+  
+          const formattedEndDate = end.toISOString().split('T')[0]; // Format the date as YYYY-MM-DD
+          updatedFormData = {
+            ...updatedFormData,
+            endDate: formattedEndDate, // Update the form data with the calculated endDate
+          };
+        }
+      }
+  
+      // When both the startDate, endDate, and countOfDays are set, calculate the salary accordingly
+      const { startDate, endDate, countOfDays } = updatedFormData;
+      if (startDate && endDate && countOfDays) {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+  
+        if (start <= end) {
+          let totalAmount = 0;
+          let current = new Date(start);
+  
+          // Loop through each month between start and end dates
+          while (current <= end) {
+            const year = current.getFullYear();
+            const month = current.getMonth() + 1; // Month is 0-indexed, so add 1
+            const daysInMonth = new Date(year, month, 0).getDate();
+  
+            // Calculate how many days to take for the current month
+            const firstDay = current.getDate();
+            const lastDay =
+              current.getMonth() === end.getMonth() && current.getFullYear() === end.getFullYear()
+                ? end.getDate()
+                : daysInMonth;
+  
+            const daysWorkedInMonth = lastDay - firstDay + 1;
+            const dailySalary = salary / daysInMonth;
+            totalAmount += dailySalary * daysWorkedInMonth;
+  
+            // Move to the next month
+            current.setMonth(current.getMonth() + 1);
+            current.setDate(1); // Set to first day of the month
+          }
+  
+          updatedFormData = {
+            ...updatedFormData,
+            amount: totalAmount.toFixed(2), // Update the amount field with the calculated amount
+          };
+        }
+      }
+  
+      return updatedFormData;
+    });
+  };        
 
   const handlePdfChange = (e) => {
     setPdfFile(e.target.files[0]) // Set the selected file
@@ -155,7 +237,14 @@ const StaffPayrole = () => {
                   {format(new Date(payrole.endDate), 'dd/MM/yyyy')}
                 </TableCell>
                 <TableCell>
-                  {payrole.isVerified ? 'Verified' : 'Pending'}
+                <Chip
+                    icon={
+                      payrole.isVerified ? <CheckCircleIcon /> : <PendingIcon />
+                    }
+                    label={payrole.isVerified ? 'Verified' : 'Pending'}
+                    color={payrole.isVerified ? 'success' : 'warning'}
+                    size="small"
+                  />
                 </TableCell>
               </TableRow>
             ))}
@@ -176,6 +265,7 @@ const StaffPayrole = () => {
               <TextField
                 label="Project ID"
                 name="pid"
+                disabled
                 value={formData.pid}
                 onChange={handleInputChange}
                 required
@@ -186,16 +276,6 @@ const StaffPayrole = () => {
                 name="countOfDays"
                 type="number"
                 value={formData.countOfDays}
-                onChange={handleInputChange}
-                required
-                fullWidth
-                inputProps={{ min: 0 }}
-              />
-              <TextField
-                label="Amount"
-                name="amount"
-                type="number"
-                value={formData.amount}
                 onChange={handleInputChange}
                 required
                 fullWidth
@@ -215,11 +295,23 @@ const StaffPayrole = () => {
                 label="End Date"
                 name="endDate"
                 type="date"
+                disabled
                 value={formData.endDate}
                 onChange={handleInputChange}
                 required
                 fullWidth
                 InputLabelProps={{ shrink: true }}
+              />
+              <TextField
+                label="Amount"
+                name="amount"
+                type="number"
+                disabled
+                value={formData.amount}
+                onChange={handleInputChange}
+                required
+                fullWidth
+                inputProps={{ min: 0 }}
               />
               <p
                 style={{ marginTop: '10px' }}
